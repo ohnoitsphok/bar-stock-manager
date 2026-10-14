@@ -1,0 +1,16 @@
+{
+  "ingredients": [
+    {
+      "name": "Bushmill Black Bush",
+      "category": "Spirit - Whisky",
+      "unit_volume": 700,
+      "volume_unit": "ml",
+      "stock": 1,
+      "par": 1,
+      "price": 720000,
+      "expiry": "",
+      "id": "1791970435328"
+    }
+  ],
+  "recipes": []
+}
