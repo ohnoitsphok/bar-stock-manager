@@ -582,6 +582,17 @@
       "price": 390000,
       "expiry": "",
       "id": "1791975989147"
+    },
+    {
+      "name": "Hennessy VS",
+      "category": "Spirit - Brandy / Cognac",
+      "unit_volume": 700,
+      "volume_unit": "ml",
+      "stock": 0.4,
+      "par": 0.2,
+      "price": 760000,
+      "expiry": "",
+      "id": "1791976024807"
     }
   ],
   "recipes": []
