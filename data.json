@@ -1418,6 +1418,17 @@
       "price": 893000,
       "expiry": "",
       "id": "1792011616878"
+    },
+    {
+      "name": "Glenlivet Triple Cask",
+      "category": "Spirit - Whisky",
+      "unit_volume": 1000,
+      "volume_unit": "ml",
+      "stock": 0.9,
+      "par": 0,
+      "price": 1150000,
+      "expiry": "",
+      "id": "1792011661053"
     }
   ],
   "recipes": [
