@@ -175,6 +175,17 @@
       "price": 300000,
       "expiry": "",
       "id": "1791974153811"
+    },
+    {
+      "name": "Laphroaig 10",
+      "category": "Spirit - Whisky",
+      "unit_volume": 700,
+      "volume_unit": "ml",
+      "stock": 0.4,
+      "par": 0.1,
+      "price": 1408000,
+      "expiry": "",
+      "id": "1791975224724"
     }
   ],
   "recipes": []
