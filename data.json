@@ -153,6 +153,17 @@
       "price": 960000,
       "expiry": "",
       "id": "1791974094250"
+    },
+    {
+      "name": "Naked Malt",
+      "category": "Spirit - Whisky",
+      "unit_volume": 700,
+      "volume_unit": "ml",
+      "stock": 1,
+      "par": 0.1,
+      "price": 900000,
+      "expiry": "",
+      "id": "1791974105438"
     }
   ],
   "recipes": []
