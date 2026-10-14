@@ -516,6 +516,17 @@
       "price": 360000,
       "expiry": "",
       "id": "1791975882035"
+    },
+    {
+      "name": "Captain Morgan Dark Rum",
+      "category": "Spirit - Rum",
+      "unit_volume": 750,
+      "volume_unit": "ml",
+      "stock": 1,
+      "par": 30,
+      "price": 360000,
+      "expiry": "",
+      "id": "1791975905446"
     }
   ],
   "recipes": []
