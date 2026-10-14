@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Strelitzia Stock & Recipe Manager</title>
-    <!-- Tailwind CSS for modern styling -->
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -20,7 +20,7 @@
             }
         }
     </script>
-    <!-- Alpine.js for lightweight reactivity -->
+    <!-- Alpine.js -->
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 </head>
 <body class="bg-darkbg text-gray-100 min-h-screen font-sans" x-data="barApp()" x-init="initApp()">
@@ -66,7 +66,7 @@
                 </div>
             </div>
 
-            <!-- MAIN LAYOUT: FORM & TABLE -->
+            <!-- MAIN LAYOUT -->
             <div class="grid grid-cols-1 lg:grid-cols-4 gap-6">
                 
                 <!-- INPUT FORM -->
@@ -75,7 +75,7 @@
                     
                     <div>
                         <label class="text-xs text-gray-400 block mb-1">Item Name</label>
-                        <input type="text" x-input.debounce="name" x-model="form.name" placeholder="e.g., Haku Vodka" class="w-full bg-black/40 border border-bordercol rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-blue-500">
+                        <input type="text" x-model="form.name" placeholder="e.g., Haku Vodka" class="w-full bg-black/40 border border-bordercol rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-blue-500">
                     </div>
 
                     <div>
@@ -310,7 +310,7 @@
                 editingId: null,
                 
                 ghConfig: {
-                    username: localStorage.getItem('gh_user') || '',
+                    username: localStorage.getItem('gh_user') || 'ohnoitsphok',
                     repo: localStorage.getItem('gh_repo') || 'bar-stock-manager',
                     token: localStorage.getItem('gh_token') || ''
                 },
@@ -463,16 +463,18 @@
                         ingredients: this.ingredients,
                         recipes: this.recipes
                     };
-                    const contentEncoded = btoa(unescape(encodeURIComponent(JSON.stringify(payload, null, 2))));
+                    
+                    const jsonString = JSON.stringify(payload, null, 2);
+                    const contentEncoded = btoa(unescape(encodeURIComponent(jsonString)));
                     
                     const url = `https://api.github.com/repos/${this.ghConfig.username}/${this.ghConfig.repo}/contents/data.json`;
                     
                     try {
-                        // Check if file already exists to get its sha
                         let sha = '';
                         const getRes = await fetch(url, {
-                            headers: { 'Authorization': `token ${this.ghConfig.token}` }
+                            headers: { 'Authorization': `Bearer ${this.ghConfig.token}` }
                         });
+                        
                         if (getRes.ok) {
                             const fileData = await getRes.json();
                             sha = fileData.sha;
@@ -487,7 +489,7 @@
                         const putRes = await fetch(url, {
                             method: 'PUT',
                             headers: {
-                                'Authorization': `token ${this.ghConfig.token}`,
+                                'Authorization': `Bearer ${this.ghConfig.token}`,
                                 'Content-Type': 'application/json'
                             },
                             body: JSON.stringify(bodyData)
@@ -498,11 +500,13 @@
                         } else {
                             const err = await putRes.json();
                             this.syncStatus = 'Sync failed ❌';
-                            if (!silent) alert('GitHub Error: ' + err.message);
+                            if (!silent) alert('GitHub Error: ' + (err.message || 'Check console'));
+                            console.error(err);
                         }
                     } catch (e) {
                         this.syncStatus = 'Network error during sync ❌';
-                        if (!silent) console.error(e);
+                        if (!silent) alert('Network error. Check F12 console.');
+                        console.error(e);
                     }
                 },
 
@@ -513,7 +517,7 @@
 
                     try {
                         const res = await fetch(url, {
-                            headers: { 'Authorization': `token ${this.ghConfig.token}` }
+                            headers: { 'Authorization': `Bearer ${this.ghConfig.token}` }
                         });
                         if (res.ok) {
                             const data = await res.json();
