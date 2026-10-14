@@ -307,6 +307,17 @@
       "price": 754000,
       "expiry": "",
       "id": "1791975488726"
+    },
+    {
+      "name": "Sipsmith Dry",
+      "category": "Spirit - Gin",
+      "unit_volume": 700,
+      "volume_unit": "ml",
+      "stock": 1,
+      "par": 0.1,
+      "price": 773000,
+      "expiry": "",
+      "id": "1791975497317"
     }
   ],
   "recipes": []
