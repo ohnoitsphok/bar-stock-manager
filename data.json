@@ -534,9 +534,9 @@
       "category": "Mixers & Soda",
       "unit_volume": 320,
       "volume_unit": "ml",
-      "stock": 2,
-      "par": 0.1,
-      "price": 225600,
+      "stock": 20,
+      "par": 5,
+      "price": 8166,
       "expiry": ""
     },
     {
