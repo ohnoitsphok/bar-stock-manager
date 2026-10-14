@@ -1456,6 +1456,29 @@
         }
       ],
       "id": "1791984384486"
+    },
+    {
+      "name": "Grasshopper",
+      "selling_price": 180000,
+      "items": [
+        {
+          "ingredient_id": "47",
+          "amount": 30
+        },
+        {
+          "ingredient_id": "20",
+          "amount": 30
+        },
+        {
+          "ingredient_id": "61",
+          "amount": 30
+        },
+        {
+          "ingredient_id": "62",
+          "amount": 30
+        }
+      ],
+      "id": "1791984510121"
     }
   ],
   "orders": []
