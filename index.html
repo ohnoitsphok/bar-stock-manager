@@ -330,15 +330,17 @@
                     <!-- INGREDIENT BUILDER -->
                     <div class="space-y-2">
                         <label class="text-xs text-gray-400 block">Recipe Ingredients & Pours</label>
-                        <div class="flex gap-2">
-                            <select x-model="tempRecipeIngId" class="flex-1 bg-black/40 border border-bordercol rounded-lg px-3 py-1.5 text-xs focus:outline-none">
+                        <div class="space-y-2">
+                            <select x-model="tempRecipeIngId" class="w-full bg-black/40 border border-bordercol rounded-lg px-3 py-1.5 text-xs focus:outline-none">
                                 <option value="">Select ingredient...</option>
                                 <template x-for="ing in ingredients" :key="ing.id">
                                     <option :value="ing.id" x-text="ing.name + ' (' + ing.volume_unit + ')'"></option>
                                 </template>
                             </select>
-                            <input type="number" x-model.number="tempRecipeAmount" placeholder="ml/g" class="w-20 bg-black/40 border border-bordercol rounded-lg px-2 py-1.5 text-xs text-center">
-                            <button @click="addRecipeItem()" class="bg-blue-600 hover:bg-blue-500 px-3 py-1.5 rounded-lg text-xs font-bold text-white shrink-0">+</button>
+                            <div class="flex items-center gap-2 pr-1">
+                                <input type="number" x-model.number="tempRecipeAmount" placeholder="ml/g" class="flex-1 bg-black/40 border border-bordercol rounded-lg px-2 py-1.5 text-xs">
+                                <button @click="addRecipeItem()" class="bg-blue-600 hover:bg-blue-500 w-8 h-8 rounded-lg text-xs font-bold text-white flex items-center justify-center shrink-0">+</button>
+                            </div>
                         </div>
 
                         <!-- LIST OF ADDED INGREDIENTS -->
