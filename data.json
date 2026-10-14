@@ -1348,6 +1348,33 @@
         }
       ],
       "id": "1791983955218"
+    },
+    {
+      "name": "Clover Club",
+      "selling_price": 180000,
+      "items": [
+        {
+          "ingredient_id": "1791974153811",
+          "amount": 40
+        },
+        {
+          "ingredient_id": "59",
+          "amount": 20
+        },
+        {
+          "ingredient_id": "58",
+          "amount": 15
+        },
+        {
+          "ingredient_id": "54",
+          "amount": 20
+        },
+        {
+          "ingredient_id": "60",
+          "amount": 1
+        }
+      ],
+      "id": "1791984050636"
     }
   ],
   "orders": []
