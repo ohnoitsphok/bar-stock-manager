@@ -87,6 +87,17 @@
       "price": 694000,
       "expiry": "",
       "id": "1791973898797"
+    },
+    {
+      "name": "Toki Whisky Suntory",
+      "category": "Spirit - Whisky",
+      "unit_volume": 700,
+      "volume_unit": "ml",
+      "stock": 0,
+      "par": 0.1,
+      "price": 970000,
+      "expiry": "",
+      "id": "1791973945273"
     }
   ],
   "recipes": []
