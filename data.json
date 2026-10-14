@@ -142,6 +142,17 @@
       "price": 528000,
       "expiry": "",
       "id": "1791974075843"
+    },
+    {
+      "name": "Double Black - Johnnie Walker",
+      "category": "Spirit - Whisky",
+      "unit_volume": 700,
+      "volume_unit": "ml",
+      "stock": 1,
+      "par": 0.1,
+      "price": 960000,
+      "expiry": "",
+      "id": "1791974094250"
     }
   ],
   "recipes": []
