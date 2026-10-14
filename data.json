@@ -186,6 +186,17 @@
       "price": 1408000,
       "expiry": "",
       "id": "1791975224724"
+    },
+    {
+      "name": "Hankey Bannister 12 Regency",
+      "category": "Spirit - Whisky",
+      "unit_volume": 700,
+      "volume_unit": "ml",
+      "stock": 1,
+      "par": 0.1,
+      "price": 518000,
+      "expiry": "",
+      "id": "1791975253180"
     }
   ],
   "recipes": []
