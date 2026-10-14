@@ -633,7 +633,7 @@
       "category": "House Syrups & Cordials",
       "unit_volume": 1200,
       "volume_unit": "ml",
-      "stock": 1.1,
+      "stock": 1.5,
       "par": 0.1,
       "price": 18000,
       "expiry": ""
@@ -644,7 +644,7 @@
       "category": "Fresh Citrus & Produce",
       "unit_volume": 400,
       "volume_unit": "ml",
-      "stock": 0,
+      "stock": 0.1,
       "par": 0.1,
       "price": 40000,
       "expiry": ""
