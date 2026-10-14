@@ -417,6 +417,17 @@
       "price": 520000,
       "expiry": "",
       "id": "1791975682819"
+    },
+    {
+      "name": "Jose Cuervo Gold",
+      "category": "Spirit - Tequila / Mezcal",
+      "unit_volume": 750,
+      "volume_unit": "ml",
+      "stock": 1.2,
+      "par": 0.3,
+      "price": 560000,
+      "expiry": "",
+      "id": "1791975709637"
     }
   ],
   "recipes": []
