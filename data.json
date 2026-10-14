@@ -1563,6 +1563,25 @@
         }
       ],
       "id": "1791984881065"
+    },
+    {
+      "name": "Old Fashioned",
+      "selling_price": 280000,
+      "items": [
+        {
+          "ingredient_id": "1791973593005",
+          "amount": 60
+        },
+        {
+          "ingredient_id": "12",
+          "amount": 3
+        },
+        {
+          "ingredient_id": "57",
+          "amount": 5
+        }
+      ],
+      "id": "1791985005749"
     }
   ],
   "orders": []
