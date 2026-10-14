@@ -1375,6 +1375,33 @@
         }
       ],
       "id": "1791984050636"
+    },
+    {
+      "name": "Midori Sour",
+      "selling_price": 200000,
+      "items": [
+        {
+          "ingredient_id": "11",
+          "amount": 30
+        },
+        {
+          "ingredient_id": "1791975851316",
+          "amount": 30
+        },
+        {
+          "ingredient_id": "59",
+          "amount": 25
+        },
+        {
+          "ingredient_id": "58",
+          "amount": 20
+        },
+        {
+          "ingredient_id": "60",
+          "amount": 1
+        }
+      ],
+      "id": "1791984140603"
     }
   ],
   "orders": []
