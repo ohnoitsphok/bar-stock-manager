@@ -43,6 +43,17 @@
       "price": 660000,
       "expiry": "",
       "id": "1791973749972"
+    },
+    {
+      "name": "Knob Creek 9",
+      "category": "Spirit - Whisky",
+      "unit_volume": 750,
+      "volume_unit": "ml",
+      "stock": 0,
+      "par": 0.1,
+      "price": 1164000,
+      "expiry": "",
+      "id": "1791973774052"
     }
   ],
   "recipes": []
