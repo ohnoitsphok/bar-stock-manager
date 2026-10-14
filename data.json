@@ -461,6 +461,17 @@
       "price": 621000,
       "expiry": "",
       "id": "1791975776783"
+    },
+    {
+      "name": "Mezcal Creyente Joven Espadin ",
+      "category": "Spirit - Tequila / Mezcal",
+      "unit_volume": 750,
+      "volume_unit": "ml",
+      "stock": 0.9,
+      "par": 0.1,
+      "price": 979000,
+      "expiry": "",
+      "id": "1791975795316"
     }
   ],
   "recipes": []
