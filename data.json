@@ -98,6 +98,17 @@
       "price": 970000,
       "expiry": "",
       "id": "1791973945273"
+    },
+    {
+      "name": "Talisker 10",
+      "category": "Spirit - Whisky",
+      "unit_volume": 700,
+      "volume_unit": "ml",
+      "stock": 1,
+      "par": 0.1,
+      "price": 1150000,
+      "expiry": "",
+      "id": "1791973962467"
     }
   ],
   "recipes": []
