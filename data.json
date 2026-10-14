@@ -351,6 +351,17 @@
       "price": 776000,
       "expiry": "",
       "id": "1791975556173"
+    },
+    {
+      "name": "Smirnoff Red",
+      "category": "Spirit - Vodka",
+      "unit_volume": 700,
+      "volume_unit": "ml",
+      "stock": 1.7,
+      "par": 0.1,
+      "price": 280000,
+      "expiry": "",
+      "id": "1791975572867"
     }
   ],
   "recipes": []
