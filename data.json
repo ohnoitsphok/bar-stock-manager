@@ -1139,7 +1139,7 @@
       "unit_volume": 700,
       "volume_unit": "ml",
       "stock": 1,
-      "par": 1,
+      "par": 0.1,
       "price": 621000,
       "expiry": "",
       "id": "1791975776783"
