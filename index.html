@@ -202,7 +202,7 @@
                     <div class="space-y-2">
                         <label class="text-xs text-gray-400 block">Recipe Ingredients & Pours</label>
                         <div class="flex gap-2">
-                            <select x-id="recipe-ing" x-model="tempRecipeIngId" class="flex-1 bg-black/40 border border-bordercol rounded-lg px-3 py-1.5 text-xs focus:outline-none">
+                            <select x-model="tempRecipeIngId" class="flex-1 bg-black/40 border border-bordercol rounded-lg px-3 py-1.5 text-xs focus:outline-none">
                                 <option value="">Select ingredient...</option>
                                 <template x-for="ing in ingredients" :key="ing.id">
                                     <option :value="ing.id" x-text="ing.name + ' (' + ing.volume_unit + ')'"></option>
