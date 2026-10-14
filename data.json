@@ -252,6 +252,17 @@
       "price": 828000,
       "expiry": "",
       "id": "1791975398632"
+    },
+    {
+      "name": "Four Pillars Bloody Shiraz ",
+      "category": "Spirit - Gin",
+      "unit_volume": 700,
+      "volume_unit": "ml",
+      "stock": 0.5,
+      "par": 0.1,
+      "price": 862000,
+      "expiry": "",
+      "id": "1791975415595"
     }
   ],
   "recipes": []
