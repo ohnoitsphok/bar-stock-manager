@@ -1601,6 +1601,25 @@
         }
       ],
       "id": "1791985301698"
+    },
+    {
+      "name": "Dry Martini",
+      "selling_price": 240000,
+      "items": [
+        {
+          "ingredient_id": "1791975380531",
+          "amount": 55
+        },
+        {
+          "ingredient_id": "16",
+          "amount": 15
+        },
+        {
+          "ingredient_id": "13",
+          "amount": 2
+        }
+      ],
+      "id": "1791985389080"
     }
   ],
   "orders": []
