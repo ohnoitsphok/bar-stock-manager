@@ -593,6 +593,17 @@
       "price": 760000,
       "expiry": "",
       "id": "1791976024807"
+    },
+    {
+      "name": "Absinthe 69",
+      "category": "Liqueurs & Modifiers",
+      "unit_volume": 700,
+      "volume_unit": "ml",
+      "stock": 0.2,
+      "par": 0.1,
+      "price": 1100000,
+      "expiry": "",
+      "id": "1791976877655"
     }
   ],
   "recipes": []
