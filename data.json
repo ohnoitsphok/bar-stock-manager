@@ -615,6 +615,17 @@
       "price": 510000,
       "expiry": "",
       "id": "1791976961754"
+    },
+    {
+      "name": "Aperol 750ml",
+      "category": "Liqueurs & Modifiers",
+      "unit_volume": 750,
+      "volume_unit": "ml",
+      "stock": 1,
+      "par": 0.1,
+      "price": 510000,
+      "expiry": "",
+      "id": "1791976975600"
     }
   ],
   "recipes": []
