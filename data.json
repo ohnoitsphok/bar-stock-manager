@@ -1429,6 +1429,17 @@
       "price": 1150000,
       "expiry": "",
       "id": "1792011661053"
+    },
+    {
+      "name": "Chivas 12",
+      "category": "Spirit - Whisky",
+      "unit_volume": 750,
+      "volume_unit": "ml",
+      "stock": 2,
+      "par": 0,
+      "price": 600000,
+      "expiry": "",
+      "id": "1792011728197"
     }
   ],
   "recipes": [
