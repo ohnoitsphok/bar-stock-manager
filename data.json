@@ -1329,6 +1329,25 @@
         }
       ],
       "id": "1791983856853"
+    },
+    {
+      "name": "White Lady",
+      "selling_price": 180000,
+      "items": [
+        {
+          "ingredient_id": "1791974153811",
+          "amount": 45
+        },
+        {
+          "ingredient_id": "2",
+          "amount": 25
+        },
+        {
+          "ingredient_id": "59",
+          "amount": 20
+        }
+      ],
+      "id": "1791983955218"
     }
   ],
   "orders": []
