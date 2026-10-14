@@ -557,8 +557,8 @@
       "unit_volume": 320,
       "volume_unit": "ml",
       "stock": 24,
-      "par": 0.1,
-      "price": 180000,
+      "par": 5,
+      "price": 6250,
       "expiry": ""
     },
     {
