@@ -373,6 +373,17 @@
       "price": 959000,
       "expiry": "",
       "id": "1791975589593"
+    },
+    {
+      "name": "Ketel One",
+      "category": "Spirit - Vodka",
+      "unit_volume": 750,
+      "volume_unit": "ml",
+      "stock": 1,
+      "par": 0.1,
+      "price": 644000,
+      "expiry": "",
+      "id": "1791975609375"
     }
   ],
   "recipes": []
