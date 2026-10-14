@@ -538,6 +538,17 @@
       "price": 351000,
       "expiry": "",
       "id": "1791975927004"
+    },
+    {
+      "name": "Flor de Cana 7 Gran Reserva ",
+      "category": "Spirit - Rum",
+      "unit_volume": 700,
+      "volume_unit": "ml",
+      "stock": 0.1,
+      "par": 0.1,
+      "price": 505000,
+      "expiry": "",
+      "id": "1791975940595"
     }
   ],
   "recipes": []
