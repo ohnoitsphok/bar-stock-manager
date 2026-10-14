@@ -37,10 +37,11 @@
             </div>
 
             <!-- TAB SWITCHER -->
-            <div class="flex bg-black/40 p-1 rounded-xl border border-bordercol">
-                <button @click="activeTab = 'inventory'" :class="activeTab === 'inventory' ? 'bg-blue-600 text-white' : 'text-gray-400 hover:text-white'" class="px-4 py-1.5 rounded-lg text-sm font-medium transition">📦 Inventory</button>
-                <button @click="activeTab = 'recipes'" :class="activeTab === 'recipes' ? 'bg-blue-600 text-white' : 'text-gray-400 hover:text-white'" class="px-4 py-1.5 rounded-lg text-sm font-medium transition">🍹 Recipes & Costing</button>
-                <button @click="activeTab = 'settings'" :class="activeTab === 'settings' ? 'bg-blue-600 text-white' : 'text-gray-400 hover:text-white'" class="px-4 py-1.5 rounded-lg text-sm font-medium transition">⚙️ GitHub Sync</button>
+            <div class="flex flex-wrap bg-black/40 p-1 rounded-xl border border-bordercol gap-1">
+                <button @click="activeTab = 'inventory'" :class="activeTab === 'inventory' ? 'bg-blue-600 text-white' : 'text-gray-400 hover:text-white'" class="px-3 py-1.5 rounded-lg text-xs font-medium transition">📦 Inventory</button>
+                <button @click="activeTab = 'orders'" :class="activeTab === 'orders' ? 'bg-blue-600 text-white' : 'text-gray-400 hover:text-white'" class="px-3 py-1.5 rounded-lg text-xs font-medium transition">📋 Orders</button>
+                <button @click="activeTab = 'recipes'" :class="activeTab === 'recipes' ? 'bg-blue-600 text-white' : 'text-gray-400 hover:text-white'" class="px-3 py-1.5 rounded-lg text-xs font-medium transition">🍹 Recipes</button>
+                <button @click="activeTab = 'settings'" :class="activeTab === 'settings' ? 'bg-blue-600 text-white' : 'text-gray-400 hover:text-white'" class="px-3 py-1.5 rounded-lg text-xs font-medium transition">⚙️ Sync</button>
             </div>
         </div>
     </header>
@@ -133,13 +134,11 @@
                 <!-- TABLE & CONTROLS -->
                 <div class="bg-cardbg border border-bordercol rounded-xl shadow lg:col-span-3 overflow-hidden flex flex-col">
                     
-                    <!-- SEARCH & CONTROLS BAR -->
                     <div class="p-4 border-b border-bordercol flex flex-col md:flex-row justify-between items-center gap-3">
                         <input type="text" x-model="searchQuery" placeholder="Search ingredients..." class="bg-black/40 border border-bordercol rounded-lg px-3 py-1.5 text-sm w-full md:w-64 focus:outline-none focus:border-blue-500">
                         <span class="text-xs text-gray-400" x-text="ingredients.length + ' total items'"></span>
                     </div>
 
-                    <!-- TABLE CONTENT -->
                     <div class="overflow-x-auto flex-1">
                         <table class="w-full text-left border-collapse text-sm">
                             <thead>
@@ -179,6 +178,100 @@
                             </tbody>
                         </table>
                     </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- ================= ORDER MANAGEMENT TAB ================= -->
+        <div x-show="activeTab === 'orders'" class="space-y-6">
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                
+                <!-- ORDER BUILDER -->
+                <div class="bg-cardbg border border-bordercol p-5 rounded-xl shadow space-y-4 lg:col-span-1">
+                    <div class="flex justify-between items-center border-b border-bordercol pb-2">
+                        <h2 class="text-base font-bold" x-text="editingOrderId ? 'Edit Purchase Order' : 'New Purchase Order'">New Purchase Order</h2>
+                        <button x-show="editingOrderId" @click="cancelEditOrder()" class="text-xs text-gray-400 hover:text-white">Cancel</button>
+                    </div>
+
+                    <div>
+                        <label class="text-xs text-gray-400 block mb-1">Supplier / Order Reference</label>
+                        <input type="text" x-model="orderForm.supplier" placeholder="e.g., Metro / General Supplier" class="w-full bg-black/40 border border-bordercol rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-blue-500">
+                    </div>
+
+                    <!-- ORDER LINE ITEM BUILDER -->
+                    <div class="space-y-2">
+                        <label class="text-xs text-gray-400 block">Add Items to Order</label>
+                        <div class="space-y-2">
+                            <select x-model="tempOrderIngId" class="w-full bg-black/40 border border-bordercol rounded-lg px-3 py-1.5 text-xs focus:outline-none">
+                                <option value="">Select ingredient...</option>
+                                <template x-for="ing in ingredients" :key="ing.id">
+                                    <option :value="ing.id" x-text="ing.name"></option>
+                                </template>
+                            </select>
+                            <div class="flex gap-2">
+                                <input type="number" step="0.1" x-model.number="tempOrderQty" placeholder="Qty" class="flex-1 bg-black/40 border border-bordercol rounded-lg px-2 py-1.5 text-xs">
+                                <input type="number" x-model.number="tempOrderPrice" placeholder="Unit Price (VND)" class="flex-1 bg-black/40 border border-bordercol rounded-lg px-2 py-1.5 text-xs">
+                                <button @click="addOrderItem()" class="bg-blue-600 hover:bg-blue-500 px-3 py-1.5 rounded-lg text-xs font-bold">+</button>
+                            </div>
+                        </div>
+
+                        <!-- ITEMS LIST -->
+                        <div class="bg-black/30 border border-bordercol rounded-lg p-3 space-y-2 mt-2">
+                            <template x-for="(oi, index) in orderForm.items" :key="index">
+                                <div class="flex justify-between items-center text-xs bg-cardbg p-2 rounded border border-bordercol">
+                                    <div>
+                                        <span class="font-medium" x-text="getIngredientName(oi.ingredient_id)"></span>
+                                        <div class="text-gray-400" x-text="oi.quantity + ' units @ ' + formatCurrency(oi.unit_price) + ' ₫'"></div>
+                                    </div>
+                                    <div class="flex items-center space-x-2">
+                                        <span class="text-emerald-400 font-mono" x-text="formatCurrency(oi.quantity * oi.unit_price) + ' ₫'"></span>
+                                        <button @click="orderForm.items.splice(index, 1)" class="text-red-400 hover:text-red-300 font-bold">×</button>
+                                    </div>
+                                </div>
+                            </template>
+                            <p class="text-xs text-gray-500 text-center py-1" x-show="orderForm.items.length === 0">No items added to order.</p>
+                        </div>
+                    </div>
+
+                    <button @click="submitOrder()" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white py-2 rounded-lg text-sm font-semibold transition" x-text="editingOrderId ? 'Update Order & Inventory' : 'Submit & Update Inventory'"></button>
+                </div>
+
+                <!-- ORDER HISTORY -->
+                <div class="bg-cardbg border border-bordercol p-5 rounded-xl shadow lg:col-span-2 space-y-4">
+                    <h2 class="text-base font-bold border-b border-bordercol pb-2">Purchase Order History</h2>
+                    
+                    <div class="space-y-4">
+                        <template x-for="order in orders" :key="order.id">
+                            <div class="bg-black/30 border border-bordercol rounded-xl p-4 space-y-3">
+                                <div class="flex justify-between items-start">
+                                    <div>
+                                        <h3 class="font-bold text-sm text-blue-300" x-text="order.supplier || 'General Order'"></h3>
+                                        <p class="text-xs text-gray-400" x-text="order.date"></p>
+                                    </div>
+                                    <div class="space-x-2">
+                                        <button @click="startEditOrder(order)" class="text-blue-400 hover:text-blue-300 text-xs">Edit</button>
+                                        <button @click="deleteOrder(order.id)" class="text-red-400 hover:text-red-300 text-xs">Delete</button>
+                                    </div>
+                                </div>
+
+                                <div class="space-y-1 border-t border-bordercol pt-2 text-xs">
+                                    <template x-for="oi in order.items">
+                                        <div class="flex justify-between text-gray-300">
+                                            <span x-text="getIngredientName(oi.ingredient_id) + ' (x' + oi.quantity + ')'"></span>
+                                            <span class="font-mono text-gray-400" x-text="formatCurrency(oi.quantity * oi.unit_price) + ' ₫'"></span>
+                                        </div>
+                                    </template>
+                                </div>
+
+                                <div class="border-t border-bordercol pt-2 flex justify-between items-center text-xs font-bold">
+                                    <span class="text-gray-400">Total Order Cost:</span>
+                                    <span class="text-emerald-400 font-mono" x-text="formatCurrency(order.items.reduce((acc, i) => acc + (i.quantity * i.unit_price), 0)) + ' ₫'"></span>
+                                </div>
+                            </div>
+                        </template>
+                    </div>
+                    <p class="text-sm text-gray-500 text-center py-8" x-show="orders.length === 0">No purchase orders recorded yet.</p>
                 </div>
 
             </div>
@@ -318,6 +411,7 @@
                 searchQuery: '',
                 editingId: null,
                 editingRecipeId: null,
+                editingOrderId: null,
 
                 ghConfig: {
                     username: localStorage.getItem('gh_user') || 'ohnoitsphok',
@@ -342,8 +436,16 @@
                 tempRecipeIngId: '',
                 tempRecipeAmount: 50,
 
+                orderForm: {
+                    supplier: '', items: []
+                },
+                tempOrderIngId: '',
+                tempOrderQty: 1,
+                tempOrderPrice: 0,
+
                 ingredients: JSON.parse(localStorage.getItem('bar_ingredients') || '[]'),
                 recipes: JSON.parse(localStorage.getItem('bar_recipes') || '[]'),
+                orders: JSON.parse(localStorage.getItem('bar_orders') || '[]'),
 
                 initApp() {
                     if (this.ghConfig.token && this.ghConfig.username) {
@@ -421,17 +523,13 @@
 
                 saveRecipe() {
                     if (!this.recipeForm.name || this.recipeForm.items.length === 0) return alert('Enter recipe name and at least one ingredient');
-                    
                     if (this.editingRecipeId) {
                         const idx = this.recipes.findIndex(r => r.id === this.editingRecipeId);
-                        if (idx !== -1) {
-                            this.recipes[idx] = { ...this.recipeForm, id: this.editingRecipeId };
-                        }
+                        if (idx !== -1) this.recipes[idx] = { ...this.recipeForm, id: this.editingRecipeId };
                         this.editingRecipeId = null;
                     } else {
                         this.recipes.push({ ...this.recipeForm, id: Date.now().toString() });
                     }
-
                     this.recipeForm = { name: '', selling_price: 0, items: [] };
                     this.persist();
                 },
@@ -440,6 +538,99 @@
                     if (confirm('Delete this recipe?')) {
                         this.recipes = this.recipes.filter(r => r.id !== id);
                         if (this.editingRecipeId === id) this.cancelEditRecipe();
+                        this.persist();
+                    }
+                },
+
+                // ORDER MANAGEMENT METHODS
+                addOrderItem() {
+                    if (!this.tempOrderIngId || !this.tempOrderQty) return;
+                    this.orderForm.items.push({
+                        ingredient_id: this.tempOrderIngId,
+                        quantity: Number(this.tempOrderQty),
+                        unit_price: Number(this.tempOrderPrice)
+                    });
+                    this.tempOrderIngId = '';
+                    this.tempOrderQty = 1;
+                    this.tempOrderPrice = 0;
+                },
+
+                submitOrder() {
+                    if (this.orderForm.items.length === 0) return alert('Please add at least one item to the order.');
+
+                    if (this.editingOrderId) {
+                        // Revert previous order stock impact first
+                        const oldOrder = this.orders.find(o => o.id === this.editingOrderId);
+                        if (oldOrder) {
+                            oldOrder.items.forEach(oi => {
+                                const ing = this.ingredients.find(i => i.id === oi.ingredient_id);
+                                if (ing) {
+                                    ing.stock = Math.max(0, Number((ing.stock - oi.quantity).toFixed(1)));
+                                }
+                            });
+                        }
+
+                        // Update order record
+                        const idx = this.orders.findIndex(o => o.id === this.editingOrderId);
+                        if (idx !== -1) {
+                            this.orders[idx] = {
+                                ...this.orderForm,
+                                id: this.editingOrderId,
+                                date: this.orders[idx].date
+                            };
+                        }
+                        this.editingOrderId = null;
+                    } else {
+                        // Create new order record
+                        const newOrder = {
+                            ...this.orderForm,
+                            id: Date.now().toString(),
+                            date: new Date().toLocaleDateString() + ' ' + new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+                        };
+                        this.orders.unshift(newOrder);
+                    }
+
+                    // Apply new order quantities and latest prices to inventory storage
+                    this.orderForm.items.forEach(oi => {
+                        const ing = this.ingredients.find(i => i.id === oi.ingredient_id);
+                        if (ing) {
+                            ing.stock = Number(((ing.stock || 0) + oi.quantity).toFixed(1));
+                            if (oi.unit_price > 0) {
+                                ing.price = oi.unit_price;
+                            }
+                        }
+                    });
+
+                    this.orderForm = { supplier: '', items: [] };
+                    this.persist();
+                },
+
+                startEditOrder(order) {
+                    this.editingOrderId = order.id;
+                    this.orderForm = {
+                        supplier: order.supplier,
+                        items: JSON.parse(JSON.stringify(order.items))
+                    };
+                },
+
+                cancelEditOrder() {
+                    this.editingOrderId = null;
+                    this.orderForm = { supplier: '', items: [] };
+                },
+
+                deleteOrder(id) {
+                    if (confirm('Delete this purchase order? (Note: Stock added by this order will be deducted back)')) {
+                        const order = this.orders.find(o => o.id === id);
+                        if (order) {
+                            order.items.forEach(oi => {
+                                const ing = this.ingredients.find(i => i.id === oi.ingredient_id);
+                                if (ing) {
+                                    ing.stock = Math.max(0, Number((ing.stock - oi.quantity).toFixed(1)));
+                                }
+                            });
+                        }
+                        this.orders = this.orders.filter(o => o.id !== id);
+                        if (this.editingOrderId === id) this.cancelEditOrder();
                         this.persist();
                     }
                 },
@@ -474,6 +665,7 @@
                 persist() {
                     localStorage.setItem('bar_ingredients', JSON.stringify(this.ingredients));
                     localStorage.setItem('bar_recipes', JSON.stringify(this.recipes));
+                    localStorage.setItem('bar_orders', JSON.stringify(this.orders));
                     if (this.ghConfig.token) {
                         this.syncToGitHub(true);
                     }
@@ -491,7 +683,8 @@
                     this.syncStatus = 'Syncing to GitHub...';
                     const payload = {
                         ingredients: this.ingredients,
-                        recipes: this.recipes
+                        recipes: this.recipes,
+                        orders: this.orders
                     };
                     
                     const jsonString = JSON.stringify(payload, null, 2);
@@ -510,7 +703,7 @@
                         }
 
                         const bodyData = {
-                            message: 'Auto-sync inventory and recipes via web app',
+                            message: 'Auto-sync inventory, recipes, and orders via web app',
                             content: contentEncoded
                         };
                         if (sha) bodyData.sha = sha;
@@ -551,8 +744,10 @@
                             const decoded = JSON.parse(decodeURIComponent(escape(atob(data.content))));
                             this.ingredients = decoded.ingredients || [];
                             this.recipes = decoded.recipes || [];
+                            this.orders = decoded.orders || [];
                             localStorage.setItem('bar_ingredients', JSON.stringify(this.ingredients));
                             localStorage.setItem('bar_recipes', JSON.stringify(this.recipes));
+                            localStorage.setItem('bar_orders', JSON.stringify(this.orders));
                             this.syncStatus = 'Synced with GitHub ✅';
                         } else {
                             this.syncStatus = 'No remote data.json found yet.';
