@@ -439,6 +439,17 @@
       "price": 348000,
       "expiry": "",
       "id": "1791975726381"
+    },
+    {
+      "name": "Don Julio Blanco",
+      "category": "Spirit - Tequila / Mezcal",
+      "unit_volume": 750,
+      "volume_unit": "ml",
+      "stock": 0.7,
+      "par": 0.1,
+      "price": 1371000,
+      "expiry": "",
+      "id": "1791975749475"
     }
   ],
   "recipes": []
