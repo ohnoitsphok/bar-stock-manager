@@ -76,6 +76,17 @@
       "price": 882000,
       "expiry": "",
       "id": "1791973865576"
+    },
+    {
+      "name": "Suntory Whisky Kakubin",
+      "category": "Spirit - Whisky",
+      "unit_volume": 700,
+      "volume_unit": "ml",
+      "stock": 0.8,
+      "par": 0.1,
+      "price": 694000,
+      "expiry": "",
+      "id": "1791973898797"
     }
   ],
   "recipes": []
