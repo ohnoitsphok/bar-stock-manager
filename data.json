@@ -1582,6 +1582,25 @@
         }
       ],
       "id": "1791985005749"
+    },
+    {
+      "name": "Godfather",
+      "selling_price": 220000,
+      "items": [
+        {
+          "ingredient_id": "1791974075843",
+          "amount": 45
+        },
+        {
+          "ingredient_id": "26",
+          "amount": 15
+        },
+        {
+          "ingredient_id": "12",
+          "amount": 2
+        }
+      ],
+      "id": "1791985301698"
     }
   ],
   "orders": []
