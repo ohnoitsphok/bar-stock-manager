@@ -168,10 +168,10 @@
     {
       "name": "Gin Gordon's",
       "category": "Spirit - Gin",
-      "unit_volume": 750000,
+      "unit_volume": 750,
       "volume_unit": "ml",
       "stock": 1,
-      "par": 0.5,
+      "par": 0.3,
       "price": 300000,
       "expiry": "",
       "id": "1791974153811"
