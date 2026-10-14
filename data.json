@@ -131,6 +131,17 @@
       "price": 282000,
       "expiry": "",
       "id": "1791974052624"
+    },
+    {
+      "name": "Black Label - Johnnie Walker",
+      "category": "Spirit - Whisky",
+      "unit_volume": 700,
+      "volume_unit": "ml",
+      "stock": 0,
+      "par": 0.1,
+      "price": 528000,
+      "expiry": "",
+      "id": "1791974075843"
     }
   ],
   "recipes": []
