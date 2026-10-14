@@ -395,6 +395,17 @@
       "price": 499000,
       "expiry": "",
       "id": "1791975658656"
+    },
+    {
+      "name": "Absolut Raspberri",
+      "category": "Spirit - Gin",
+      "unit_volume": 1000,
+      "volume_unit": "ml",
+      "stock": 0.5,
+      "par": 0.1,
+      "price": 420000,
+      "expiry": "",
+      "id": "1791975671720"
     }
   ],
   "recipes": []
