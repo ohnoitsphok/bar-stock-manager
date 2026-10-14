@@ -384,6 +384,17 @@
       "price": 644000,
       "expiry": "",
       "id": "1791975609375"
+    },
+    {
+      "name": "Tito's Handmade",
+      "category": "Spirit - Vodka",
+      "unit_volume": 750,
+      "volume_unit": "ml",
+      "stock": 0,
+      "par": 0.1,
+      "price": 499000,
+      "expiry": "",
+      "id": "1791975658656"
     }
   ],
   "recipes": []
