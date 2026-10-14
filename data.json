@@ -1429,6 +1429,33 @@
         }
       ],
       "id": "1791984276969"
+    },
+    {
+      "name": "Amaretto Sour",
+      "selling_price": 200000,
+      "items": [
+        {
+          "ingredient_id": "26",
+          "amount": 30
+        },
+        {
+          "ingredient_id": "1791973822110",
+          "amount": 30
+        },
+        {
+          "ingredient_id": "59",
+          "amount": 25
+        },
+        {
+          "ingredient_id": "58",
+          "amount": 20
+        },
+        {
+          "ingredient_id": "60",
+          "amount": 1
+        }
+      ],
+      "id": "1791984384486"
     }
   ],
   "orders": []
