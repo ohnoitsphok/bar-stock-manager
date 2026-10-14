@@ -82,9 +82,21 @@
                     <div>
                         <label class="text-xs text-gray-400 block mb-1">Category / Base</label>
                         <select x-model="form.category" class="w-full bg-black/40 border border-bordercol rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-blue-500">
-                            <template x-for="cat in categories" :key="cat">
-                                <option :value="cat" x-text="cat"></option>
-                            </template>
+                            <option value="Spirit - Gin">Spirit - Gin</option>
+                            <option value="Spirit - Whisky">Spirit - Whisky</option>
+                            <option value="Spirit - Vodka">Spirit - Vodka</option>
+                            <option value="Spirit - Rum">Spirit - Rum</option>
+                            <option value="Spirit - Tequila / Mezcal">Spirit - Tequila / Mezcal</option>
+                            <option value="Spirit - Brandy / Cognac">Spirit - Brandy / Cognac</option>
+                            <option value="Spirit - Other">Spirit - Other</option>
+                            <option value="Liqueurs & Modifiers">Liqueurs & Modifiers</option>
+                            <option value="Vermouth & Aperitifs">Vermouth & Aperitifs</option>
+                            <option value="House Syrups & Cordials">House Syrups & Cordials</option>
+                            <option value="Bitters & Tinctures">Bitters & Tinctures</option>
+                            <option value="Fresh Citrus & Produce">Fresh Citrus & Produce</option>
+                            <option value="Dairy & Cream">Dairy & Cream</option>
+                            <option value="Mixers & Soda">Mixers & Soda</option>
+                            <option value="Garnishes & Dry Goods">Garnishes & Dry Goods</option>
                         </select>
                     </div>
 
@@ -162,7 +174,7 @@
                             <thead>
                                 <tr class="bg-black/30 text-gray-400 text-xs uppercase border-b border-bordercol">
                                     <th class="p-3">Name</th>
-                                    <th class="p-3">Category</th>
+                                    <th class="p-3" x-show="!groupByCategory">Category</th>
                                     <th class="p-3 text-center">Size</th>
                                     <th class="p-3 text-center">Stock</th>
                                     <th class="p-3 text-right">Price</th>
@@ -172,10 +184,15 @@
                                 </tr>
                             </thead>
                             <tbody class="divide-y divide-bordercol">
-                                <template x-for="item in sortedIngredients" :key="item.id || item.name">
+                                <template x-for="item in sortedIngredients" :key="item.id">
+                                    <template x-if="shouldShowCategoryHeader(item)">
+                                        <tr class="bg-blue-950/40 border-t border-b border-bordercol">
+                                            <td colspan="8" class="p-2.5 font-bold text-xs text-blue-300 tracking-wide uppercase" x-text="item.category"></td>
+                                        </tr>
+                                    </template>
                                     <tr class="hover:bg-white/[0.02] transition" :class="Number(item.stock || 0) <= Number(item.par || 0) ? 'bg-red-950/20' : ''">
                                         <td class="p-3 font-medium" x-text="item.name"></td>
-                                        <td class="p-3 text-gray-400 text-xs" x-text="item.category"></td>
+                                        <td class="p-3 text-gray-400 text-xs" x-show="!groupByCategory" x-text="item.category"></td>
                                         <td class="p-3 text-center text-xs text-gray-300" x-text="(item.unit_volume || 0) + ' ' + (item.volume_unit || 'ml')"></td>
                                         <td class="p-3 text-center">
                                             <div class="flex items-center justify-center space-x-1">
@@ -431,6 +448,8 @@
                 editingRecipeId: null,
                 editingOrderId: null,
                 
+                // Sorting and Grouping State
+                groupByCategory: false,
                 sortBy: 'name', // name, stock, price, value
                 sortOrder: 'asc', // asc, desc
 
@@ -439,13 +458,6 @@
                     repo: localStorage.getItem('gh_repo') || 'bar-stock-manager',
                     token: localStorage.getItem('gh_token') || ''
                 },
-
-                categories: [
-                    "Spirit - Gin", "Spirit - Whisky", "Spirit - Vodka", "Spirit - Rum", 
-                    "Spirit - Tequila / Mezcal", "Spirit - Brandy / Cognac", "Spirit - Other",
-                    "Liqueurs & Modifiers", "Vermouth & Aperitifs", "House Syrups & Cordials",
-                    "Bitters & Tinctures", "Fresh Citrus & Produce", "Dairy & Cream", "Mixers & Soda", "Garnishes & Dry Goods"
-                ],
 
                 form: {
                     name: '', category: 'Spirit - Gin', unit_volume: 700, volume_unit: 'ml', stock: 1, par: 1, price: 0, expiry: ''
@@ -484,6 +496,12 @@
                         if (!a) return 1;
                         if (!b) return -1;
                         let valA, valB;
+                        const catA = a.category || 'Uncategorized';
+                        const catB = b.category || 'Uncategorized';
+                        
+                        if (this.groupByCategory && this.sortBy === 'name') {
+                            if (catA !== catB) return catA.localeCompare(catB);
+                        }
                         if (this.sortBy === 'name') {
                             valA = (a.name || '').toLowerCase();
                             valB = (b.name || '').toLowerCase();
@@ -500,7 +518,18 @@
                         }
                         return this.sortOrder === 'asc' ? valA - valB : valB - valA;
                     });
+                    if (this.groupByCategory && this.sortBy !== 'name') {
+                        result.sort((a, b) => (a?.category || 'Uncategorized').localeCompare(b?.category || 'Uncategorized'));
+                    }
                     return result;
+                },
+
+                shouldShowCategoryHeader(item) {
+                    if (!this.groupByCategory || !item) return false;
+                    const items = this.sortedIngredients;
+                    const index = items.indexOf(item);
+                    if (index <= 0) return true;
+                    return (items[index - 1]?.category || 'Uncategorized') !== (item.category || 'Uncategorized');
                 },
 
                 get totalInventoryValue() {
