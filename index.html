@@ -229,7 +229,7 @@
                         <input type="text" x-model="orderForm.supplier" placeholder="e.g., Metro / General Supplier" class="w-full bg-black/40 border border-bordercol rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-blue-500">
                     </div>
 
-                    <!-- ORDER LINE ITEM BUILDER -->
+                   <!-- ORDER LINE ITEM BUILDER -->
                     <div class="space-y-2">
                         <label class="text-xs text-gray-400 block">Add Items to Order</label>
                         <div class="space-y-2">
@@ -239,10 +239,10 @@
                                     <option :value="ing.id" x-text="ing.name"></option>
                                 </template>
                             </select>
-                            <div class="flex gap-2">
-                                <input type="number" step="0.1" x-model.number="tempOrderQty" placeholder="Qty" class="flex-1 bg-black/40 border border-bordercol rounded-lg px-2 py-1.5 text-xs">
+                            <div class="flex items-center gap-2 pr-1">
+                                <input type="number" step="0.1" x-model.number="tempOrderQty" placeholder="Qty" class="w-1/3 bg-black/40 border border-bordercol rounded-lg px-2 py-1.5 text-xs">
                                 <input type="number" x-model.number="tempOrderPrice" placeholder="Unit Price (VND)" class="flex-1 bg-black/40 border border-bordercol rounded-lg px-2 py-1.5 text-xs">
-                                <button @click="addOrderItem()" class="bg-blue-600 hover:bg-blue-500 px-3 py-1.5 rounded-lg text-xs font-bold">+</button>
+                                <button @click="addOrderItem()" class="bg-blue-600 hover:bg-blue-500 w-8 h-8 rounded-lg text-xs font-bold text-white flex items-center justify-center shrink-0">+</button>
                             </div>
                         </div>
 
@@ -338,7 +338,7 @@
                                 </template>
                             </select>
                             <input type="number" x-model.number="tempRecipeAmount" placeholder="ml/g" class="w-20 bg-black/40 border border-bordercol rounded-lg px-2 py-1.5 text-xs text-center">
-                            <button @click="addRecipeItem()" class="bg-blue-600 hover:bg-blue-500 px-3 py-1.5 rounded-lg text-xs font-bold">+</button>
+                            <button @click="addRecipeItem()" class="bg-blue-600 hover:bg-blue-500 px-3 py-1.5 rounded-lg text-xs font-bold text-white shrink-0">+</button>
                         </div>
 
                         <!-- LIST OF ADDED INGREDIENTS -->
