@@ -241,6 +241,17 @@
       "price": 390000,
       "expiry": "",
       "id": "1791975380531"
+    },
+    {
+      "name": "Beefeater 24",
+      "category": "Spirit - Gin",
+      "unit_volume": 700,
+      "volume_unit": "ml",
+      "stock": 0.4,
+      "par": 0.1,
+      "price": 828000,
+      "expiry": "",
+      "id": "1791975398632"
     }
   ],
   "recipes": []
