@@ -219,6 +219,17 @@
       "price": 650000,
       "expiry": "",
       "id": "1791975289483"
+    },
+    {
+      "name": "Bombay Sapphire",
+      "category": "Spirit - Gin",
+      "unit_volume": 750,
+      "volume_unit": "ml",
+      "stock": 1,
+      "par": 0.3,
+      "price": 440000,
+      "expiry": "",
+      "id": "1791975353176"
     }
   ],
   "recipes": []
