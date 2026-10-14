@@ -549,6 +549,17 @@
       "price": 505000,
       "expiry": "",
       "id": "1791975940595"
+    },
+    {
+      "name": "Kraken Black Spiced ",
+      "category": "Spirit - Gin",
+      "unit_volume": 700,
+      "volume_unit": "ml",
+      "stock": 1,
+      "par": 0.1,
+      "price": 743000,
+      "expiry": "",
+      "id": "1791975952856"
     }
   ],
   "recipes": []
