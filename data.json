@@ -1473,6 +1473,17 @@
       "price": 1950000,
       "expiry": "",
       "id": "1792011784013"
+    },
+    {
+      "name": "Ballantines 7",
+      "category": "Spirit - Whisky",
+      "unit_volume": 700,
+      "volume_unit": "ml",
+      "stock": 1,
+      "par": 0,
+      "price": 1300000,
+      "expiry": "",
+      "id": "1792011797570"
     }
   ],
   "recipes": [
