@@ -285,6 +285,17 @@
       "price": 970000,
       "expiry": "",
       "id": "1791975461846"
+    },
+    {
+      "name": "Tanqueray No.10",
+      "category": "Spirit - Gin",
+      "unit_volume": 1000,
+      "volume_unit": "ml",
+      "stock": 1,
+      "par": 0.1,
+      "price": 850000,
+      "expiry": "",
+      "id": "1791975477157"
     }
   ],
   "recipes": []
