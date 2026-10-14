@@ -483,6 +483,17 @@
       "price": 360000,
       "expiry": "",
       "id": "1791975815776"
+    },
+    {
+      "name": "Havana 7",
+      "category": "Spirit - Rum",
+      "unit_volume": 700,
+      "volume_unit": "ml",
+      "stock": 2,
+      "par": 0.1,
+      "price": 450000,
+      "expiry": "",
+      "id": "1791975833731"
     }
   ],
   "recipes": []
