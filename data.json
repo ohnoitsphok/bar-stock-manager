@@ -38,7 +38,7 @@
       "category": "Spirit - Whisky",
       "unit_volume": 750,
       "volume_unit": "ml",
-      "stock": 0.9,
+      "stock": 0,
       "par": 0.1,
       "price": 660000,
       "expiry": "",
@@ -54,6 +54,17 @@
       "price": 1164000,
       "expiry": "",
       "id": "1791973774052"
+    },
+    {
+      "name": "Evan Williams Black Label",
+      "category": "Spirit - Whisky",
+      "unit_volume": 750,
+      "volume_unit": "ml",
+      "stock": 1,
+      "par": 1,
+      "price": 450000,
+      "expiry": "",
+      "id": "1791973822110"
     }
   ],
   "recipes": []
