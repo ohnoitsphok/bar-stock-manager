@@ -428,6 +428,17 @@
       "price": 560000,
       "expiry": "",
       "id": "1791975709637"
+    },
+    {
+      "name": "Jose Cuervo Blanco",
+      "category": "Spirit - Tequila / Mezcal",
+      "unit_volume": 750,
+      "volume_unit": "ml",
+      "stock": 1.1,
+      "par": 0.1,
+      "price": 348000,
+      "expiry": "",
+      "id": "1791975726381"
     }
   ],
   "recipes": []
