@@ -1440,6 +1440,17 @@
       "price": 600000,
       "expiry": "",
       "id": "1792011728197"
+    },
+    {
+      "name": "Grants",
+      "category": "Spirit - Whisky",
+      "unit_volume": 750,
+      "volume_unit": "ml",
+      "stock": 1,
+      "par": 0,
+      "price": 320000,
+      "expiry": "",
+      "id": "1792011741922"
     }
   ],
   "recipes": [
