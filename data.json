@@ -1462,6 +1462,17 @@
       "price": 3500000,
       "expiry": "",
       "id": "1792011760106"
+    },
+    {
+      "name": "Highland Park 12",
+      "category": "Spirit - Whisky",
+      "unit_volume": 700,
+      "volume_unit": "ml",
+      "stock": 1,
+      "par": 0,
+      "price": 1950000,
+      "expiry": "",
+      "id": "1792011784013"
     }
   ],
   "recipes": [
