@@ -41,7 +41,7 @@
       "volume_unit": "ml",
       "stock": 0.7,
       "par": 0.3,
-      "price": 480000,
+      "price": 500000,
       "expiry": ""
     },
     {
@@ -909,7 +909,7 @@
       "volume_unit": "ml",
       "stock": 0.8,
       "par": 0.3,
-      "price": 440000,
+      "price": 480000,
       "expiry": "",
       "id": "1791975353176"
     },
@@ -920,7 +920,7 @@
       "volume_unit": "ml",
       "stock": 0.8,
       "par": 0.1,
-      "price": 390000,
+      "price": 360000,
       "expiry": "",
       "id": "1791975380531"
     },
@@ -1030,7 +1030,7 @@
       "volume_unit": "ml",
       "stock": 1,
       "par": 0.1,
-      "price": 776000,
+      "price": 650000,
       "expiry": "",
       "id": "1791975556173"
     },
@@ -1195,7 +1195,7 @@
       "volume_unit": "ml",
       "stock": 0.8,
       "par": 0.3,
-      "price": 360000,
+      "price": 380000,
       "expiry": "",
       "id": "1791975882035"
     },
