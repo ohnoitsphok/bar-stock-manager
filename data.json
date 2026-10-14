@@ -450,6 +450,17 @@
       "price": 1371000,
       "expiry": "",
       "id": "1791975749475"
+    },
+    {
+      "name": "Olmeca Altos Reposado",
+      "category": "Spirit - Tequila / Mezcal",
+      "unit_volume": 700,
+      "volume_unit": "ml",
+      "stock": 1,
+      "par": 1,
+      "price": 621000,
+      "expiry": "",
+      "id": "1791975776783"
     }
   ],
   "recipes": []
