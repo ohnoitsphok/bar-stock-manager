@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Strelitzia Stock & Recipe Manager</title>
+    <!-- Tailwind CSS for modern styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        darkbg: '#121212',
+                        cardbg: '#1e1e1e',
+                        bordercol: '#2d2d2d'
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Alpine.js for lightweight reactivity -->
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+</head>
+<body class="bg-darkbg text-gray-100 min-h-screen font-sans" x-data="barApp()" x-init="initApp()">
+
+    <!-- TOP NAVIGATION & SYNC BAR -->
+    <header class="bg-cardbg border-b border-bordercol sticky top-0 z-50 px-4 py-3 shadow-md">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
+            <div class="flex items-center space-x-3">
+                <span class="text-2xl">🍸</span>
+                <div>
+                    <h1 class="text-lg font-bold tracking-wide">Strelitzia Stock Manager</h1>
+                    <p class="text-xs text-gray-400" x-text="syncStatus"></p>
+                </div>
+            </div>
+
+            <!-- TAB SWITCHER -->
+            <div class="flex bg-black/40 p-1 rounded-xl border border-bordercol">
+                <button @click="activeTab = 'inventory'" :class="activeTab === 'inventory' ? 'bg-blue-600 text-white' : 'text-gray-400 hover:text-white'" class="px-4 py-1.5 rounded-lg text-sm font-medium transition">📦 Inventory</button>
+                <button @click="activeTab = 'recipes'" :class="activeTab === 'recipes' ? 'bg-blue-600 text-white' : 'text-gray-400 hover:text-white'" class="px-4 py-1.5 rounded-lg text-sm font-medium transition">🍹 Recipes & Costing</button>
+                <button @click="activeTab = 'settings'" :class="activeTab === 'settings' ? 'bg-blue-600 text-white' : 'text-gray-400 hover:text-white'" class="px-4 py-1.5 rounded-lg text-sm font-medium transition">⚙️ GitHub Sync</button>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto p-4 md:p-6">
+
+        <!-- ================= INVENTORY TAB ================= -->
+        <div x-show="activeTab === 'inventory'" class="space-y-6">
+            
+            <!-- KPI SUMMARY CARDS -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div class="bg-cardbg border border-bordercol p-4 rounded-xl shadow">
+                    <p class="text-xs text-gray-400 uppercase tracking-wider font-semibold">Total Items</p>
+                    <p class="text-2xl font-bold mt-1" x-text="ingredients.length">0</p>
+                </div>
+                <div class="bg-cardbg border border-bordercol p-4 rounded-xl shadow">
+                    <p class="text-xs text-gray-400 uppercase tracking-wider font-semibold">Low Stock Alerts</p>
+                    <p class="text-2xl font-bold mt-1 text-red-400" x-text="ingredients.filter(i => i.stock <= i.par).length">0</p>
+                </div>
+                <div class="bg-cardbg border border-bordercol p-4 rounded-xl shadow">
+                    <p class="text-xs text-gray-400 uppercase tracking-wider font-semibold">Total Inventory Value</p>
+                    <p class="text-2xl font-bold mt-1 text-emerald-400" x-text="formatCurrency(totalInventoryValue) + ' ₫'">0 ₫</p>
+                </div>
+            </div>
+
+            <!-- MAIN LAYOUT: FORM & TABLE -->
+            <div class="grid grid-cols-1 lg:grid-cols-4 gap-6">
+                
+                <!-- INPUT FORM -->
+                <div class="bg-cardbg border border-bordercol p-5 rounded-xl shadow lg:col-span-1 space-y-4">
+                    <h2 class="text-base font-bold border-b border-bordercol pb-2" x-text="editingId ? 'Edit Ingredient' : 'Add Ingredient'">Add Ingredient</h2>
+                    
+                    <div>
+                        <label class="text-xs text-gray-400 block mb-1">Item Name</label>
+                        <input type="text" x-input.debounce="name" x-model="form.name" placeholder="e.g., Haku Vodka" class="w-full bg-black/40 border border-bordercol rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-blue-500">
+                    </div>
+
+                    <div>
+                        <label class="text-xs text-gray-400 block mb-1">Category / Base</label>
+                        <select x-model="form.category" class="w-full bg-black/40 border border-bordercol rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-blue-500">
+                            <template x-for="cat in categories">
+                                <option :value="cat" x-text="cat"></option>
+                            </template>
+                        </select>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-2">
+                        <div>
+                            <label class="text-xs text-gray-400 block mb-1">Bottle Size</label>
+                            <input type="number" x-model.number="form.unit_volume" placeholder="700" class="w-full bg-black/40 border border-bordercol rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-blue-500">
+                        </div>
+                        <div>
+                            <label class="text-xs text-gray-400 block mb-1">Unit</label>
+                            <select x-model="form.volume_unit" class="w-full bg-black/40 border border-bordercol rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-blue-500">
+                                <option value="ml">ml</option>
+                                <option value="g">g</option>
+                                <option value="pcs">pcs</option>
+                                <option value="dashes">dashes</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-2">
+                        <div>
+                            <label class="text-xs text-gray-400 block mb-1">Stock (Units)</label>
+                            <input type="number" step="0.1" x-model.number="form.stock" placeholder="1.5" class="w-full bg-black/40 border border-bordercol rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-blue-500">
+                        </div>
+                        <div>
+                            <label class="text-xs text-gray-400 block mb-1">Par Level</label>
+                            <input type="number" step="0.1" x-model.number="form.par" placeholder="1.0" class="w-full bg-black/40 border border-bordercol rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-blue-500">
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="text-xs text-gray-400 block mb-1">Unit Price (VND)</label>
+                        <input type="number" x-model.number="form.price" placeholder="850000" class="w-full bg-black/40 border border-bordercol rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-blue-500">
+                    </div>
+
+                    <div>
+                        <label class="text-xs text-gray-400 block mb-1">Expiry / Batch (Optional)</label>
+                        <input type="date" x-model="form.expiry" class="w-full bg-black/40 border border-bordercol rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-blue-500">
+                    </div>
+
+                    <div class="pt-2 flex gap-2">
+                        <button @click="saveIngredient()" class="flex-1 bg-emerald-600 hover:bg-emerald-500 text-white py-2 rounded-lg text-sm font-semibold transition" x-text="editingId ? 'Save' : 'Add'"></button>
+                        <button @click="resetForm()" class="bg-gray-700 hover:bg-gray-600 px-3 py-2 rounded-lg text-sm transition">Clear</button>
+                    </div>
+                </div>
+
+                <!-- TABLE -->
+                <div class="bg-cardbg border border-bordercol rounded-xl shadow lg:col-span-3 overflow-hidden flex flex-col">
+                    <div class="p-4 border-b border-bordercol flex justify-between items-center gap-4">
+                        <input type="text" x-model="searchQuery" placeholder="Search ingredients..." class="bg-black/40 border border-bordercol rounded-lg px-3 py-1.5 text-sm w-full md:w-72 focus:outline-none focus:border-blue-500">
+                        <span class="text-xs text-gray-400" x-text="filteredIngredients.length + ' items'"></span>
+                    </div>
+
+                    <div class="overflow-x-auto flex-1">
+                        <table class="w-full text-left border-collapse text-sm">
+                            <thead>
+                                <tr class="bg-black/30 text-gray-400 text-xs uppercase border-b border-bordercol">
+                                    <th class="p-3">Name</th>
+                                    <th class="p-3">Category</th>
+                                    <th class="p-3 text-center">Size</th>
+                                    <th class="p-3 text-center">Stock</th>
+                                    <th class="p-3 text-right">Price</th>
+                                    <th class="p-3 text-right">Cost / Unit</th>
+                                    <th class="p-3 text-right">Total Value</th>
+                                    <th class="p-3 text-center">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-bordercol">
+                                <template x-for="item in filteredIngredients" :key="item.id">
+                                    <tr class="hover:bg-white/[0.02] transition" :class="item.stock <= item.par ? 'bg-red-950/20' : ''">
+                                        <td class="p-3 font-medium" x-text="item.name"></td>
+                                        <td class="p-3 text-gray-400 text-xs" x-text="item.category"></td>
+                                        <td class="p-3 text-center text-xs text-gray-300" x-text="item.unit_volume + ' ' + item.volume_unit"></td>
+                                        <td class="p-3 text-center">
+                                            <div class="flex items-center justify-center space-x-1">
+                                                <button @click="adjustStock(item.id, -0.1)" class="w-6 h-6 bg-red-900/40 text-red-300 rounded hover:bg-red-900 text-xs">-</button>
+                                                <span class="px-2 font-bold" x-text="item.stock.toFixed(1)"></span>
+                                                <button @click="adjustStock(item.id, 0.1)" class="w-6 h-6 bg-emerald-900/40 text-emerald-300 rounded hover:bg-emerald-900 text-xs">+</button>
+                                            </div>
+                                        </td>
+                                        <td class="p-3 text-right font-mono text-xs" x-text="formatCurrency(item.price)"></td>
+                                        <td class="p-3 text-right font-mono text-xs text-gray-400" x-text="item.unit_volume > 0 ? formatCurrency(item.price / item.unit_volume, 2) + '/' + item.volume_unit : '0'"></td>
+                                        <td class="p-3 text-right font-mono text-xs text-emerald-400" x-text="formatCurrency(item.stock * item.price)"></td>
+                                        <td class="p-3 text-center space-x-1">
+                                            <button @click="editItem(item)" class="text-blue-400 hover:text-blue-300 text-xs px-1.5 py-1">Edit</button>
+                                            <button @click="deleteItem(item.id)" class="text-red-400 hover:text-red-300 text-xs px-1.5 py-1">Del</button>
+                                        </td>
+                                    </tr>
+                                </template>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- ================= RECIPES TAB ================= -->
+        <div x-show="activeTab === 'recipes'" class="space-y-6">
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <!-- RECIPE CREATOR -->
+                <div class="bg-cardbg border border-bordercol p-5 rounded-xl shadow space-y-4">
+                    <h2 class="text-base font-bold border-b border-bordercol pb-2">New Cocktail Recipe</h2>
+                    
+                    <div>
+                        <label class="text-xs text-gray-400 block mb-1">Cocktail Name</label>
+                        <input type="text" x-model="recipeForm.name" placeholder="e.g., Negroni" class="w-full bg-black/40 border border-bordercol rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-blue-500">
+                    </div>
+
+                    <div>
+                        <label class="text-xs text-gray-400 block mb-1">Menu Selling Price (VND)</label>
+                        <input type="number" x-model.number="recipeForm.selling_price" placeholder="180000" class="w-full bg-black/40 border border-bordercol rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-blue-500">
+                    </div>
+
+                    <!-- INGREDIENT BUILDER -->
+                    <div class="space-y-2">
+                        <label class="text-xs text-gray-400 block">Recipe Ingredients & Pours</label>
+                        <div class="flex gap-2">
+                            <select x-id="recipe-ing" x-model="tempRecipeIngId" class="flex-1 bg-black/40 border border-bordercol rounded-lg px-3 py-1.5 text-xs focus:outline-none">
+                                <option value="">Select ingredient...</option>
+                                <template x-for="ing in ingredients" :key="ing.id">
+                                    <option :value="ing.id" x-text="ing.name + ' (' + ing.volume_unit + ')'"></option>
+                                </template>
+                            </select>
+                            <input type="number" x-model.number="tempRecipeAmount" placeholder="ml/g" class="w-20 bg-black/40 border border-bordercol rounded-lg px-2 py-1.5 text-xs text-center">
+                            <button @click="addRecipeItem()" class="bg-blue-600 hover:bg-blue-500 px-3 py-1.5 rounded-lg text-xs font-bold">+</button>
+                        </div>
+
+                        <!-- LIST OF ADDED INGREDIENTS -->
+                        <div class="bg-black/30 border border-bordercol rounded-lg p-3 space-y-2 mt-2">
+                            <template x-for="(ri, index) in recipeForm.items" :key="index">
+                                <div class="flex justify-between items-center text-xs bg-cardbg p-2 rounded border border-bordercol">
+                                    <div>
+                                        <span class="font-medium" x-text="getIngredientName(ri.ingredient_id)"></span>
+                                        <span class="text-gray-400 ml-2" x-text="ri.amount + ' ' + getIngredientUnit(ri.ingredient_id)"></span>
+                                    </div>
+                                    <div class="flex items-center space-x-2">
+                                        <span class="text-emerald-400 font-mono" x-text="formatCurrency(calcRecipeItemCost(ri)) + ' ₫'"></span>
+                                        <button @click="recipeForm.items.splice(index, 1)" class="text-red-400 hover:text-red-300 font-bold">×</button>
+                                    </div>
+                                </div>
+                            </template>
+                            <p class="text-xs text-gray-500 text-center py-1" x-show="recipeForm.items.length === 0">No ingredients added yet.</p>
+                        </div>
+                    </div>
+
+                    <button @click="saveRecipe()" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white py-2 rounded-lg text-sm font-semibold transition">Save Recipe</button>
+                </div>
+
+                <!-- RECIPES LIST & COSTING -->
+                <div class="bg-cardbg border border-bordercol p-5 rounded-xl shadow lg:col-span-2 space-y-4">
+                    <h2 class="text-base font-bold border-b border-bordercol pb-2">Cocktail Menu Costing</h2>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <template x-for="recipe in recipes" :key="recipe.id">
+                            <div class="bg-black/30 border border-bordercol rounded-xl p-4 space-y-3 relative">
+                                <div class="flex justify-between items-start">
+                                    <h3 class="font-bold text-base" x-text="recipe.name"></h3>
+                                    <button @click="deleteRecipe(recipe.id)" class="text-red-400 hover:text-red-300 text-xs">Delete</button>
+                                </div>
+
+                                <div class="space-y-1 border-t border-bordercol pt-2 text-xs">
+                                    <template x-for="ri in recipe.items">
+                                        <div class="flex justify-between text-gray-300">
+                                            <span x-text="getIngredientName(ri.ingredient_id) + ' (' + ri.amount + ' ' + getIngredientUnit(ri.ingredient_id) + ')'"></span>
+                                            <span class="font-mono text-gray-400" x-text="formatCurrency(calcRecipeItemCost(ri)) + ' ₫'"></span>
+                                        </div>
+                                    </template>
+                                </div>
+
+                                <div class="border-t border-bordercol pt-2 flex justify-between items-center text-xs">
+                                    <div>
+                                        <span class="text-gray-400">Total Cost: </span>
+                                        <span class="text-emerald-400 font-bold font-mono" x-text="formatCurrency(calcRecipeTotalCost(recipe)) + ' ₫'"></span>
+                                    </div>
+                                    <div>
+                                        <span class="text-gray-400">Pour Cost: </span>
+                                        <span class="font-bold font-mono" :class="calcPourCostPct(recipe) > 25 ? 'text-red-400' : 'text-blue-400'" x-text="calcPourCostPct(recipe) + '%'"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </template>
+                    </div>
+                    <p class="text-sm text-gray-500 text-center py-8" x-show="recipes.length === 0">No cocktail recipes saved yet.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- ================= SETTINGS / GITHUB SYNC TAB ================= -->
+        <div x-show="activeTab === 'settings'" class="max-w-xl mx-auto bg-cardbg border border-bordercol p-6 rounded-xl shadow space-y-4">
+            <h2 class="text-lg font-bold border-b border-bordercol pb-2">GitHub Repository Sync</h2>
+            <p class="text-xs text-gray-400">Enter your GitHub details and Personal Access Token so your inventory and recipes sync across your PC and phone.</p>
+            
+            <div>
+                <label class="text-xs text-gray-400 block mb-1">GitHub Username</label>
+                <input type="text" x-model="ghConfig.username" placeholder="e.g., your-username" class="w-full bg-black/40 border border-bordercol rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-blue-500">
+            </div>
+
+            <div>
+                <label class="text-xs text-gray-400 block mb-1">Repository Name</label>
+                <input type="text" x-model="ghConfig.repo" placeholder="bar-stock-manager" class="w-full bg-black/40 border border-bordercol rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-blue-500">
+            </div>
+
+            <div>
+                <label class="text-xs text-gray-400 block mb-1">Personal Access Token (PAT)</label>
+                <input type="password" x-model="ghConfig.token" placeholder="github_pat_..." class="w-full bg-black/40 border border-bordercol rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-blue-500">
+            </div>
+
+            <div class="flex gap-3 pt-2">
+                <button @click="syncFromGitHub()" class="flex-1 bg-blue-600 hover:bg-blue-500 text-white py-2 rounded-lg text-sm font-semibold transition">Pull from GitHub</button>
+                <button @click="syncToGitHub()" class="flex-1 bg-emerald-600 hover:bg-emerald-500 text-white py-2 rounded-lg text-sm font-semibold transition">Push to GitHub</button>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- APP LOGIC -->
+    <script>
+        function barApp() {
+            return {
+                activeTab: 'inventory',
+                syncStatus: 'Running locally (Not synced yet)',
+                searchQuery: '',
+                editingId: null,
+                
+                ghConfig: {
+                    username: localStorage.getItem('gh_user') || '',
+                    repo: localStorage.getItem('gh_repo') || 'bar-stock-manager',
+                    token: localStorage.getItem('gh_token') || ''
+                },
+
+                categories: [
+                    "Spirit - Gin", "Spirit - Whisky", "Spirit - Vodka", "Spirit - Rum", 
+                    "Spirit - Tequila / Mezcal", "Spirit - Brandy / Cognac", "Spirit - Other",
+                    "Liqueurs & Modifiers", "Vermouth & Aperitifs", "House Syrups & Cordials",
+                    "Bitters & Tinctures", "Fresh Citrus & Produce", "Dairy & Cream", "Mixers & Soda", "Garnishes & Dry Goods"
+                ],
+
+                form: {
+                    name: '', category: 'Spirit - Gin', unit_volume: 700, volume_unit: 'ml', stock: 1, par: 1, price: 0, expiry: ''
+                },
+
+                recipeForm: {
+                    name: '', selling_price: 0, items: []
+                },
+                tempRecipeIngId: '',
+                tempRecipeAmount: 50,
+
+                ingredients: JSON.parse(localStorage.getItem('bar_ingredients') || '[]'),
+                recipes: JSON.parse(localStorage.getItem('bar_recipes') || '[]'),
+
+                initApp() {
+                    if (this.ghConfig.token && this.ghConfig.username) {
+                        this.syncFromGitHub();
+                    }
+                },
+
+                get filteredIngredients() {
+                    if (!this.searchQuery) return this.ingredients;
+                    return this.ingredients.filter(i => i.name.toLowerCase().includes(this.searchQuery.toLowerCase()) || i.category.toLowerCase().includes(this.searchQuery.toLowerCase()));
+                },
+
+                get totalInventoryValue() {
+                    return this.ingredients.reduce((acc, i) => acc + (i.stock * i.price), 0);
+                },
+
+                formatCurrency(val, decimals = 0) {
+                    if (isNaN(val)) return '0';
+                    return Number(val).toLocaleString('en-US', { minimumFractionDigits: decimals, maximumFractionDigits: decimals });
+                },
+
+                saveIngredient() {
+                    if (!this.form.name) return alert('Please enter ingredient name');
+                    if (this.editingId) {
+                        const idx = this.ingredients.findIndex(i => i.id === this.editingId);
+                        if (idx !== -1) this.ingredients[idx] = { ...this.form, id: this.editingId };
+                    } else {
+                        const newId = Date.now().toString();
+                        this.ingredients.push({ ...this.form, id: newId });
+                    }
+                    this.resetForm();
+                    this.persist();
+                },
+
+                editItem(item) {
+                    this.editingId = item.id;
+                    this.form = { ...item };
+                },
+
+                deleteItem(id) {
+                    if (confirm('Delete this ingredient?')) {
+                        this.ingredients = this.ingredients.filter(i => i.id !== id);
+                        this.persist();
+                    }
+                },
+
+                adjustStock(id, delta) {
+                    const item = this.ingredients.find(i => i.id === id);
+                    if (item) {
+                        item.stock = Math.max(0, Number((item.stock + delta).toFixed(1)));
+                        this.persist();
+                    }
+                },
+
+                resetForm() {
+                    this.editingId = null;
+                    this.form = { name: '', category: 'Spirit - Gin', unit_volume: 700, volume_unit: 'ml', stock: 1, par: 1, price: 0, expiry: '' };
+                },
+
+                addRecipeItem() {
+                    if (!this.tempRecipeIngId || !this.tempRecipeAmount) return;
+                    this.recipeForm.items.push({ ingredient_id: this.tempRecipeIngId, amount: this.tempRecipeAmount });
+                    this.tempRecipeIngId = '';
+                    this.tempRecipeAmount = 50;
+                },
+
+                getIngredientName(id) {
+                    const ing = this.ingredients.find(i => i.id === id);
+                    return ing ? ing.name : 'Unknown';
+                },
+
+                getIngredientUnit(id) {
+                    const ing = this.ingredients.find(i => i.id === id);
+                    return ing ? ing.volume_unit : 'ml';
+                },
+
+                calcRecipeItemCost(ri) {
+                    const ing = this.ingredients.find(i => i.id === ri.ingredient_id);
+                    if (!ing || !ing.unit_volume || ing.unit_volume <= 0) return 0;
+                    const costPerUnit = ing.price / ing.unit_volume;
+                    return costPerUnit * ri.amount;
+                },
+
+                calcRecipeTotalCost(recipe) {
+                    return recipe.items.reduce((acc, ri) => acc + this.calcRecipeItemCost(ri), 0);
+                },
+
+                calcPourCostPct(recipe) {
+                    if (!recipe.selling_price || recipe.selling_price <= 0) return 0;
+                    const totalCost = this.calcRecipeTotalCost(recipe);
+                    return ((totalCost / recipe.selling_price) * 100).toFixed(1);
+                },
+
+                saveRecipe() {
+                    if (!this.recipeForm.name || this.recipeForm.items.length === 0) return alert('Enter recipe name and ingredients');
+                    this.recipes.push({ ...this.recipeForm, id: Date.now().toString() });
+                    this.recipeForm = { name: '', selling_price: 0, items: [] };
+                    this.persist();
+                },
+
+                deleteRecipe(id) {
+                    if (confirm('Delete this recipe?')) {
+                        this.recipes = this.recipes.filter(r => r.id !== id);
+                        this.persist();
+                    }
+                },
+
+                persist() {
+                    localStorage.setItem('bar_ingredients', JSON.stringify(this.ingredients));
+                    localStorage.setItem('bar_recipes', JSON.stringify(this.recipes));
+                    if (this.ghConfig.token) {
+                        this.syncToGitHub(true);
+                    }
+                },
+
+                async syncToGitHub(silent = false) {
+                    if (!this.ghConfig.token || !this.ghConfig.username || !this.ghConfig.repo) {
+                        if (!silent) alert('Please fill in GitHub username, repo name, and Token in the Settings tab.');
+                        return;
+                    }
+                    localStorage.setItem('gh_user', this.ghConfig.username);
+                    localStorage.setItem('gh_repo', this.ghConfig.repo);
+                    localStorage.setItem('gh_token', this.ghConfig.token);
+
+                    this.syncStatus = 'Syncing to GitHub...';
+                    const payload = {
+                        ingredients: this.ingredients,
+                        recipes: this.recipes
+                    };
+                    const contentEncoded = btoa(unescape(encodeURIComponent(JSON.stringify(payload, null, 2))));
+                    
+                    const url = `https://api.github.com/repos/${this.ghConfig.username}/${this.ghConfig.repo}/contents/data.json`;
+                    
+                    try {
+                        // Check if file already exists to get its sha
+                        let sha = '';
+                        const getRes = await fetch(url, {
+                            headers: { 'Authorization': `token ${this.ghConfig.token}` }
+                        });
+                        if (getRes.ok) {
+                            const fileData = await getRes.json();
+                            sha = fileData.sha;
+                        }
+
+                        const bodyData = {
+                            message: 'Auto-sync inventory and recipes via web app',
+                            content: contentEncoded
+                        };
+                        if (sha) bodyData.sha = sha;
+
+                        const putRes = await fetch(url, {
+                            method: 'PUT',
+                            headers: {
+                                'Authorization': `token ${this.ghConfig.token}`,
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify(bodyData)
+                        });
+
+                        if (putRes.ok) {
+                            this.syncStatus = 'Synced with GitHub ✅';
+                        } else {
+                            const err = await putRes.json();
+                            this.syncStatus = 'Sync failed ❌';
+                            if (!silent) alert('GitHub Error: ' + err.message);
+                        }
+                    } catch (e) {
+                        this.syncStatus = 'Network error during sync ❌';
+                        if (!silent) console.error(e);
+                    }
+                },
+
+                async syncFromGitHub() {
+                    if (!this.ghConfig.token || !this.ghConfig.username || !this.ghConfig.repo) return;
+                    this.syncStatus = 'Pulling from GitHub...';
+                    const url = `https://api.github.com/repos/${this.ghConfig.username}/${this.ghConfig.repo}/contents/data.json`;
+
+                    try {
+                        const res = await fetch(url, {
+                            headers: { 'Authorization': `token ${this.ghConfig.token}` }
+                        });
+                        if (res.ok) {
+                            const data = await res.json();
+                            const decoded = JSON.parse(decodeURIComponent(escape(atob(data.content))));
+                            this.ingredients = decoded.ingredients || [];
+                            this.recipes = decoded.recipes || [];
+                            localStorage.setItem('bar_ingredients', JSON.stringify(this.ingredients));
+                            localStorage.setItem('bar_recipes', JSON.stringify(this.recipes));
+                            this.syncStatus = 'Synced with GitHub ✅';
+                        } else {
+                            this.syncStatus = 'No remote data.json found yet (Will be created on first push).';
+                        }
+                    } catch (e) {
+                        this.syncStatus = 'Pull failed ❌';
+                    }
+                }
+            }
+        }
+    </script>
+</body>
+</html>
