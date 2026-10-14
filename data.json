@@ -1540,6 +1540,29 @@
         }
       ],
       "id": "1791984801449"
+    },
+    {
+      "name": "Kamikaze",
+      "selling_price": 180000,
+      "items": [
+        {
+          "ingredient_id": "1791975851316",
+          "amount": 45
+        },
+        {
+          "ingredient_id": "59",
+          "amount": 25
+        },
+        {
+          "ingredient_id": "2",
+          "amount": 20
+        },
+        {
+          "ingredient_id": "58",
+          "amount": 10
+        }
+      ],
+      "id": "1791984881065"
     }
   ],
   "orders": []
