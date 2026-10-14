@@ -1521,6 +1521,25 @@
         }
       ],
       "id": "1791984774516"
+    },
+    {
+      "name": "Daiquiri",
+      "selling_price": 180000,
+      "items": [
+        {
+          "ingredient_id": "1791975882035",
+          "amount": 45
+        },
+        {
+          "ingredient_id": "59",
+          "amount": 25
+        },
+        {
+          "ingredient_id": "57",
+          "amount": 15
+        }
+      ],
+      "id": "1791984801449"
     }
   ],
   "orders": []
