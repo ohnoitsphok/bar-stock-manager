@@ -296,6 +296,17 @@
       "price": 850000,
       "expiry": "",
       "id": "1791975477157"
+    },
+    {
+      "name": "Tanqueray Malacca",
+      "category": "Spirit - Gin",
+      "unit_volume": 700,
+      "volume_unit": "ml",
+      "stock": 1,
+      "par": 0.1,
+      "price": 754000,
+      "expiry": "",
+      "id": "1791975488726"
     }
   ],
   "recipes": []
