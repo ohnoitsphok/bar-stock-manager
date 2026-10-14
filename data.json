@@ -571,6 +571,17 @@
       "price": 783000,
       "expiry": "",
       "id": "1791975971493"
+    },
+    {
+      "name": "Malibu",
+      "category": "Spirit - Rum",
+      "unit_volume": 750,
+      "volume_unit": "ml",
+      "stock": 2,
+      "par": 0.3,
+      "price": 390000,
+      "expiry": "",
+      "id": "1791975989147"
     }
   ],
   "recipes": []
