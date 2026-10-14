@@ -168,13 +168,13 @@
                         </div>
                     </div>
 
-                    <!-- TABLE CONTENT -->
+                   <!-- TABLE CONTENT -->
                     <div class="overflow-x-auto flex-1">
                         <table class="w-full text-left border-collapse text-sm">
                             <thead>
                                 <tr class="bg-black/30 text-gray-400 text-xs uppercase border-b border-bordercol">
                                     <th class="p-3">Name</th>
-                                    <th class="p-3" x-show="!groupByCategory">Category</th>
+                                    <th class="p-3">Category</th>
                                     <th class="p-3 text-center">Size</th>
                                     <th class="p-3 text-center">Stock</th>
                                     <th class="p-3 text-right">Price</th>
@@ -185,14 +185,9 @@
                             </thead>
                             <tbody class="divide-y divide-bordercol">
                                 <template x-for="item in sortedIngredients" :key="item.id">
-                                    <template x-if="shouldShowCategoryHeader(item)">
-                                        <tr class="bg-blue-950/40 border-t border-b border-bordercol">
-                                            <td colspan="8" class="p-2.5 font-bold text-xs text-blue-300 tracking-wide uppercase" x-text="item.category"></td>
-                                        </tr>
-                                    </template>
                                     <tr class="hover:bg-white/[0.02] transition" :class="Number(item.stock || 0) <= Number(item.par || 0) ? 'bg-red-950/20' : ''">
                                         <td class="p-3 font-medium" x-text="item.name"></td>
-                                        <td class="p-3 text-gray-400 text-xs" x-show="!groupByCategory" x-text="item.category"></td>
+                                        <td class="p-3 text-gray-400 text-xs" x-text="item.category"></td>
                                         <td class="p-3 text-center text-xs text-gray-300" x-text="(item.unit_volume || 0) + ' ' + (item.volume_unit || 'ml')"></td>
                                         <td class="p-3 text-center">
                                             <div class="flex items-center justify-center space-x-1">
