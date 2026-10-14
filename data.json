@@ -560,6 +560,17 @@
       "price": 743000,
       "expiry": "",
       "id": "1791975952856"
+    },
+    {
+      "name": "Zacapa Ambar 12 ",
+      "category": "Spirit - Rum",
+      "unit_volume": 750,
+      "volume_unit": "ml",
+      "stock": 0.9,
+      "par": 0.1,
+      "price": 783000,
+      "expiry": "",
+      "id": "1791975971493"
     }
   ],
   "recipes": []
