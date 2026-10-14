@@ -1677,6 +1677,37 @@
         }
       ],
       "id": "1791985509813"
+    },
+    {
+      "name": "Sazerac",
+      "selling_price": 280000,
+      "items": [
+        {
+          "ingredient_id": "1791973992136",
+          "amount": 40
+        },
+        {
+          "ingredient_id": "1791976024807",
+          "amount": 20
+        },
+        {
+          "ingredient_id": "1791976877655",
+          "amount": 5
+        },
+        {
+          "ingredient_id": "14",
+          "amount": 2
+        },
+        {
+          "ingredient_id": "12",
+          "amount": 2
+        },
+        {
+          "ingredient_id": "57",
+          "amount": 5
+        }
+      ],
+      "id": "1791985576281"
     }
   ],
   "orders": []
