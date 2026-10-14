@@ -1385,6 +1385,17 @@
       "price": 0,
       "expiry": "",
       "id": "1791992407154"
+    },
+    {
+      "name": "Singleton 12 Dufftown",
+      "category": "Spirit - Whisky",
+      "unit_volume": 750,
+      "volume_unit": "ml",
+      "stock": 1,
+      "par": 0,
+      "price": 800000,
+      "expiry": "",
+      "id": "1792011545710"
     }
   ],
   "recipes": [
