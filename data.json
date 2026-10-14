@@ -329,6 +329,17 @@
       "price": 1370000,
       "expiry": "",
       "id": "1791975514676"
+    },
+    {
+      "name": "Roku Gin",
+      "category": "Spirit - Gin",
+      "unit_volume": 700,
+      "volume_unit": "ml",
+      "stock": 1.5,
+      "par": 0.1,
+      "price": 600000,
+      "expiry": "",
+      "id": "1791975533630"
     }
   ],
   "recipes": []
