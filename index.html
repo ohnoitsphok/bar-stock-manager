@@ -380,31 +380,34 @@
                     let result = [...this.ingredients];
                     if (this.searchQuery) {
                         const q = this.searchQuery.toLowerCase();
-                        result = result.filter(i => i.name.toLowerCase().includes(q) || i.category.toLowerCase().includes(q));
+                        result = result.filter(i => (i.name || '').toLowerCase().includes(q) || (i.category || '').toLowerCase().includes(q));
                     }
                     result.sort((a, b) => {
                         let valA, valB;
+                        const catA = a.category || '';
+                        const catB = b.category || '';
+                        
                         if (this.groupByCategory && this.sortBy === 'name') {
-                            if (a.category !== b.category) return a.category.localeCompare(b.category);
+                            if (catA !== catB) return catA.localeCompare(catB);
                         }
                         if (this.sortBy === 'name') {
-                            valA = a.name.toLowerCase();
-                            valB = b.name.toLowerCase();
+                            valA = (a.name || '').toLowerCase();
+                            valB = (b.name || '').toLowerCase();
                             return this.sortOrder === 'asc' ? valA.localeCompare(valB) : valB.localeCompare(valA);
                         } else if (this.sortBy === 'stock') {
-                            valA = a.stock;
-                            valB = b.stock;
+                            valA = Number(a.stock || 0);
+                            valB = Number(b.stock || 0);
                         } else if (this.sortBy === 'price') {
-                            valA = a.price;
-                            valB = b.price;
+                            valA = Number(a.price || 0);
+                            valB = Number(b.price || 0);
                         } else if (this.sortBy === 'value') {
-                            valA = a.stock * a.price;
-                            valB = b.stock * b.price;
+                            valA = Number(a.stock || 0) * Number(a.price || 0);
+                            valB = Number(b.stock || 0) * Number(b.price || 0);
                         }
                         return this.sortOrder === 'asc' ? valA - valB : valB - valA;
                     });
                     if (this.groupByCategory && this.sortBy !== 'name') {
-                        result.sort((a, b) => a.category.localeCompare(b.category));
+                        result.sort((a, b) => (a.category || '').localeCompare(b.category || ''));
                     }
                     return result;
                 },
@@ -414,11 +417,11 @@
                     const items = this.sortedIngredients;
                     const index = items.indexOf(item);
                     if (index === 0) return true;
-                    return items[index - 1].category !== item.category;
+                    return (items[index - 1].category || '') !== (item.category || '');
                 },
 
                 get totalInventoryValue() {
-                    return this.ingredients.reduce((acc, i) => acc + (i.stock * i.price), 0);
+                    return this.ingredients.reduce((acc, i) => acc + (Number(i.stock || 0) * Number(i.price || 0)), 0);
                 },
 
                 formatCurrency(val, decimals = 0) {
@@ -454,7 +457,7 @@
                 adjustStock(id, delta) {
                     const item = this.ingredients.find(i => i.id === id);
                     if (item) {
-                        item.stock = Math.max(0, Number((item.stock + delta).toFixed(1)));
+                        item.stock = Math.max(0, Number(((item.stock || 0) + delta).toFixed(1)));
                         this.persist();
                     }
                 },
@@ -473,7 +476,6 @@
 
                 startEditRecipe(recipe) {
                     this.editingRecipeId = recipe.id;
-                    // Deep copy items so edits don't mutate state instantly before saving
                     this.recipeForm = {
                         name: recipe.name,
                         selling_price: recipe.selling_price,
