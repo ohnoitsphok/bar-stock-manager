@@ -406,6 +406,17 @@
       "price": 420000,
       "expiry": "",
       "id": "1791975671720"
+    },
+    {
+      "name": "Absolut Mango",
+      "category": "Spirit - Gin",
+      "unit_volume": 1000,
+      "volume_unit": "ml",
+      "stock": 0,
+      "par": 0.1,
+      "price": 520000,
+      "expiry": "",
+      "id": "1791975682819"
     }
   ],
   "recipes": []
