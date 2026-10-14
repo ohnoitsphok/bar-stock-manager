@@ -340,6 +340,17 @@
       "price": 600000,
       "expiry": "",
       "id": "1791975533630"
+    },
+    {
+      "name": "Haku Vodka",
+      "category": "Spirit - Vodka",
+      "unit_volume": 700,
+      "volume_unit": "ml",
+      "stock": 1,
+      "par": 0.1,
+      "price": 776000,
+      "expiry": "",
+      "id": "1791975556173"
     }
   ],
   "recipes": []
