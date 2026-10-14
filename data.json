@@ -65,6 +65,17 @@
       "price": 450000,
       "expiry": "",
       "id": "1791973822110"
+    },
+    {
+      "name": "Elijah Craig Small Batch",
+      "category": "Spirit - Whisky",
+      "unit_volume": 750,
+      "volume_unit": "ml",
+      "stock": 1,
+      "par": 1,
+      "price": 882000,
+      "expiry": "",
+      "id": "1791973865576"
     }
   ],
   "recipes": []
