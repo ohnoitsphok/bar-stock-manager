@@ -120,6 +120,17 @@
       "price": 876000,
       "expiry": "",
       "id": "1791973992136"
+    },
+    {
+      "name": "Red Label - Johnnie Walker",
+      "category": "Spirit - Whisky",
+      "unit_volume": 750,
+      "volume_unit": "ml",
+      "stock": 0,
+      "par": 0.1,
+      "price": 282000,
+      "expiry": "",
+      "id": "1791974052624"
     }
   ],
   "recipes": []
