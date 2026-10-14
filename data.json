@@ -472,6 +472,17 @@
       "price": 979000,
       "expiry": "",
       "id": "1791975795316"
+    },
+    {
+      "name": "Havana 3",
+      "category": "Spirit - Rum",
+      "unit_volume": 700,
+      "volume_unit": "ml",
+      "stock": 1,
+      "par": 0.1,
+      "price": 360000,
+      "expiry": "",
+      "id": "1791975815776"
     }
   ],
   "recipes": []
