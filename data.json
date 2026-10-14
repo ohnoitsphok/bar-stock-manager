@@ -1396,6 +1396,17 @@
       "price": 800000,
       "expiry": "",
       "id": "1792011545710"
+    },
+    {
+      "name": "Lagavulin 12 2020 Special Release",
+      "category": "Spirit - Whisky",
+      "unit_volume": 700,
+      "volume_unit": "ml",
+      "stock": 0,
+      "par": 0,
+      "price": 5220000,
+      "expiry": "",
+      "id": "1792011579836"
     }
   ],
   "recipes": [
