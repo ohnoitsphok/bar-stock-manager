@@ -1620,6 +1620,25 @@
         }
       ],
       "id": "1791985389080"
+    },
+    {
+      "name": "Vodka Martini",
+      "selling_price": 240000,
+      "items": [
+        {
+          "ingredient_id": "1791975556173",
+          "amount": 55
+        },
+        {
+          "ingredient_id": "16",
+          "amount": 15
+        },
+        {
+          "ingredient_id": "13",
+          "amount": 2
+        }
+      ],
+      "id": "1791985442380"
     }
   ],
   "orders": []
