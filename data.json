@@ -208,6 +208,17 @@
       "price": 510000,
       "expiry": "",
       "id": "1791975271476"
+    },
+    {
+      "name": "Jack Daniel's Apple",
+      "category": "Spirit - Whisky",
+      "unit_volume": 700,
+      "volume_unit": "ml",
+      "stock": 0.3,
+      "par": 0.1,
+      "price": 650000,
+      "expiry": "",
+      "id": "1791975289483"
     }
   ],
   "recipes": []
