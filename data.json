@@ -1451,6 +1451,17 @@
       "price": 320000,
       "expiry": "",
       "id": "1792011741922"
+    },
+    {
+      "name": "Dalmore Luceo",
+      "category": "Spirit - Whisky",
+      "unit_volume": 700,
+      "volume_unit": "ml",
+      "stock": 1,
+      "par": 0,
+      "price": 3500000,
+      "expiry": "",
+      "id": "1792011760106"
     }
   ],
   "recipes": [
