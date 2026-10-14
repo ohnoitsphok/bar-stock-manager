@@ -482,15 +482,17 @@
                 },
 
                 get sortedIngredients() {
-                    let result = [...this.ingredients];
+                    let result = Array.isArray(this.ingredients) ? [...this.ingredients] : [];
                     if (this.searchQuery) {
                         const q = this.searchQuery.toLowerCase();
-                        result = result.filter(i => (i.name || '').toLowerCase().includes(q) || (i.category || '').toLowerCase().includes(q));
+                        result = result.filter(i => (i && (i.name || '').toLowerCase().includes(q) || (i.category || '').toLowerCase().includes(q)));
                     }
                     result.sort((a, b) => {
+                        if (!a) return 1;
+                        if (!b) return -1;
                         let valA, valB;
-                        const catA = a.category || '';
-                        const catB = b.category || '';
+                        const catA = a.category || 'Uncategorized';
+                        const catB = b.category || 'Uncategorized';
                         
                         if (this.groupByCategory && this.sortBy === 'name') {
                             if (catA !== catB) return catA.localeCompare(catB);
@@ -512,17 +514,17 @@
                         return this.sortOrder === 'asc' ? valA - valB : valB - valA;
                     });
                     if (this.groupByCategory && this.sortBy !== 'name') {
-                        result.sort((a, b) => (a.category || '').localeCompare(b.category || ''));
+                        result.sort((a, b) => (a?.category || '').localeCompare(b?.category || ''));
                     }
                     return result;
                 },
 
                 shouldShowCategoryHeader(item) {
-                    if (!this.groupByCategory) return false;
+                    if (!this.groupByCategory || !item) return false;
                     const items = this.sortedIngredients;
                     const index = items.indexOf(item);
-                    if (index === 0) return true;
-                    return (items[index - 1].category || '') !== (item.category || '');
+                    if (index <= 0) return true;
+                    return (items[index - 1]?.category || 'Uncategorized') !== (item.category || 'Uncategorized');
                 },
 
                 get totalInventoryValue() {
