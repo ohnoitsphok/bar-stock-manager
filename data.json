@@ -71,8 +71,8 @@
       "category": "Spirit - Whisky",
       "unit_volume": 750,
       "volume_unit": "ml",
-      "stock": 1,
-      "par": 1,
+      "stock": 0,
+      "par": 0.1,
       "price": 882000,
       "expiry": "",
       "id": "1791973865576"
