@@ -1310,5 +1310,26 @@
       "id": "1791976975600"
     }
   ],
-  "recipes": []
+  "recipes": [
+    {
+      "name": "Sidecar",
+      "selling_price": 240000,
+      "items": [
+        {
+          "ingredient_id": "1791976024807",
+          "amount": 45
+        },
+        {
+          "ingredient_id": "2",
+          "amount": 20
+        },
+        {
+          "ingredient_id": "59",
+          "amount": 20
+        }
+      ],
+      "id": "1791983856853"
+    }
+  ],
+  "orders": []
 }
