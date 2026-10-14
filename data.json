@@ -175,17 +175,6 @@
       "price": 300000,
       "expiry": "",
       "id": "1791974153811"
-    },
-    {
-      "name": "abctest",
-      "category": "Spirit - Gin",
-      "unit_volume": 700,
-      "volume_unit": "ml",
-      "stock": 1,
-      "par": 1,
-      "price": 0,
-      "expiry": "",
-      "id": "1791974717018"
     }
   ],
   "recipes": []
