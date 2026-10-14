@@ -633,7 +633,7 @@
       "category": "House Syrups & Cordials",
       "unit_volume": 1200,
       "volume_unit": "ml",
-      "stock": 1,
+      "stock": 1.1,
       "par": 0.1,
       "price": 18000,
       "expiry": ""
@@ -655,7 +655,7 @@
       "category": "Garnishes & Dry Goods",
       "unit_volume": 1,
       "volume_unit": "pcs",
-      "stock": 1.3,
+      "stock": 1,
       "par": 0.1,
       "price": 3000,
       "expiry": ""
