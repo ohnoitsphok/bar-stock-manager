@@ -505,6 +505,17 @@
       "price": 370000,
       "expiry": "",
       "id": "1791975851316"
+    },
+    {
+      "name": "Captain Morgan Gold Rum",
+      "category": "Spirit - Rum",
+      "unit_volume": 750,
+      "volume_unit": "ml",
+      "stock": 1,
+      "par": 0.3,
+      "price": 360000,
+      "expiry": "",
+      "id": "1791975882035"
     }
   ],
   "recipes": []
