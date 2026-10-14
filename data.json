@@ -32,6 +32,17 @@
       "price": 320000,
       "expiry": "",
       "id": "1791973662310"
+    },
+    {
+      "name": "Maker's Mark ",
+      "category": "Spirit - Whisky",
+      "unit_volume": 750,
+      "volume_unit": "ml",
+      "stock": 1,
+      "par": 0.1,
+      "price": 660000,
+      "expiry": "",
+      "id": "1791973749972"
     }
   ],
   "recipes": []
