@@ -274,6 +274,17 @@
       "price": 10910000,
       "expiry": "",
       "id": "1791975448388"
+    },
+    {
+      "name": "Hendrick's Original ",
+      "category": "Spirit - Gin",
+      "unit_volume": 700,
+      "volume_unit": "ml",
+      "stock": 0.9,
+      "par": 0.1,
+      "price": 970000,
+      "expiry": "",
+      "id": "1791975461846"
     }
   ],
   "recipes": []
