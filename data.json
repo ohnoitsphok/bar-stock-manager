@@ -318,6 +318,17 @@
       "price": 773000,
       "expiry": "",
       "id": "1791975497317"
+    },
+    {
+      "name": "London Dry No.3",
+      "category": "Spirit - Gin",
+      "unit_volume": 700,
+      "volume_unit": "ml",
+      "stock": 1,
+      "par": 0.1,
+      "price": 1370000,
+      "expiry": "",
+      "id": "1791975514676"
     }
   ],
   "recipes": []
