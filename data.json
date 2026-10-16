@@ -160,9 +160,9 @@
       "category": "Vermouth & Aperitifs",
       "unit_volume": 750,
       "volume_unit": "ml",
-      "stock": 0.2,
+      "stock": 1.2,
       "par": 0.1,
-      "price": 540000,
+      "price": 560000,
       "expiry": ""
     },
     {
@@ -1886,5 +1886,18 @@
       "id": "1791985576281"
     }
   ],
-  "orders": []
+  "orders": [
+    {
+      "supplier": "",
+      "items": [
+        {
+          "ingredient_id": "15",
+          "quantity": 1,
+          "unit_price": 560000
+        }
+      ],
+      "id": "1792164360678",
+      "date": "10/16/2026 10:26 PM"
+    }
+  ]
 }
