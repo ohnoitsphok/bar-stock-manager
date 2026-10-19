@@ -1884,6 +1884,45 @@
         }
       ],
       "id": "1791985576281"
+    },
+    {
+      "name": "Long Island Iced Tea",
+      "selling_price": 250000,
+      "items": [
+        {
+          "ingredient_id": "49",
+          "amount": 320
+        },
+        {
+          "ingredient_id": "1791975726381",
+          "amount": 15
+        },
+        {
+          "ingredient_id": "1791975851316",
+          "amount": 15
+        },
+        {
+          "ingredient_id": "1791974153811",
+          "amount": 15
+        },
+        {
+          "ingredient_id": "59",
+          "amount": 15
+        },
+        {
+          "ingredient_id": "58",
+          "amount": 15
+        },
+        {
+          "ingredient_id": "1791975572867",
+          "amount": 15
+        },
+        {
+          "ingredient_id": "2",
+          "amount": 15
+        }
+      ],
+      "id": "1792418608947"
     }
   ],
   "orders": [
