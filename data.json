@@ -39,9 +39,9 @@
       "category": "Vermouth & Aperitifs",
       "unit_volume": 1000,
       "volume_unit": "ml",
-      "stock": 0.6,
+      "stock": 1,
       "par": 0.3,
-      "price": 500000,
+      "price": 580000,
       "expiry": ""
     },
     {
@@ -182,9 +182,9 @@
       "category": "Vermouth & Aperitifs",
       "unit_volume": 750,
       "volume_unit": "ml",
-      "stock": 0,
+      "stock": 1,
       "par": 0.1,
-      "price": 620000,
+      "price": 600000,
       "expiry": ""
     },
     {
@@ -742,7 +742,7 @@
       "category": "Spirit - Whisky",
       "unit_volume": 750,
       "volume_unit": "ml",
-      "stock": 0.6,
+      "stock": 1.6,
       "par": 0.1,
       "price": 450000,
       "expiry": "",
@@ -852,9 +852,9 @@
       "category": "Spirit - Gin",
       "unit_volume": 750,
       "volume_unit": "ml",
-      "stock": 0.6,
+      "stock": 1.6,
       "par": 0.3,
-      "price": 300000,
+      "price": 280000,
       "expiry": "",
       "id": "1791974153811"
     },
@@ -1325,9 +1325,9 @@
       "category": "Liqueurs & Modifiers",
       "unit_volume": 700,
       "volume_unit": "ml",
-      "stock": 0.3,
+      "stock": 1.3,
       "par": 0.1,
-      "price": 650000,
+      "price": 620000,
       "expiry": "",
       "id": "1791991519194"
     },
@@ -1490,7 +1490,7 @@
       "category": "Liqueurs & Modifiers",
       "unit_volume": 700,
       "volume_unit": "ml",
-      "stock": 0,
+      "stock": 1,
       "par": 0.1,
       "price": 440000,
       "expiry": "",
@@ -1937,6 +1937,43 @@
     }
   ],
   "orders": [
+    {
+      "supplier": "A Tuyến",
+      "items": [
+        {
+          "ingredient_id": "1791991519194",
+          "quantity": 1,
+          "unit_price": 620000
+        },
+        {
+          "ingredient_id": "4",
+          "quantity": 1,
+          "unit_price": 580000
+        },
+        {
+          "ingredient_id": "1791974153811",
+          "quantity": 1,
+          "unit_price": 280000
+        },
+        {
+          "ingredient_id": "1791973822110",
+          "quantity": 1,
+          "unit_price": 450000
+        },
+        {
+          "ingredient_id": "1793596832434",
+          "quantity": 1,
+          "unit_price": 440000
+        },
+        {
+          "ingredient_id": "17",
+          "quantity": 1,
+          "unit_price": 600000
+        }
+      ],
+      "id": "1793603627802",
+      "date": "11/2/2026 02:13 PM"
+    },
     {
       "supplier": "A Tuyến",
       "items": [
