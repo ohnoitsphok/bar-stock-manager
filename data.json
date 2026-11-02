@@ -1484,6 +1484,17 @@
       "price": 1300000,
       "expiry": "",
       "id": "1792011797570"
+    },
+    {
+      "name": "GF Cacao White",
+      "category": "Liqueurs & Modifiers",
+      "unit_volume": 700,
+      "volume_unit": "ml",
+      "stock": 0,
+      "par": 0.1,
+      "price": 440000,
+      "expiry": "",
+      "id": "1793596832434"
     }
   ],
   "recipes": [
