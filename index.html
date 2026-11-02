@@ -233,12 +233,33 @@
                     <div class="space-y-2">
                         <label class="text-xs text-gray-400 block">Add Items to Order</label>
                         <div class="space-y-2">
-                            <select x-model="tempOrderIngId" class="w-full bg-black/40 border border-bordercol rounded-lg px-3 py-1.5 text-xs focus:outline-none">
-                                <option value="">Select ingredient...</option>
-                                <template x-for="ing in ingredients" :key="ing.id">
-                                    <option :value="ing.id" x-text="ing.name"></option>
-                                </template>
-                            </select>
+                            <!-- Searchable Combobox -->
+                            <div class="relative" @click.away="orderDropdownOpen = false">
+                                <input 
+                                    type="text" 
+                                    x-model="orderSearchQuery" 
+                                    @focus="orderDropdownOpen = true" 
+                                    @input="orderDropdownOpen = true; tempOrderIngId = ''" 
+                                    placeholder="Type to search ingredient..." 
+                                    class="w-full bg-black/40 border border-bordercol rounded-lg px-3 py-1.5 text-xs focus:outline-none focus:border-blue-500"
+                                >
+                                <!-- Floating Dropdown List -->
+                                <div 
+                                    x-show="orderDropdownOpen && filteredOrderIngredients.length > 0" 
+                                    class="absolute z-30 w-full mt-1 bg-cardbg border border-bordercol rounded-lg shadow-xl max-h-48 overflow-y-auto divide-y divide-bordercol"
+                                >
+                                    <template x-for="ing in filteredOrderIngredients" :key="ing.id">
+                                        <div 
+                                            @click="selectOrderIngredient(ing)" 
+                                            class="px-3 py-2 text-xs hover:bg-blue-600/30 cursor-pointer flex justify-between items-center transition"
+                                        >
+                                            <span class="font-medium text-gray-100" x-text="ing.name"></span>
+                                            <span class="text-gray-400 text-[10px]" x-text="formatCurrency(ing.price) + ' ₫'"></span>
+                                        </div>
+                                    </template>
+                                </div>
+                            </div>
+
                             <div class="flex items-center gap-2 pr-1">
                                 <input type="number" step="0.1" x-model.number="tempOrderQty" placeholder="Qty" class="w-1/3 bg-black/40 border border-bordercol rounded-lg px-2 py-1.5 text-xs">
                                 <input type="number" x-model.number="tempOrderPrice" placeholder="Unit Price (VND)" class="flex-1 bg-black/40 border border-bordercol rounded-lg px-2 py-1.5 text-xs">
@@ -331,12 +352,33 @@
                     <div class="space-y-2">
                         <label class="text-xs text-gray-400 block">Recipe Ingredients & Pours</label>
                         <div class="space-y-2">
-                            <select x-model="tempRecipeIngId" class="w-full bg-black/40 border border-bordercol rounded-lg px-3 py-1.5 text-xs focus:outline-none">
-                                <option value="">Select ingredient...</option>
-                                <template x-for="ing in ingredients" :key="ing.id">
-                                    <option :value="ing.id" x-text="ing.name + ' (' + ing.volume_unit + ')'"></option>
-                                </template>
-                            </select>
+                            <!-- Searchable Combobox -->
+                            <div class="relative" @click.away="recipeDropdownOpen = false">
+                                <input 
+                                    type="text" 
+                                    x-model="recipeSearchQuery" 
+                                    @focus="recipeDropdownOpen = true" 
+                                    @input="recipeDropdownOpen = true; tempRecipeIngId = ''" 
+                                    placeholder="Type to search ingredient..." 
+                                    class="w-full bg-black/40 border border-bordercol rounded-lg px-3 py-1.5 text-xs focus:outline-none focus:border-blue-500"
+                                >
+                                <!-- Floating Dropdown List -->
+                                <div 
+                                    x-show="recipeDropdownOpen && filteredRecipeIngredients.length > 0" 
+                                    class="absolute z-30 w-full mt-1 bg-cardbg border border-bordercol rounded-lg shadow-xl max-h-48 overflow-y-auto divide-y divide-bordercol"
+                                >
+                                    <template x-for="ing in filteredRecipeIngredients" :key="ing.id">
+                                        <div 
+                                            @click="selectRecipeIngredient(ing)" 
+                                            class="px-3 py-2 text-xs hover:bg-blue-600/30 cursor-pointer flex justify-between items-center transition"
+                                        >
+                                            <span class="font-medium text-gray-100" x-text="ing.name"></span>
+                                            <span class="text-gray-400 text-[10px]" x-text="ing.volume_unit"></span>
+                                        </div>
+                                    </template>
+                                </div>
+                            </div>
+
                             <div class="flex items-center gap-2 pr-1">
                                 <input type="number" x-model.number="tempRecipeAmount" placeholder="ml/g" class="flex-1 bg-black/40 border border-bordercol rounded-lg px-2 py-1.5 text-xs">
                                 <button @click="addRecipeItem()" class="bg-blue-600 hover:bg-blue-500 w-8 h-8 rounded-lg text-xs font-bold text-white flex items-center justify-center shrink-0">+</button>
@@ -447,8 +489,14 @@
                 
                 // Sorting and Grouping State
                 groupByCategory: false,
-                sortBy: 'name', // name, stock, price, value
-                sortOrder: 'asc', // asc, desc
+                sortBy: 'name', 
+                sortOrder: 'asc', 
+
+                // Searchable Combobox States
+                recipeSearchQuery: '',
+                recipeDropdownOpen: false,
+                orderSearchQuery: '',
+                orderDropdownOpen: false,
 
                 ghConfig: {
                     username: localStorage.getItem('gh_user') || 'ohnoitsphok',
@@ -529,6 +577,39 @@
                     return (items[index - 1]?.category || 'Uncategorized') !== (item.category || 'Uncategorized');
                 },
 
+                get filteredRecipeIngredients() {
+                    const q = (this.recipeSearchQuery || '').toLowerCase().trim();
+                    const list = Array.isArray(this.ingredients) ? this.ingredients : [];
+                    if (!q) return list.slice(0, 15);
+                    return list.filter(i => 
+                        (i.name || '').toLowerCase().includes(q) || 
+                        (i.category || '').toLowerCase().includes(q)
+                    );
+                },
+
+                get filteredOrderIngredients() {
+                    const q = (this.orderSearchQuery || '').toLowerCase().trim();
+                    const list = Array.isArray(this.ingredients) ? this.ingredients : [];
+                    if (!q) return list.slice(0, 15);
+                    return list.filter(i => 
+                        (i.name || '').toLowerCase().includes(q) || 
+                        (i.category || '').toLowerCase().includes(q)
+                    );
+                },
+
+                selectRecipeIngredient(ing) {
+                    this.tempRecipeIngId = ing.id;
+                    this.recipeSearchQuery = `${ing.name} (${ing.volume_unit || 'ml'})`;
+                    this.recipeDropdownOpen = false;
+                },
+
+                selectOrderIngredient(ing) {
+                    this.tempOrderIngId = ing.id;
+                    this.orderSearchQuery = ing.name;
+                    this.tempOrderPrice = Number(ing.price || 0);
+                    this.orderDropdownOpen = false;
+                },
+
                 get totalInventoryValue() {
                     return this.ingredients.reduce((acc, i) => acc + (Number(i.stock || 0) * Number(i.price || 0)), 0);
                 },
@@ -577,9 +658,16 @@
                 },
 
                 addRecipeItem() {
+                    if (!this.tempRecipeIngId && this.filteredRecipeIngredients.length > 0) {
+                        this.tempRecipeIngId = this.filteredRecipeIngredients[0].id;
+                    }
                     if (!this.tempRecipeIngId || !this.tempRecipeAmount) return;
-                    this.recipeForm.items.push({ ingredient_id: this.tempRecipeIngId, amount: this.tempRecipeAmount });
+                    this.recipeForm.items.push({ 
+                        ingredient_id: this.tempRecipeIngId, 
+                        amount: Number(this.tempRecipeAmount) 
+                    });
                     this.tempRecipeIngId = '';
+                    this.recipeSearchQuery = '';
                     this.tempRecipeAmount = 50;
                 },
 
@@ -620,6 +708,11 @@
 
                 // ORDER MANAGEMENT METHODS
                 addOrderItem() {
+                    if (!this.tempOrderIngId && this.filteredOrderIngredients.length > 0) {
+                        const topMatch = this.filteredOrderIngredients[0];
+                        this.tempOrderIngId = topMatch.id;
+                        if (!this.tempOrderPrice) this.tempOrderPrice = Number(topMatch.price || 0);
+                    }
                     if (!this.tempOrderIngId || !this.tempOrderQty) return;
                     this.orderForm.items.push({
                         ingredient_id: this.tempOrderIngId,
@@ -627,6 +720,7 @@
                         unit_price: Number(this.tempOrderPrice)
                     });
                     this.tempOrderIngId = '';
+                    this.orderSearchQuery = '';
                     this.tempOrderQty = 1;
                     this.tempOrderPrice = 0;
                 },
