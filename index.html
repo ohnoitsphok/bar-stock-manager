@@ -844,7 +844,10 @@
                             <tr class="hover:bg-white/[0.02] transition-colors">
                                 <td class="p-2.5 font-medium text-gray-100" x-text="ing.name"></td>
                                 <td class="p-2.5 text-gray-400 text-[11px]" x-text="ing.category"></td>
-                                <td class="p-2.5 text-center font-mono text-gray-300" x-text="Number(ing.stock || 0).toFixed(1) + ' ' + (ing.volume_unit || 'ml')"></td>
+                                <td class="p-2.5 text-center font-mono text-gray-300">
+                                    <div class="font-bold text-gray-200" x-text="Number(ing.stock || 0).toFixed(1) + (ing.volume_unit === 'pcs' ? ' pcs' : ' btl')"></div>
+                                    <div class="text-[10px] text-gray-500" x-show="ing.unit_volume && ing.volume_unit !== 'pcs'" x-text="'(' + ing.unit_volume + ' ' + (ing.volume_unit || 'ml') + ')'"></div>
+                                </td>
                                 <td class="p-2.5 text-center">
                                     <div class="flex items-center justify-center space-x-1">
                                         <button 
@@ -866,13 +869,14 @@
                                         >
                                             +
                                         </button>
+                                        <span class="text-[10px] text-gray-500 w-6 text-left" x-text="ing.volume_unit === 'pcs' ? 'pcs' : 'btl'"></span>
                                     </div>
                                 </td>
                                 <td class="p-2.5 text-center font-mono font-bold">
                                     <span 
                                         class="px-2 py-0.5 rounded text-[11px]"
                                         :class="getAuditItemVariance(ing) === 0 ? 'text-gray-400 bg-black/20' : (getAuditItemVariance(ing) > 0 ? 'text-emerald-400 bg-emerald-950/40 border border-emerald-900/50' : 'text-red-400 bg-red-950/40 border border-red-900/50')"
-                                        x-text="(getAuditItemVariance(ing) > 0 ? '+' : '') + getAuditItemVariance(ing)"
+                                        x-text="(getAuditItemVariance(ing) > 0 ? '+' : '') + getAuditItemVariance(ing) + (ing.volume_unit === 'pcs' ? ' pcs' : ' btl')"
                                     ></span>
                                 </td>
                             </tr>
