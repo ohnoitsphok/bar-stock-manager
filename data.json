@@ -17,7 +17,7 @@
       "category": "Liqueurs & Modifiers",
       "unit_volume": 700,
       "volume_unit": "ml",
-      "stock": 0.7,
+      "stock": 0.2,
       "par": 0.1,
       "price": 550000,
       "expiry": ""
@@ -50,7 +50,7 @@
       "category": "Liqueurs & Modifiers",
       "unit_volume": 700,
       "volume_unit": "ml",
-      "stock": 0.3,
+      "stock": 0.2,
       "par": 0.1,
       "price": 735000,
       "expiry": ""
@@ -83,7 +83,7 @@
       "category": "Liqueurs & Modifiers",
       "unit_volume": 1000,
       "volume_unit": "ml",
-      "stock": 0,
+      "stock": 0.7,
       "par": 0.1,
       "price": 360000,
       "expiry": ""
@@ -116,7 +116,7 @@
       "category": "Liqueurs & Modifiers",
       "unit_volume": 1000,
       "volume_unit": "ml",
-      "stock": 0.6,
+      "stock": 0.4,
       "par": 0.1,
       "price": 650000,
       "expiry": ""
@@ -160,7 +160,7 @@
       "category": "Vermouth & Aperitifs",
       "unit_volume": 750,
       "volume_unit": "ml",
-      "stock": 1,
+      "stock": 0.4,
       "par": 0.1,
       "price": 560000,
       "expiry": ""
@@ -171,7 +171,7 @@
       "category": "Vermouth & Aperitifs",
       "unit_volume": 750,
       "volume_unit": "ml",
-      "stock": 0.5,
+      "stock": 0.4,
       "par": 0.1,
       "price": 546000,
       "expiry": ""
@@ -182,7 +182,7 @@
       "category": "Vermouth & Aperitifs",
       "unit_volume": 750,
       "volume_unit": "ml",
-      "stock": 1,
+      "stock": 0,
       "par": 0.1,
       "price": 600000,
       "expiry": ""
@@ -215,7 +215,7 @@
       "category": "Liqueurs & Modifiers",
       "unit_volume": 700,
       "volume_unit": "ml",
-      "stock": 0.6,
+      "stock": 0.2,
       "par": 0.1,
       "price": 441000,
       "expiry": ""
@@ -281,7 +281,7 @@
       "category": "Liqueurs & Modifiers",
       "unit_volume": 700,
       "volume_unit": "ml",
-      "stock": 0.9,
+      "stock": 0.7,
       "par": 0.1,
       "price": 440000,
       "expiry": ""
@@ -336,7 +336,7 @@
       "category": "Liqueurs & Modifiers",
       "unit_volume": 1000,
       "volume_unit": "ml",
-      "stock": 0.6,
+      "stock": 0.5,
       "par": 0.1,
       "price": 640000,
       "expiry": ""
@@ -446,7 +446,7 @@
       "category": "House Syrups & Cordials",
       "unit_volume": 700,
       "volume_unit": "ml",
-      "stock": 1,
+      "stock": 0.4,
       "par": 0.1,
       "price": 230000,
       "expiry": ""
@@ -457,7 +457,7 @@
       "category": "House Syrups & Cordials",
       "unit_volume": 700,
       "volume_unit": "ml",
-      "stock": 1,
+      "stock": 0.8,
       "par": 0.1,
       "price": 230000,
       "expiry": ""
@@ -468,7 +468,7 @@
       "category": "House Syrups & Cordials",
       "unit_volume": 700,
       "volume_unit": "ml",
-      "stock": 1,
+      "stock": 0.9,
       "par": 0.1,
       "price": 230000,
       "expiry": ""
@@ -490,7 +490,7 @@
       "category": "House Syrups & Cordials",
       "unit_volume": 700,
       "volume_unit": "ml",
-      "stock": 1,
+      "stock": 0.6,
       "par": 0.1,
       "price": 230000,
       "expiry": ""
@@ -501,7 +501,7 @@
       "category": "House Syrups & Cordials",
       "unit_volume": 700,
       "volume_unit": "ml",
-      "stock": 1,
+      "stock": 0.5,
       "par": 0.1,
       "price": 230000,
       "expiry": ""
@@ -512,7 +512,7 @@
       "category": "Liqueurs & Modifiers",
       "unit_volume": 700,
       "volume_unit": "ml",
-      "stock": 0.4,
+      "stock": 0,
       "par": 0.1,
       "price": 580000,
       "expiry": ""
@@ -523,7 +523,7 @@
       "category": "Liqueurs & Modifiers",
       "unit_volume": 700,
       "volume_unit": "ml",
-      "stock": 1,
+      "stock": 0.9,
       "par": 0.1,
       "price": 500000,
       "expiry": ""
@@ -534,7 +534,7 @@
       "category": "Mixers & Soda",
       "unit_volume": 320,
       "volume_unit": "ml",
-      "stock": 20,
+      "stock": 0,
       "par": 5,
       "price": 8166,
       "expiry": ""
@@ -545,7 +545,7 @@
       "category": "Mixers & Soda",
       "unit_volume": 320,
       "volume_unit": "ml",
-      "stock": 18,
+      "stock": 0,
       "par": 5,
       "price": 7291,
       "expiry": ""
@@ -556,7 +556,7 @@
       "category": "Mixers & Soda",
       "unit_volume": 320,
       "volume_unit": "ml",
-      "stock": 24,
+      "stock": 11,
       "par": 5,
       "price": 6250,
       "expiry": ""
@@ -567,7 +567,7 @@
       "category": "Mixers & Soda",
       "unit_volume": 320,
       "volume_unit": "ml",
-      "stock": 24,
+      "stock": 10,
       "par": 5,
       "price": 7083,
       "expiry": ""
@@ -578,7 +578,7 @@
       "category": "Mixers & Soda",
       "unit_volume": 320,
       "volume_unit": "ml",
-      "stock": 24,
+      "stock": 23,
       "par": 5,
       "price": 8375,
       "expiry": ""
@@ -600,7 +600,7 @@
       "category": "Fresh Citrus & Produce",
       "unit_volume": 1000,
       "volume_unit": "ml",
-      "stock": 0.4,
+      "stock": 0,
       "par": 0.1,
       "price": 122000,
       "expiry": ""
@@ -611,7 +611,7 @@
       "category": "Fresh Citrus & Produce",
       "unit_volume": 1000,
       "volume_unit": "ml",
-      "stock": 1,
+      "stock": 0,
       "par": 0.1,
       "price": 115000,
       "expiry": ""
@@ -622,7 +622,7 @@
       "category": "House Syrups & Cordials",
       "unit_volume": 1200,
       "volume_unit": "ml",
-      "stock": 0.1,
+      "stock": 1,
       "par": 0.1,
       "price": 18000,
       "expiry": ""
@@ -644,7 +644,7 @@
       "category": "Fresh Citrus & Produce",
       "unit_volume": 400,
       "volume_unit": "ml",
-      "stock": 0.5,
+      "stock": 1,
       "par": 0.1,
       "price": 40000,
       "expiry": ""
@@ -666,7 +666,7 @@
       "category": "Dairy & Cream",
       "unit_volume": 1000,
       "volume_unit": "ml",
-      "stock": 0.5,
+      "stock": 0,
       "par": 0.1,
       "price": 31500,
       "expiry": ""
@@ -677,7 +677,7 @@
       "category": "Dairy & Cream",
       "unit_volume": 450,
       "volume_unit": "ml",
-      "stock": 1.6,
+      "stock": 0.5,
       "par": 0.1,
       "price": 32000,
       "expiry": ""
@@ -698,7 +698,7 @@
       "category": "Spirit - Whisky",
       "unit_volume": 700,
       "volume_unit": "ml",
-      "stock": 0.3,
+      "stock": 0.2,
       "par": 0.1,
       "price": 550000,
       "expiry": "",
@@ -742,7 +742,7 @@
       "category": "Spirit - Whisky",
       "unit_volume": 750,
       "volume_unit": "ml",
-      "stock": 1.6,
+      "stock": 1.3,
       "par": 0.1,
       "price": 450000,
       "expiry": "",
@@ -797,7 +797,7 @@
       "category": "Spirit - Whisky",
       "unit_volume": 750,
       "volume_unit": "ml",
-      "stock": 0.9,
+      "stock": 0.8,
       "par": 0.1,
       "price": 876000,
       "expiry": "",
@@ -830,7 +830,7 @@
       "category": "Spirit - Whisky",
       "unit_volume": 700,
       "volume_unit": "ml",
-      "stock": 1,
+      "stock": 0.9,
       "par": 0.1,
       "price": 960000,
       "expiry": "",
@@ -841,7 +841,7 @@
       "category": "Spirit - Whisky",
       "unit_volume": 700,
       "volume_unit": "ml",
-      "stock": 0.6,
+      "stock": 0.4,
       "par": 0.1,
       "price": 900000,
       "expiry": "",
@@ -852,7 +852,7 @@
       "category": "Spirit - Gin",
       "unit_volume": 750,
       "volume_unit": "ml",
-      "stock": 1.6,
+      "stock": 1,
       "par": 0.3,
       "price": 280000,
       "expiry": "",
@@ -863,7 +863,7 @@
       "category": "Spirit - Whisky",
       "unit_volume": 700,
       "volume_unit": "ml",
-      "stock": 0.3,
+      "stock": 0.4,
       "par": 0.1,
       "price": 1408000,
       "expiry": "",
@@ -896,7 +896,7 @@
       "category": "Spirit - Whisky",
       "unit_volume": 700,
       "volume_unit": "ml",
-      "stock": 0.3,
+      "stock": 0.4,
       "par": 0.1,
       "price": 650000,
       "expiry": "",
@@ -907,7 +907,7 @@
       "category": "Spirit - Gin",
       "unit_volume": 750,
       "volume_unit": "ml",
-      "stock": 0.8,
+      "stock": 0.2,
       "par": 0.3,
       "price": 480000,
       "expiry": "",
@@ -918,7 +918,7 @@
       "category": "Spirit - Gin",
       "unit_volume": 700,
       "volume_unit": "ml",
-      "stock": 0.8,
+      "stock": 0.7,
       "par": 0.1,
       "price": 360000,
       "expiry": "",
@@ -973,7 +973,7 @@
       "category": "Spirit - Gin",
       "unit_volume": 1000,
       "volume_unit": "ml",
-      "stock": 0.9,
+      "stock": 0.8,
       "par": 0.1,
       "price": 850000,
       "expiry": "",
@@ -1017,7 +1017,7 @@
       "category": "Spirit - Gin",
       "unit_volume": 700,
       "volume_unit": "ml",
-      "stock": 1.1,
+      "stock": 0.9,
       "par": 0.1,
       "price": 600000,
       "expiry": "",
@@ -1028,7 +1028,7 @@
       "category": "Spirit - Vodka",
       "unit_volume": 700,
       "volume_unit": "ml",
-      "stock": 1,
+      "stock": 0.9,
       "par": 0.1,
       "price": 650000,
       "expiry": "",
@@ -1039,7 +1039,7 @@
       "category": "Spirit - Vodka",
       "unit_volume": 700,
       "volume_unit": "ml",
-      "stock": 0.8,
+      "stock": 0.4,
       "par": 0.1,
       "price": 280000,
       "expiry": "",
@@ -1083,7 +1083,7 @@
       "category": "Spirit - Vodka",
       "unit_volume": 1000,
       "volume_unit": "ml",
-      "stock": 0.6,
+      "stock": 0.5,
       "par": 0.1,
       "price": 420000,
       "expiry": "",
@@ -1116,7 +1116,7 @@
       "category": "Spirit - Tequila / Mezcal",
       "unit_volume": 750,
       "volume_unit": "ml",
-      "stock": 0.9,
+      "stock": 0.7,
       "par": 0.1,
       "price": 348000,
       "expiry": "",
@@ -1160,7 +1160,7 @@
       "category": "Spirit - Rum",
       "unit_volume": 700,
       "volume_unit": "ml",
-      "stock": 1,
+      "stock": 1.4,
       "par": 0.1,
       "price": 360000,
       "expiry": "",
@@ -1171,7 +1171,7 @@
       "category": "Spirit - Rum",
       "unit_volume": 700,
       "volume_unit": "ml",
-      "stock": 2,
+      "stock": 1.8,
       "par": 0.1,
       "price": 450000,
       "expiry": "",
@@ -1182,7 +1182,7 @@
       "category": "Spirit - Rum",
       "unit_volume": 750,
       "volume_unit": "ml",
-      "stock": 0.7,
+      "stock": 0.5,
       "par": 0.3,
       "price": 370000,
       "expiry": "",
@@ -1193,7 +1193,7 @@
       "category": "Spirit - Rum",
       "unit_volume": 750,
       "volume_unit": "ml",
-      "stock": 0.5,
+      "stock": 0.1,
       "par": 0.3,
       "price": 380000,
       "expiry": "",
@@ -1204,7 +1204,7 @@
       "category": "Spirit - Rum",
       "unit_volume": 750,
       "volume_unit": "ml",
-      "stock": 0.8,
+      "stock": 0.7,
       "par": 0.1,
       "price": 360000,
       "expiry": "",
@@ -1237,7 +1237,7 @@
       "category": "Spirit - Rum",
       "unit_volume": 700,
       "volume_unit": "ml",
-      "stock": 0.9,
+      "stock": 0.8,
       "par": 0.1,
       "price": 743000,
       "expiry": "",
@@ -1248,7 +1248,7 @@
       "category": "Spirit - Rum",
       "unit_volume": 750,
       "volume_unit": "ml",
-      "stock": 0.9,
+      "stock": 0.8,
       "par": 0.1,
       "price": 783000,
       "expiry": "",
@@ -1347,7 +1347,7 @@
       "category": "Spirit - Gin",
       "unit_volume": 1000,
       "volume_unit": "g",
-      "stock": 0.9,
+      "stock": 0,
       "par": 0,
       "price": 140000,
       "expiry": "",
@@ -1490,7 +1490,7 @@
       "category": "Liqueurs & Modifiers",
       "unit_volume": 700,
       "volume_unit": "ml",
-      "stock": 1,
+      "stock": 0.9,
       "par": 0.1,
       "price": 440000,
       "expiry": "",
@@ -1987,5 +1987,966 @@
       "date": "10/16/2026 10:26 PM"
     }
   ],
-  "audits": []
+  "audits": [
+    {
+      "id": "1793776474301",
+      "date": "11/4/2026 02:14 PM",
+      "month": "2026-11",
+      "notes": "Nov Stock",
+      "items": [
+        {
+          "ingredient_id": "1",
+          "system_stock": 1,
+          "physical_stock": 1,
+          "variance": 0,
+          "unit_price": 694000
+        },
+        {
+          "ingredient_id": "2",
+          "system_stock": 0.7,
+          "physical_stock": 0.2,
+          "variance": -0.5,
+          "unit_price": 550000
+        },
+        {
+          "ingredient_id": "3",
+          "system_stock": 0.7,
+          "physical_stock": 0.7,
+          "variance": 0,
+          "unit_price": 336000
+        },
+        {
+          "ingredient_id": "4",
+          "system_stock": 1,
+          "physical_stock": 1,
+          "variance": 0,
+          "unit_price": 580000
+        },
+        {
+          "ingredient_id": "5",
+          "system_stock": 0.3,
+          "physical_stock": 0.2,
+          "variance": -0.1,
+          "unit_price": 735000
+        },
+        {
+          "ingredient_id": "6",
+          "system_stock": 1,
+          "physical_stock": 1,
+          "variance": 0,
+          "unit_price": 660000
+        },
+        {
+          "ingredient_id": "7",
+          "system_stock": 0.3,
+          "physical_stock": 0.3,
+          "variance": 0,
+          "unit_price": 807000
+        },
+        {
+          "ingredient_id": "8",
+          "system_stock": 0,
+          "physical_stock": 0.7,
+          "variance": 0.7,
+          "unit_price": 360000
+        },
+        {
+          "ingredient_id": "9",
+          "system_stock": 0.9,
+          "physical_stock": 0.9,
+          "variance": 0,
+          "unit_price": 342000
+        },
+        {
+          "ingredient_id": "10",
+          "system_stock": 0.8,
+          "physical_stock": 0.8,
+          "variance": 0,
+          "unit_price": 660000
+        },
+        {
+          "ingredient_id": "11",
+          "system_stock": 0.6,
+          "physical_stock": 0.4,
+          "variance": -0.2,
+          "unit_price": 650000
+        },
+        {
+          "ingredient_id": "12",
+          "system_stock": 1,
+          "physical_stock": 1,
+          "variance": 0,
+          "unit_price": 420000
+        },
+        {
+          "ingredient_id": "13",
+          "system_stock": 1,
+          "physical_stock": 1,
+          "variance": 0,
+          "unit_price": 359040
+        },
+        {
+          "ingredient_id": "14",
+          "system_stock": 1,
+          "physical_stock": 1,
+          "variance": 0,
+          "unit_price": 690000
+        },
+        {
+          "ingredient_id": "15",
+          "system_stock": 1,
+          "physical_stock": 0.4,
+          "variance": -0.6,
+          "unit_price": 560000
+        },
+        {
+          "ingredient_id": "16",
+          "system_stock": 0.5,
+          "physical_stock": 0.4,
+          "variance": -0.1,
+          "unit_price": 546000
+        },
+        {
+          "ingredient_id": "17",
+          "system_stock": 1,
+          "physical_stock": 0,
+          "variance": -1,
+          "unit_price": 600000
+        },
+        {
+          "ingredient_id": "18",
+          "system_stock": 0.8,
+          "physical_stock": 0.8,
+          "variance": 0,
+          "unit_price": 384000
+        },
+        {
+          "ingredient_id": "19",
+          "system_stock": 0,
+          "physical_stock": 0,
+          "variance": 0,
+          "unit_price": 384000
+        },
+        {
+          "ingredient_id": "20",
+          "system_stock": 0.6,
+          "physical_stock": 0.2,
+          "variance": -0.4,
+          "unit_price": 441000
+        },
+        {
+          "ingredient_id": "21",
+          "system_stock": 0.8,
+          "physical_stock": 0.8,
+          "variance": 0,
+          "unit_price": 441000
+        },
+        {
+          "ingredient_id": "22",
+          "system_stock": 0,
+          "physical_stock": 0,
+          "variance": 0,
+          "unit_price": 356000
+        },
+        {
+          "ingredient_id": "23",
+          "system_stock": 0.7,
+          "physical_stock": 0.7,
+          "variance": 0,
+          "unit_price": 441000
+        },
+        {
+          "ingredient_id": "24",
+          "system_stock": 0.5,
+          "physical_stock": 0.5,
+          "variance": 0,
+          "unit_price": 441000
+        },
+        {
+          "ingredient_id": "25",
+          "system_stock": 1.8,
+          "physical_stock": 1.8,
+          "variance": 0,
+          "unit_price": 440000
+        },
+        {
+          "ingredient_id": "26",
+          "system_stock": 0.9,
+          "physical_stock": 0.7,
+          "variance": -0.2,
+          "unit_price": 440000
+        },
+        {
+          "ingredient_id": "27",
+          "system_stock": 1,
+          "physical_stock": 1,
+          "variance": 0,
+          "unit_price": 440000
+        },
+        {
+          "ingredient_id": "28",
+          "system_stock": 1,
+          "physical_stock": 1,
+          "variance": 0,
+          "unit_price": 440000
+        },
+        {
+          "ingredient_id": "29",
+          "system_stock": 0.7,
+          "physical_stock": 0.7,
+          "variance": 0,
+          "unit_price": 440000
+        },
+        {
+          "ingredient_id": "30",
+          "system_stock": 0.9,
+          "physical_stock": 0.9,
+          "variance": 0,
+          "unit_price": 640000
+        },
+        {
+          "ingredient_id": "31",
+          "system_stock": 0.6,
+          "physical_stock": 0.5,
+          "variance": -0.1,
+          "unit_price": 640000
+        },
+        {
+          "ingredient_id": "32",
+          "system_stock": 0.6,
+          "physical_stock": 0.6,
+          "variance": 0,
+          "unit_price": 250000
+        },
+        {
+          "ingredient_id": "33",
+          "system_stock": 0.9,
+          "physical_stock": 0.9,
+          "variance": 0,
+          "unit_price": 250000
+        },
+        {
+          "ingredient_id": "34",
+          "system_stock": 0.7,
+          "physical_stock": 0.7,
+          "variance": 0,
+          "unit_price": 250000
+        },
+        {
+          "ingredient_id": "35",
+          "system_stock": 1,
+          "physical_stock": 1,
+          "variance": 0,
+          "unit_price": 250000
+        },
+        {
+          "ingredient_id": "36",
+          "system_stock": 0.7,
+          "physical_stock": 0.7,
+          "variance": 0,
+          "unit_price": 250000
+        },
+        {
+          "ingredient_id": "37",
+          "system_stock": 0.8,
+          "physical_stock": 0.8,
+          "variance": 0,
+          "unit_price": 250000
+        },
+        {
+          "ingredient_id": "38",
+          "system_stock": 0.4,
+          "physical_stock": 0.4,
+          "variance": 0,
+          "unit_price": 375000
+        },
+        {
+          "ingredient_id": "39",
+          "system_stock": 1,
+          "physical_stock": 1,
+          "variance": 0,
+          "unit_price": 198000
+        },
+        {
+          "ingredient_id": "40",
+          "system_stock": 0.6,
+          "physical_stock": 0.6,
+          "variance": 0,
+          "unit_price": 198000
+        },
+        {
+          "ingredient_id": "41",
+          "system_stock": 1,
+          "physical_stock": 0.4,
+          "variance": -0.6,
+          "unit_price": 230000
+        },
+        {
+          "ingredient_id": "42",
+          "system_stock": 1,
+          "physical_stock": 0.8,
+          "variance": -0.2,
+          "unit_price": 230000
+        },
+        {
+          "ingredient_id": "43",
+          "system_stock": 1,
+          "physical_stock": 0.9,
+          "variance": -0.1,
+          "unit_price": 230000
+        },
+        {
+          "ingredient_id": "44",
+          "system_stock": 0.2,
+          "physical_stock": 0.2,
+          "variance": 0,
+          "unit_price": 230000
+        },
+        {
+          "ingredient_id": "45",
+          "system_stock": 1,
+          "physical_stock": 0.6,
+          "variance": -0.4,
+          "unit_price": 230000
+        },
+        {
+          "ingredient_id": "46",
+          "system_stock": 1,
+          "physical_stock": 0.5,
+          "variance": -0.5,
+          "unit_price": 230000
+        },
+        {
+          "ingredient_id": "47",
+          "system_stock": 0.4,
+          "physical_stock": 0,
+          "variance": -0.4,
+          "unit_price": 580000
+        },
+        {
+          "ingredient_id": "48",
+          "system_stock": 1,
+          "physical_stock": 0.9,
+          "variance": -0.1,
+          "unit_price": 500000
+        },
+        {
+          "ingredient_id": "49",
+          "system_stock": 20,
+          "physical_stock": 0,
+          "variance": -20,
+          "unit_price": 8166
+        },
+        {
+          "ingredient_id": "50",
+          "system_stock": 18,
+          "physical_stock": 0,
+          "variance": -18,
+          "unit_price": 7291
+        },
+        {
+          "ingredient_id": "51",
+          "system_stock": 24,
+          "physical_stock": 11,
+          "variance": -13,
+          "unit_price": 6250
+        },
+        {
+          "ingredient_id": "52",
+          "system_stock": 24,
+          "physical_stock": 10,
+          "variance": -14,
+          "unit_price": 7083
+        },
+        {
+          "ingredient_id": "53",
+          "system_stock": 24,
+          "physical_stock": 23,
+          "variance": -1,
+          "unit_price": 8375
+        },
+        {
+          "ingredient_id": "54",
+          "system_stock": 0.3,
+          "physical_stock": 0.3,
+          "variance": 0,
+          "unit_price": 142000
+        },
+        {
+          "ingredient_id": "55",
+          "system_stock": 0.4,
+          "physical_stock": 0,
+          "variance": -0.4,
+          "unit_price": 122000
+        },
+        {
+          "ingredient_id": "56",
+          "system_stock": 1,
+          "physical_stock": 0,
+          "variance": -1,
+          "unit_price": 115000
+        },
+        {
+          "ingredient_id": "57",
+          "system_stock": 0.1,
+          "physical_stock": 1,
+          "variance": 0.9,
+          "unit_price": 18000
+        },
+        {
+          "ingredient_id": "58",
+          "system_stock": 1.5,
+          "physical_stock": 1.5,
+          "variance": 0,
+          "unit_price": 18000
+        },
+        {
+          "ingredient_id": "59",
+          "system_stock": 0.5,
+          "physical_stock": 1,
+          "variance": 0.5,
+          "unit_price": 40000
+        },
+        {
+          "ingredient_id": "60",
+          "system_stock": 1,
+          "physical_stock": 1,
+          "variance": 0,
+          "unit_price": 3000
+        },
+        {
+          "ingredient_id": "61",
+          "system_stock": 0.5,
+          "physical_stock": 0,
+          "variance": -0.5,
+          "unit_price": 31500
+        },
+        {
+          "ingredient_id": "62",
+          "system_stock": 1.6,
+          "physical_stock": 0.5,
+          "variance": -1.1,
+          "unit_price": 32000
+        },
+        {
+          "ingredient_id": "1791970435328",
+          "system_stock": 1,
+          "physical_stock": 1,
+          "variance": 0,
+          "unit_price": 720000
+        },
+        {
+          "ingredient_id": "1791973593005",
+          "system_stock": 0.3,
+          "physical_stock": 0.2,
+          "variance": -0.1,
+          "unit_price": 550000
+        },
+        {
+          "ingredient_id": "1791973662310",
+          "system_stock": 1,
+          "physical_stock": 1,
+          "variance": 0,
+          "unit_price": 320000
+        },
+        {
+          "ingredient_id": "1791973749972",
+          "system_stock": 0,
+          "physical_stock": 0,
+          "variance": 0,
+          "unit_price": 660000
+        },
+        {
+          "ingredient_id": "1791973774052",
+          "system_stock": 0,
+          "physical_stock": 0,
+          "variance": 0,
+          "unit_price": 1164000
+        },
+        {
+          "ingredient_id": "1791973822110",
+          "system_stock": 1.6,
+          "physical_stock": 1.3,
+          "variance": -0.3,
+          "unit_price": 450000
+        },
+        {
+          "ingredient_id": "1791973865576",
+          "system_stock": 0,
+          "physical_stock": 0,
+          "variance": 0,
+          "unit_price": 882000
+        },
+        {
+          "ingredient_id": "1791973898797",
+          "system_stock": 0.7,
+          "physical_stock": 0.7,
+          "variance": 0,
+          "unit_price": 694000
+        },
+        {
+          "ingredient_id": "1791973945273",
+          "system_stock": 0,
+          "physical_stock": 0,
+          "variance": 0,
+          "unit_price": 970000
+        },
+        {
+          "ingredient_id": "1791973962467",
+          "system_stock": 0.6,
+          "physical_stock": 0.6,
+          "variance": 0,
+          "unit_price": 1150000
+        },
+        {
+          "ingredient_id": "1791973992136",
+          "system_stock": 0.9,
+          "physical_stock": 0.8,
+          "variance": -0.1,
+          "unit_price": 876000
+        },
+        {
+          "ingredient_id": "1791974052624",
+          "system_stock": 0,
+          "physical_stock": 0,
+          "variance": 0,
+          "unit_price": 282000
+        },
+        {
+          "ingredient_id": "1791974075843",
+          "system_stock": 0,
+          "physical_stock": 0,
+          "variance": 0,
+          "unit_price": 528000
+        },
+        {
+          "ingredient_id": "1791974094250",
+          "system_stock": 1,
+          "physical_stock": 0.9,
+          "variance": -0.1,
+          "unit_price": 960000
+        },
+        {
+          "ingredient_id": "1791974105438",
+          "system_stock": 0.6,
+          "physical_stock": 0.4,
+          "variance": -0.2,
+          "unit_price": 900000
+        },
+        {
+          "ingredient_id": "1791974153811",
+          "system_stock": 1.6,
+          "physical_stock": 1,
+          "variance": -0.6,
+          "unit_price": 280000
+        },
+        {
+          "ingredient_id": "1791975224724",
+          "system_stock": 0.3,
+          "physical_stock": 0.4,
+          "variance": 0.1,
+          "unit_price": 1408000
+        },
+        {
+          "ingredient_id": "1791975253180",
+          "system_stock": 1,
+          "physical_stock": 1,
+          "variance": 0,
+          "unit_price": 518000
+        },
+        {
+          "ingredient_id": "1791975271476",
+          "system_stock": 0,
+          "physical_stock": 0,
+          "variance": 0,
+          "unit_price": 510000
+        },
+        {
+          "ingredient_id": "1791975289483",
+          "system_stock": 0.3,
+          "physical_stock": 0.4,
+          "variance": 0.1,
+          "unit_price": 650000
+        },
+        {
+          "ingredient_id": "1791975353176",
+          "system_stock": 0.8,
+          "physical_stock": 0.2,
+          "variance": -0.6,
+          "unit_price": 480000
+        },
+        {
+          "ingredient_id": "1791975380531",
+          "system_stock": 0.8,
+          "physical_stock": 0.7,
+          "variance": -0.1,
+          "unit_price": 360000
+        },
+        {
+          "ingredient_id": "1791975398632",
+          "system_stock": 0.4,
+          "physical_stock": 0.4,
+          "variance": 0,
+          "unit_price": 828000
+        },
+        {
+          "ingredient_id": "1791975415595",
+          "system_stock": 0.5,
+          "physical_stock": 0.5,
+          "variance": 0,
+          "unit_price": 862000
+        },
+        {
+          "ingredient_id": "1791975448388",
+          "system_stock": 0.4,
+          "physical_stock": 0.4,
+          "variance": 0,
+          "unit_price": 1091000
+        },
+        {
+          "ingredient_id": "1791975461846",
+          "system_stock": 0.9,
+          "physical_stock": 0.9,
+          "variance": 0,
+          "unit_price": 970000
+        },
+        {
+          "ingredient_id": "1791975477157",
+          "system_stock": 0.9,
+          "physical_stock": 0.8,
+          "variance": -0.1,
+          "unit_price": 850000
+        },
+        {
+          "ingredient_id": "1791975488726",
+          "system_stock": 1,
+          "physical_stock": 1,
+          "variance": 0,
+          "unit_price": 754000
+        },
+        {
+          "ingredient_id": "1791975497317",
+          "system_stock": 0,
+          "physical_stock": 0,
+          "variance": 0,
+          "unit_price": 773000
+        },
+        {
+          "ingredient_id": "1791975514676",
+          "system_stock": 1,
+          "physical_stock": 1,
+          "variance": 0,
+          "unit_price": 1370000
+        },
+        {
+          "ingredient_id": "1791975533630",
+          "system_stock": 1.1,
+          "physical_stock": 0.9,
+          "variance": -0.2,
+          "unit_price": 600000
+        },
+        {
+          "ingredient_id": "1791975556173",
+          "system_stock": 1,
+          "physical_stock": 0.9,
+          "variance": -0.1,
+          "unit_price": 650000
+        },
+        {
+          "ingredient_id": "1791975572867",
+          "system_stock": 0.8,
+          "physical_stock": 0.4,
+          "variance": -0.4,
+          "unit_price": 280000
+        },
+        {
+          "ingredient_id": "1791975589593",
+          "system_stock": 0.8,
+          "physical_stock": 0.8,
+          "variance": 0,
+          "unit_price": 959000
+        },
+        {
+          "ingredient_id": "1791975609375",
+          "system_stock": 1,
+          "physical_stock": 1,
+          "variance": 0,
+          "unit_price": 644000
+        },
+        {
+          "ingredient_id": "1791975658656",
+          "system_stock": 0,
+          "physical_stock": 0,
+          "variance": 0,
+          "unit_price": 499000
+        },
+        {
+          "ingredient_id": "1791975671720",
+          "system_stock": 0.6,
+          "physical_stock": 0.5,
+          "variance": -0.1,
+          "unit_price": 420000
+        },
+        {
+          "ingredient_id": "1791975682819",
+          "system_stock": 0,
+          "physical_stock": 0,
+          "variance": 0,
+          "unit_price": 520000
+        },
+        {
+          "ingredient_id": "1791975709637",
+          "system_stock": 1,
+          "physical_stock": 1,
+          "variance": 0,
+          "unit_price": 560000
+        },
+        {
+          "ingredient_id": "1791975726381",
+          "system_stock": 0.9,
+          "physical_stock": 0.7,
+          "variance": -0.2,
+          "unit_price": 348000
+        },
+        {
+          "ingredient_id": "1791975749475",
+          "system_stock": 0.7,
+          "physical_stock": 0.7,
+          "variance": 0,
+          "unit_price": 1371000
+        },
+        {
+          "ingredient_id": "1791975776783",
+          "system_stock": 1,
+          "physical_stock": 1,
+          "variance": 0,
+          "unit_price": 621000
+        },
+        {
+          "ingredient_id": "1791975795316",
+          "system_stock": 0.9,
+          "physical_stock": 0.9,
+          "variance": 0,
+          "unit_price": 979000
+        },
+        {
+          "ingredient_id": "1791975815776",
+          "system_stock": 1,
+          "physical_stock": 1.4,
+          "variance": 0.4,
+          "unit_price": 360000
+        },
+        {
+          "ingredient_id": "1791975833731",
+          "system_stock": 2,
+          "physical_stock": 1.8,
+          "variance": -0.2,
+          "unit_price": 450000
+        },
+        {
+          "ingredient_id": "1791975851316",
+          "system_stock": 0.7,
+          "physical_stock": 0.5,
+          "variance": -0.2,
+          "unit_price": 370000
+        },
+        {
+          "ingredient_id": "1791975882035",
+          "system_stock": 0.5,
+          "physical_stock": 0.1,
+          "variance": -0.4,
+          "unit_price": 380000
+        },
+        {
+          "ingredient_id": "1791975905446",
+          "system_stock": 0.8,
+          "physical_stock": 0.7,
+          "variance": -0.1,
+          "unit_price": 360000
+        },
+        {
+          "ingredient_id": "1791975927004",
+          "system_stock": 0,
+          "physical_stock": 0,
+          "variance": 0,
+          "unit_price": 351000
+        },
+        {
+          "ingredient_id": "1791975940595",
+          "system_stock": 0.2,
+          "physical_stock": 0.2,
+          "variance": 0,
+          "unit_price": 505000
+        },
+        {
+          "ingredient_id": "1791975952856",
+          "system_stock": 0.9,
+          "physical_stock": 0.8,
+          "variance": -0.1,
+          "unit_price": 743000
+        },
+        {
+          "ingredient_id": "1791975971493",
+          "system_stock": 0.9,
+          "physical_stock": 0.8,
+          "variance": -0.1,
+          "unit_price": 783000
+        },
+        {
+          "ingredient_id": "1791975989147",
+          "system_stock": 1.8,
+          "physical_stock": 1.8,
+          "variance": 0,
+          "unit_price": 390000
+        },
+        {
+          "ingredient_id": "1791976024807",
+          "system_stock": 0.4,
+          "physical_stock": 0.4,
+          "variance": 0,
+          "unit_price": 760000
+        },
+        {
+          "ingredient_id": "1791976877655",
+          "system_stock": 0,
+          "physical_stock": 0,
+          "variance": 0,
+          "unit_price": 1100000
+        },
+        {
+          "ingredient_id": "1791976961754",
+          "system_stock": 1,
+          "physical_stock": 1,
+          "variance": 0,
+          "unit_price": 510000
+        },
+        {
+          "ingredient_id": "1791976975600",
+          "system_stock": 1,
+          "physical_stock": 1,
+          "variance": 0,
+          "unit_price": 510000
+        },
+        {
+          "ingredient_id": "1791991304225",
+          "system_stock": 0.7,
+          "physical_stock": 0.7,
+          "variance": 0,
+          "unit_price": 410000
+        },
+        {
+          "ingredient_id": "1791991519194",
+          "system_stock": 0.8,
+          "physical_stock": 0.8,
+          "variance": 0,
+          "unit_price": 620000
+        },
+        {
+          "ingredient_id": "1791992227406",
+          "system_stock": 0.4,
+          "physical_stock": 0.4,
+          "variance": 0,
+          "unit_price": 120000
+        },
+        {
+          "ingredient_id": "1791992262074",
+          "system_stock": 0.9,
+          "physical_stock": 0,
+          "variance": -0.9,
+          "unit_price": 140000
+        },
+        {
+          "ingredient_id": "1791992302122",
+          "system_stock": 1,
+          "physical_stock": 1,
+          "variance": 0,
+          "unit_price": 140000
+        },
+        {
+          "ingredient_id": "1791992384387",
+          "system_stock": 0.3,
+          "physical_stock": 0.3,
+          "variance": 0,
+          "unit_price": 0
+        },
+        {
+          "ingredient_id": "1791992407154",
+          "system_stock": 1,
+          "physical_stock": 1,
+          "variance": 0,
+          "unit_price": 0
+        },
+        {
+          "ingredient_id": "1792011545710",
+          "system_stock": 1,
+          "physical_stock": 1,
+          "variance": 0,
+          "unit_price": 800000
+        },
+        {
+          "ingredient_id": "1792011579836",
+          "system_stock": 0,
+          "physical_stock": 0,
+          "variance": 0,
+          "unit_price": 5220000
+        },
+        {
+          "ingredient_id": "1792011616878",
+          "system_stock": 1,
+          "physical_stock": 1,
+          "variance": 0,
+          "unit_price": 893000
+        },
+        {
+          "ingredient_id": "1792011661053",
+          "system_stock": 0.9,
+          "physical_stock": 0.9,
+          "variance": 0,
+          "unit_price": 1150000
+        },
+        {
+          "ingredient_id": "1792011728197",
+          "system_stock": 2,
+          "physical_stock": 2,
+          "variance": 0,
+          "unit_price": 600000
+        },
+        {
+          "ingredient_id": "1792011741922",
+          "system_stock": 1,
+          "physical_stock": 1,
+          "variance": 0,
+          "unit_price": 320000
+        },
+        {
+          "ingredient_id": "1792011760106",
+          "system_stock": 1,
+          "physical_stock": 1,
+          "variance": 0,
+          "unit_price": 3500000
+        },
+        {
+          "ingredient_id": "1792011784013",
+          "system_stock": 1,
+          "physical_stock": 1,
+          "variance": 0,
+          "unit_price": 1950000
+        },
+        {
+          "ingredient_id": "1792011797570",
+          "system_stock": 1,
+          "physical_stock": 1,
+          "variance": 0,
+          "unit_price": 1300000
+        },
+        {
+          "ingredient_id": "1793596832434",
+          "system_stock": 1,
+          "physical_stock": 0.9,
+          "variance": -0.1,
+          "unit_price": 440000
+        }
+      ]
+    }
+  ]
 }
