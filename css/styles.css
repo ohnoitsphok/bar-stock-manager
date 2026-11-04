@@ -3,6 +3,12 @@
 /* Stabilize scrollbar gutter to eliminate horizontal layout shift (CLS) when switching tabs */
 html {
     scrollbar-gutter: stable;
+    -webkit-tap-highlight-color: transparent;
+}
+
+/* Smooth momentum scrolling for mobile devices */
+.overflow-x-auto, .overflow-y-auto {
+    -webkit-overflow-scrolling: touch;
 }
 
 /* Custom scrollbars for dark mode tables and combobox dropdowns */
@@ -22,6 +28,22 @@ html {
 
 ::-webkit-scrollbar-thumb:hover {
     background: #3d3d3d;
+}
+
+/* Hide scrollbars for horizontal pill bars while maintaining scrollability */
+.no-scrollbar::-webkit-scrollbar {
+    display: none;
+}
+.no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+/* Prevent unwanted automatic zoom on iOS Safari when focusing form inputs */
+@media screen and (max-width: 640px) {
+    input, select, textarea {
+        font-size: 16px !important;
+    }
 }
 
 /* Isolate table layout & style recalculation boundaries */

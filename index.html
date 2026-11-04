@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
     <title>Strelitzia Stock & Recipe Manager</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -11,6 +11,9 @@
             darkMode: 'class',
             theme: {
                 extend: {
+                    screens: {
+                        xs: '420px'
+                    },
                     colors: {
                         darkbg: '#121212',
                         cardbg: '#1e1e1e',
@@ -38,154 +41,167 @@
     <!-- Alpine.js -->
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 </head>
-<body class="bg-darkbg text-gray-100 min-h-screen font-sans" x-data="barApp()" x-init="initApp()" x-cloak>
+<body class="bg-darkbg text-gray-100 min-h-screen font-sans antialiased" x-data="barApp()" x-init="initApp()" x-cloak>
 
     <!-- TOP NAVIGATION & SYNC BAR -->
-    <header class="bg-cardbg border-b border-bordercol sticky top-0 z-40 px-4 py-3 shadow-md">
-        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
-            <div class="flex items-center space-x-3">
-                <span class="text-2xl">🍸</span>
-                <div>
-                    <h1 class="text-lg font-bold tracking-wide">Strelitzia Stock Manager</h1>
-                    <p class="text-xs text-gray-400" x-text="syncStatus"></p>
+    <header class="bg-cardbg border-b border-bordercol sticky top-0 z-40 px-3 sm:px-4 py-2.5 sm:py-3 shadow-md">
+        <div class="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-2.5 sm:gap-4">
+            <div class="flex items-center space-x-2.5 self-start sm:self-auto w-full sm:w-auto justify-between sm:justify-start">
+                <div class="flex items-center space-x-2.5">
+                    <span class="text-xl sm:text-2xl">🍸</span>
+                    <div>
+                        <h1 class="text-sm sm:text-base md:text-lg font-bold tracking-wide">Strelitzia Stock Manager</h1>
+                        <p class="text-[10px] sm:text-xs text-gray-400" x-text="syncStatus"></p>
+                    </div>
                 </div>
             </div>
 
-            <!-- TAB SWITCHER -->
-            <div class="flex flex-wrap bg-black/40 p-1 rounded-xl border border-bordercol gap-1">
-                <button @click="activeTab = 'inventory'" :class="activeTab === 'inventory' ? 'bg-blue-600 text-white' : 'text-gray-400 hover:text-white'" class="px-3 py-1.5 rounded-lg text-xs font-medium transition">📦 Inventory</button>
-                <button @click="activeTab = 'reports'" :class="activeTab === 'reports' ? 'bg-blue-600 text-white' : 'text-gray-400 hover:text-white'" class="px-3 py-1.5 rounded-lg text-xs font-medium transition">📋 Reports</button>
-                <button @click="activeTab = 'recipes'" :class="activeTab === 'recipes' ? 'bg-blue-600 text-white' : 'text-gray-400 hover:text-white'" class="px-3 py-1.5 rounded-lg text-xs font-medium transition">🍹 Recipes</button>
-                <button @click="activeTab = 'settings'" :class="activeTab === 'settings' ? 'bg-blue-600 text-white' : 'text-gray-400 hover:text-white'" class="px-3 py-1.5 rounded-lg text-xs font-medium transition">⚙️ Sync & Export</button>
+            <!-- TAB SWITCHER (Compact & Touch-Friendly Grid on Mobile) -->
+            <div class="grid grid-cols-4 w-full sm:w-auto bg-black/40 p-1 rounded-xl border border-bordercol gap-1">
+                <button @click="activeTab = 'inventory'" :class="activeTab === 'inventory' ? 'bg-blue-600 text-white font-semibold shadow-sm' : 'text-gray-400 hover:text-white'" class="px-1.5 sm:px-3 py-1.5 rounded-lg text-xs transition text-center truncate">📦 Stock</button>
+                <button @click="activeTab = 'reports'" :class="activeTab === 'reports' ? 'bg-blue-600 text-white font-semibold shadow-sm' : 'text-gray-400 hover:text-white'" class="px-1.5 sm:px-3 py-1.5 rounded-lg text-xs transition text-center truncate">📋 Reports</button>
+                <button @click="activeTab = 'recipes'" :class="activeTab === 'recipes' ? 'bg-blue-600 text-white font-semibold shadow-sm' : 'text-gray-400 hover:text-white'" class="px-1.5 sm:px-3 py-1.5 rounded-lg text-xs transition text-center truncate">🍹 Recipes</button>
+                <button @click="activeTab = 'settings'" :class="activeTab === 'settings' ? 'bg-blue-600 text-white font-semibold shadow-sm' : 'text-gray-400 hover:text-white'" class="px-1.5 sm:px-3 py-1.5 rounded-lg text-xs transition text-center truncate">⚙️ Sync</button>
             </div>
         </div>
     </header>
 
-    <main class="max-w-7xl mx-auto p-4 md:p-6">
+    <main class="max-w-7xl mx-auto p-3 sm:p-4 md:p-6">
 
         <!-- ================= INVENTORY TAB ================= -->
-        <div x-show="activeTab === 'inventory'" class="space-y-6">
+        <div x-show="activeTab === 'inventory'" class="space-y-4 sm:space-y-6">
             
-            <!-- KPI SUMMARY CARDS -->
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <div class="bg-cardbg border border-bordercol p-4 rounded-xl shadow">
-                    <p class="text-xs text-gray-400 uppercase tracking-wider font-semibold">Total Items</p>
-                    <p class="text-2xl font-bold mt-1" x-text="ingredients.length">0</p>
+            <!-- KPI SUMMARY CARDS (Balanced 3-column row on mobile to save vertical space) -->
+            <div class="grid grid-cols-3 gap-2 sm:gap-4">
+                <div class="bg-cardbg border border-bordercol p-2.5 sm:p-4 rounded-xl shadow">
+                    <p class="text-[10px] sm:text-xs text-gray-400 uppercase tracking-wider font-semibold truncate">Total Items</p>
+                    <p class="text-base sm:text-2xl font-bold mt-0.5 sm:mt-1" x-text="ingredients.length">0</p>
                 </div>
-                <div class="bg-cardbg border border-bordercol p-4 rounded-xl shadow">
-                    <p class="text-xs text-gray-400 uppercase tracking-wider font-semibold">Low Stock Alerts</p>
-                    <p class="text-2xl font-bold mt-1 text-red-400" x-text="lowStockCount">0</p>
+                <div class="bg-cardbg border border-bordercol p-2.5 sm:p-4 rounded-xl shadow">
+                    <p class="text-[10px] sm:text-xs text-gray-400 uppercase tracking-wider font-semibold truncate">Low Stock</p>
+                    <p class="text-base sm:text-2xl font-bold mt-0.5 sm:mt-1 text-red-400" x-text="lowStockCount">0</p>
                 </div>
-                <div class="bg-cardbg border border-bordercol p-4 rounded-xl shadow">
-                    <p class="text-xs text-gray-400 uppercase tracking-wider font-semibold">Total Inventory Value</p>
-                    <p class="text-2xl font-bold mt-1 text-emerald-400" x-text="formatCurrency(totalInventoryValue) + ' ₫'">0 ₫</p>
+                <div class="bg-cardbg border border-bordercol p-2.5 sm:p-4 rounded-xl shadow">
+                    <p class="text-[10px] sm:text-xs text-gray-400 uppercase tracking-wider font-semibold truncate">Total Value</p>
+                    <p class="text-xs sm:text-2xl font-bold mt-0.5 sm:mt-1 text-emerald-400 truncate" x-text="formatCurrency(totalInventoryValue) + ' ₫'">0 ₫</p>
                 </div>
             </div>
 
             <!-- MAIN LAYOUT -->
-            <div class="grid grid-cols-1 lg:grid-cols-4 gap-6">
+            <div class="grid grid-cols-1 lg:grid-cols-4 gap-4 sm:gap-6">
                 
-                <!-- INPUT FORM -->
-                <div class="bg-cardbg border border-bordercol p-5 rounded-xl shadow lg:col-span-1 space-y-4">
-                    <h2 class="text-base font-bold border-b border-bordercol pb-2" x-text="editingId ? 'Edit Ingredient' : 'Add Ingredient'">Add Ingredient</h2>
-                    
-                    <div>
-                        <label class="text-xs text-gray-400 block mb-1">Item Name</label>
-                        <input type="text" x-model="form.name" placeholder="e.g., Haku Vodka" class="w-full bg-black/40 border border-bordercol rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-blue-500">
+                <!-- INPUT FORM (Collapsible on mobile so staff immediately see stock list) -->
+                <div class="bg-cardbg border border-bordercol p-4 sm:p-5 rounded-xl shadow lg:col-span-1 space-y-3 sm:space-y-4">
+                    <div class="flex justify-between items-center border-b border-bordercol pb-2">
+                        <h2 class="text-sm sm:text-base font-bold" x-text="editingId ? 'Edit Ingredient' : 'Add Ingredient'">Add Ingredient</h2>
+                        <button 
+                            @click="showMobileForm = !showMobileForm" 
+                            class="lg:hidden text-xs px-2.5 py-1 rounded-lg bg-black/40 border border-bordercol text-blue-400 font-semibold transition"
+                        >
+                            <span x-text="(showMobileForm || editingId) ? '▲ Hide Form' : '➕ Add Item'"></span>
+                        </button>
                     </div>
 
-                    <div>
-                        <label class="text-xs text-gray-400 block mb-1">Category / Base</label>
-                        <select x-model="form.category" class="w-full bg-black/40 border border-bordercol rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-blue-500">
-                            <option value="Spirit - Gin">Spirit - Gin</option>
-                            <option value="Spirit - Whisky">Spirit - Whisky</option>
-                            <option value="Spirit - Vodka">Spirit - Vodka</option>
-                            <option value="Spirit - Rum">Spirit - Rum</option>
-                            <option value="Spirit - Tequila / Mezcal">Spirit - Tequila / Mezcal</option>
-                            <option value="Spirit - Brandy / Cognac">Spirit - Brandy / Cognac</option>
-                            <option value="Spirit - Other">Spirit - Other</option>
-                            <option value="Liqueurs & Modifiers">Liqueurs & Modifiers</option>
-                            <option value="Vermouth & Aperitifs">Vermouth & Aperitifs</option>
-                            <option value="House Syrups & Cordials">House Syrups & Cordials</option>
-                            <option value="Bitters & Tinctures">Bitters & Tinctures</option>
-                            <option value="Fresh Citrus & Produce">Fresh Citrus & Produce</option>
-                            <option value="Dairy & Cream">Dairy & Cream</option>
-                            <option value="Mixers & Soda">Mixers & Soda</option>
-                            <option value="Garnishes & Dry Goods">Garnishes & Dry Goods</option>
-                        </select>
-                    </div>
-
-                    <div class="grid grid-cols-2 gap-2">
+                    <div class="space-y-3 pt-1" :class="(showMobileForm || editingId) ? 'block' : 'hidden lg:block'">
                         <div>
-                            <label class="text-xs text-gray-400 block mb-1">Bottle Size</label>
-                            <input type="number" x-model.number="form.unit_volume" placeholder="700" class="w-full bg-black/40 border border-bordercol rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-blue-500">
+                            <label class="text-xs text-gray-400 block mb-1">Item Name</label>
+                            <input type="text" x-model="form.name" placeholder="e.g., Haku Vodka" class="w-full bg-black/40 border border-bordercol rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-blue-500">
                         </div>
+
                         <div>
-                            <label class="text-xs text-gray-400 block mb-1">Unit</label>
-                            <select x-model="form.volume_unit" class="w-full bg-black/40 border border-bordercol rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-blue-500">
-                                <option value="ml">ml</option>
-                                <option value="g">g</option>
-                                <option value="pcs">pcs</option>
-                                <option value="dashes">dashes</option>
+                            <label class="text-xs text-gray-400 block mb-1">Category / Base</label>
+                            <select x-model="form.category" class="w-full bg-black/40 border border-bordercol rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-blue-500">
+                                <option value="Spirit - Gin">Spirit - Gin</option>
+                                <option value="Spirit - Whisky">Spirit - Whisky</option>
+                                <option value="Spirit - Vodka">Spirit - Vodka</option>
+                                <option value="Spirit - Rum">Spirit - Rum</option>
+                                <option value="Spirit - Tequila / Mezcal">Spirit - Tequila / Mezcal</option>
+                                <option value="Spirit - Brandy / Cognac">Spirit - Brandy / Cognac</option>
+                                <option value="Spirit - Other">Spirit - Other</option>
+                                <option value="Liqueurs & Modifiers">Liqueurs & Modifiers</option>
+                                <option value="Vermouth & Aperitifs">Vermouth & Aperitifs</option>
+                                <option value="House Syrups & Cordials">House Syrups & Cordials</option>
+                                <option value="Bitters & Tinctures">Bitters & Tinctures</option>
+                                <option value="Fresh Citrus & Produce">Fresh Citrus & Produce</option>
+                                <option value="Dairy & Cream">Dairy & Cream</option>
+                                <option value="Mixers & Soda">Mixers & Soda</option>
+                                <option value="Garnishes & Dry Goods">Garnishes & Dry Goods</option>
                             </select>
                         </div>
-                    </div>
 
-                    <div class="grid grid-cols-2 gap-2">
-                        <div>
-                            <label class="text-xs text-gray-400 block mb-1">Stock (Units)</label>
-                            <input type="number" step="0.1" x-model.number="form.stock" placeholder="1.5" class="w-full bg-black/40 border border-bordercol rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-blue-500">
+                        <div class="grid grid-cols-2 gap-2">
+                            <div>
+                                <label class="text-xs text-gray-400 block mb-1">Bottle Size</label>
+                                <input type="number" x-model.number="form.unit_volume" placeholder="700" class="w-full bg-black/40 border border-bordercol rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-blue-500">
+                            </div>
+                            <div>
+                                <label class="text-xs text-gray-400 block mb-1">Unit</label>
+                                <select x-model="form.volume_unit" class="w-full bg-black/40 border border-bordercol rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-blue-500">
+                                    <option value="ml">ml</option>
+                                    <option value="g">g</option>
+                                    <option value="pcs">pcs</option>
+                                    <option value="dashes">dashes</option>
+                                </select>
+                            </div>
                         </div>
-                        <div>
-                            <label class="text-xs text-gray-400 block mb-1">Par Level</label>
-                            <input type="number" step="0.1" x-model.number="form.par" placeholder="1.0" class="w-full bg-black/40 border border-bordercol rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-blue-500">
+
+                        <div class="grid grid-cols-2 gap-2">
+                            <div>
+                                <label class="text-xs text-gray-400 block mb-1">Stock (Units)</label>
+                                <input type="number" step="0.1" x-model.number="form.stock" placeholder="1.5" class="w-full bg-black/40 border border-bordercol rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-blue-500">
+                            </div>
+                            <div>
+                                <label class="text-xs text-gray-400 block mb-1">Par Level</label>
+                                <input type="number" step="0.1" x-model.number="form.par" placeholder="1.0" class="w-full bg-black/40 border border-bordercol rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-blue-500">
+                            </div>
                         </div>
-                    </div>
 
-                    <div>
-                        <label class="text-xs text-gray-400 block mb-1">Unit Price (VND)</label>
-                        <input type="number" x-model.number="form.price" placeholder="850000" class="w-full bg-black/40 border border-bordercol rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-blue-500">
-                    </div>
+                        <div>
+                            <label class="text-xs text-gray-400 block mb-1">Unit Price (VND)</label>
+                            <input type="number" x-model.number="form.price" placeholder="850000" class="w-full bg-black/40 border border-bordercol rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-blue-500">
+                        </div>
 
-                    <div>
-                        <label class="text-xs text-gray-400 block mb-1">Expiry / Batch (Optional)</label>
-                        <input type="date" x-model="form.expiry" class="w-full bg-black/40 border border-bordercol rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-blue-500">
-                    </div>
+                        <div>
+                            <label class="text-xs text-gray-400 block mb-1">Expiry / Batch (Optional)</label>
+                            <input type="date" x-model="form.expiry" class="w-full bg-black/40 border border-bordercol rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-blue-500">
+                        </div>
 
-                    <div class="pt-2 flex gap-2">
-                        <button @click="saveIngredient()" class="flex-1 bg-emerald-600 hover:bg-emerald-500 text-white py-2 rounded-lg text-sm font-semibold transition" x-text="editingId ? 'Save' : 'Add'"></button>
-                        <button @click="resetForm()" class="bg-gray-700 hover:bg-gray-600 px-3 py-2 rounded-lg text-sm transition">Clear</button>
+                        <div class="pt-2 flex gap-2">
+                            <button @click="saveIngredient()" class="flex-1 bg-emerald-600 hover:bg-emerald-500 text-white py-2 rounded-lg text-sm font-semibold transition active:scale-[0.98]" x-text="editingId ? 'Save' : 'Add'"></button>
+                            <button @click="resetForm()" class="bg-gray-700 hover:bg-gray-600 px-3 py-2 rounded-lg text-sm transition">Clear</button>
+                        </div>
                     </div>
                 </div>
 
                 <!-- TABLE & CONTROLS -->
                 <div class="bg-cardbg border border-bordercol rounded-xl shadow lg:col-span-3 overflow-hidden flex flex-col">
                     
-                    <!-- SEARCH & SORT CONTROLS BAR -->
-                    <div class="p-4 border-b border-bordercol flex flex-col md:flex-row justify-between items-center gap-3">
-                        <input type="text" x-model.debounce.150ms="searchQuery" placeholder="Search ingredients..." class="bg-black/40 border border-bordercol rounded-lg px-3 py-1.5 text-sm w-full md:w-64 focus:outline-none focus:border-blue-500">
+                    <!-- SEARCH & SORT CONTROLS BAR (Mobile-Adapted Flexbox) -->
+                    <div class="p-3 sm:p-4 border-b border-bordercol flex flex-col sm:flex-row justify-between items-stretch sm:items-center gap-2.5 sm:gap-3">
+                        <input type="text" x-model.debounce.150ms="searchQuery" placeholder="Search ingredients..." class="bg-black/40 border border-bordercol rounded-lg px-3 py-2 text-sm w-full sm:w-64 focus:outline-none focus:border-blue-500">
                         
-                        <div class="flex flex-wrap items-center gap-2 w-full md:w-auto justify-end">
-                            <button @click="groupByCategory = !groupByCategory" :class="groupByCategory ? 'bg-blue-600 text-white' : 'bg-black/40 text-gray-400 border border-bordercol'" class="px-3 py-1.5 rounded-lg text-xs font-medium transition">
-                                <span x-text="groupByCategory ? '📂 Grouped by Category' : '📑 Flat List'"></span>
+                        <div class="flex items-center gap-1.5 sm:gap-2 overflow-x-auto pb-1 sm:pb-0 no-scrollbar justify-between sm:justify-end">
+                            <button @click="groupByCategory = !groupByCategory" :class="groupByCategory ? 'bg-blue-600 text-white' : 'bg-black/40 text-gray-400 border border-bordercol'" class="px-2.5 sm:px-3 py-1.5 rounded-lg text-xs font-medium shrink-0 transition">
+                                <span x-text="groupByCategory ? '📂 Grouped' : '📑 Flat'"></span>
                             </button>
 
-                            <select x-model="sortBy" class="bg-black/40 border border-bordercol rounded-lg px-2.5 py-1.5 text-xs focus:outline-none focus:border-blue-500">
-                                <option value="name">Sort by Name</option>
-                                <option value="stock">Sort by Stock</option>
-                                <option value="price">Sort by Price</option>
-                                <option value="value">Sort by Total Value</option>
+                            <select x-model="sortBy" class="bg-black/40 border border-bordercol rounded-lg px-2 sm:px-2.5 py-1.5 text-xs focus:outline-none focus:border-blue-500 shrink-0">
+                                <option value="name">Name</option>
+                                <option value="stock">Stock</option>
+                                <option value="price">Price</option>
+                                <option value="value">Value</option>
                             </select>
 
-                            <button @click="sortOrder = sortOrder === 'asc' ? 'desc' : 'asc'" class="bg-black/40 border border-bordercol px-3 py-1.5 rounded-lg text-xs font-semibold hover:bg-white/10 transition">
-                                <span x-text="sortOrder === 'asc' ? '⬆️ Asc' : '⬇️ Desc'"></span>
+                            <button @click="sortOrder = sortOrder === 'asc' ? 'desc' : 'asc'" class="bg-black/40 border border-bordercol px-2.5 sm:px-3 py-1.5 rounded-lg text-xs font-semibold hover:bg-white/10 shrink-0 transition">
+                                <span x-text="sortOrder === 'asc' ? '⬆️' : '⬇️'"></span>
                             </button>
 
                             <!-- INVENTORY EXPORT DROPDOWN -->
-                            <div class="relative" x-data="{ exportOpen: false }" @click.away="exportOpen = false">
-                                <button @click="exportOpen = !exportOpen" class="bg-black/40 border border-bordercol px-3 py-1.5 rounded-lg text-xs font-semibold hover:bg-white/10 transition flex items-center gap-1.5">
-                                    <span>📥 Export</span>
-                                    <span class="text-[9px]">▼</span>
+                            <div class="relative shrink-0" x-data="{ exportOpen: false }" @click.away="exportOpen = false">
+                                <button @click="exportOpen = !exportOpen" class="bg-black/40 border border-bordercol px-2.5 sm:px-3 py-1.5 rounded-lg text-xs font-semibold hover:bg-white/10 transition flex items-center gap-1">
+                                    <span>📥</span>
+                                    <span class="hidden sm:inline">Export</span>
+                                    <span class="text-[8px]">▼</span>
                                 </button>
                                 <div x-show="exportOpen" class="absolute right-0 mt-1.5 w-44 bg-cardbg border border-bordercol rounded-xl shadow-2xl py-1 z-30 text-xs divide-y divide-bordercol">
                                     <button @click="exportInventoryXlsx(); exportOpen = false" class="w-full text-left px-3 py-2 hover:bg-blue-600/30 text-gray-200">📊 Excel (.xlsx)</button>
@@ -196,40 +212,49 @@
                         </div>
                     </div>
 
-                    <!-- TABLE CONTENT -->
+                    <!-- TABLE CONTENT (Responsive columns + enlarged touch hitboxes) -->
                     <div class="overflow-x-auto flex-1 table-contain">
                         <table class="w-full text-left border-collapse text-sm">
                             <thead>
                                 <tr class="bg-black/30 text-gray-400 text-xs uppercase border-b border-bordercol">
-                                    <th class="p-3">Name</th>
-                                    <th class="p-3">Category</th>
-                                    <th class="p-3 text-center">Size</th>
-                                    <th class="p-3 text-center">Stock</th>
-                                    <th class="p-3 text-right">Price</th>
-                                    <th class="p-3 text-right">Cost / Unit</th>
-                                    <th class="p-3 text-right">Total Value</th>
-                                    <th class="p-3 text-center">Actions</th>
+                                    <th class="p-2.5 sm:p-3">Item</th>
+                                    <th class="p-3 hidden sm:table-cell">Category</th>
+                                    <th class="p-3 text-center hidden sm:table-cell">Size</th>
+                                    <th class="p-2.5 sm:p-3 text-center w-28 sm:w-36">Stock</th>
+                                    <th class="p-3 text-right hidden md:table-cell">Price</th>
+                                    <th class="p-3 text-right hidden lg:table-cell">Cost / Unit</th>
+                                    <th class="p-2.5 sm:p-3 text-right">Value</th>
+                                    <th class="p-2.5 sm:p-3 text-center">Actions</th>
                                 </tr>
                             </thead>
                             <tbody class="divide-y divide-bordercol">
                                 <template x-for="item in sortedIngredients" :key="item.id">
                                     <tr class="hover:bg-white/[0.02] transition-colors" :class="Number(item.stock || 0) <= Number(item.par || 0) ? 'bg-red-950/20' : ''">
-                                        <td class="p-3 font-medium" x-text="item.name"></td>
-                                        <td class="p-3 text-gray-400 text-xs" x-text="item.category"></td>
-                                        <td class="p-3 text-center text-xs text-gray-300" x-text="(item.unit_volume || 0) + ' ' + (item.volume_unit || 'ml')"></td>
-                                        <td class="p-3 text-center">
-                                            <div class="flex items-center justify-center space-x-1">
-                                                <button @click="adjustStock(item.id, -0.1)" class="w-6 h-6 bg-red-900/40 text-red-300 rounded hover:bg-red-900 text-xs">-</button>
-                                                <span class="px-2 font-bold" x-text="Number(item.stock || 0).toFixed(1)"></span>
-                                                <button @click="adjustStock(item.id, 0.1)" class="w-6 h-6 bg-emerald-900/40 text-emerald-300 rounded hover:bg-emerald-900 text-xs">+</button>
+                                        <!-- Item Name + Category Subtitle on Mobile -->
+                                        <td class="p-2.5 sm:p-3">
+                                            <div class="font-medium text-gray-100" x-text="item.name"></div>
+                                            <div class="text-[11px] text-gray-400 sm:hidden" x-text="item.category + ' • ' + (item.unit_volume || 0) + (item.volume_unit || 'ml')"></div>
+                                        </td>
+                                        <td class="p-3 text-gray-400 text-xs hidden sm:table-cell" x-text="item.category"></td>
+                                        <td class="p-3 text-center text-xs text-gray-300 hidden sm:table-cell" x-text="(item.unit_volume || 0) + ' ' + (item.volume_unit || 'ml')"></td>
+                                        
+                                        <!-- Stock Adjustment with 32x32px Touch Targets -->
+                                        <td class="p-2.5 sm:p-3 text-center">
+                                            <div class="flex items-center justify-center space-x-1 sm:space-x-1.5">
+                                                <button @click="adjustStock(item.id, -0.1)" class="w-7 h-7 sm:w-8 sm:h-8 bg-red-900/40 text-red-300 rounded-lg hover:bg-red-900 text-sm font-bold flex items-center justify-center active:scale-95 transition-transform">-</button>
+                                                <span class="px-1 sm:px-2 font-bold font-mono text-xs sm:text-sm text-gray-100" x-text="Number(item.stock || 0).toFixed(1)"></span>
+                                                <button @click="adjustStock(item.id, 0.1)" class="w-7 h-7 sm:w-8 sm:h-8 bg-emerald-900/40 text-emerald-300 rounded-lg hover:bg-emerald-900 text-sm font-bold flex items-center justify-center active:scale-95 transition-transform">+</button>
                                             </div>
                                         </td>
-                                        <td class="p-3 text-right font-mono text-xs" x-text="formatCurrency(item.price)"></td>
-                                        <td class="p-3 text-right font-mono text-xs text-gray-400" x-text="Number(item.unit_volume) > 0 ? formatCurrency(Number(item.price) / Number(item.unit_volume), 2) + '/' + item.volume_unit : '0'"></td>
-                                        <td class="p-3 text-right font-mono text-xs text-emerald-400" x-text="formatCurrency(Number(item.stock || 0) * Number(item.price || 0))"></td>
-                                        <td class="p-3 text-center space-x-1">
-                                            <button @click="editItem(item)" class="text-blue-400 hover:text-blue-300 text-xs px-1.5 py-1">Edit</button>
-                                            <button @click="deleteItem(item.id)" class="text-red-400 hover:text-red-300 text-xs px-1.5 py-1">Del</button>
+
+                                        <td class="p-3 text-right font-mono text-xs hidden md:table-cell" x-text="formatCurrency(item.price)"></td>
+                                        <td class="p-3 text-right font-mono text-xs text-gray-400 hidden lg:table-cell" x-text="Number(item.unit_volume) > 0 ? formatCurrency(Number(item.price) / Number(item.unit_volume), 2) + '/' + item.volume_unit : '0'"></td>
+                                        <td class="p-2.5 sm:p-3 text-right font-mono text-xs text-emerald-400 font-bold" x-text="formatCurrency(Number(item.stock || 0) * Number(item.price || 0))"></td>
+                                        
+                                        <!-- Actions as Touch Pills -->
+                                        <td class="p-2.5 sm:p-3 text-center whitespace-nowrap space-x-1">
+                                            <button @click="editItem(item); showMobileForm = true" class="text-blue-400 hover:text-blue-300 text-xs px-2 py-1 bg-black/40 rounded border border-bordercol">Edit</button>
+                                            <button @click="deleteItem(item.id)" class="text-red-400 hover:text-red-300 text-xs px-2 py-1 bg-black/40 rounded border border-bordercol">Del</button>
                                         </td>
                                     </tr>
                                 </template>
@@ -242,50 +267,50 @@
         </div>
 
         <!-- ================= REPORTS & ORDERS TAB ================= -->
-        <div x-show="activeTab === 'reports'" class="space-y-6">
+        <div x-show="activeTab === 'reports'" class="space-y-4 sm:space-y-6">
 
             <!-- REPORTS HEADER & CONTROL BAR -->
-            <div class="bg-cardbg border border-bordercol p-4 rounded-xl shadow flex flex-col md:flex-row justify-between items-center gap-4">
+            <div class="bg-cardbg border border-bordercol p-3.5 sm:p-4 rounded-xl shadow flex flex-col md:flex-row justify-between items-stretch md:items-center gap-3 sm:gap-4">
                 
                 <!-- Left: Period Selector -->
-                <div class="flex items-center space-x-3 w-full md:w-auto">
-                    <span class="text-xs text-gray-400 font-semibold uppercase tracking-wider">Period:</span>
-                    <select x-model="selectedReportMonth" class="bg-black/40 border border-bordercol rounded-lg px-3 py-1.5 text-xs font-semibold focus:outline-none focus:border-blue-500 text-blue-300">
+                <div class="flex items-center space-x-2.5 justify-between sm:justify-start">
+                    <span class="text-xs text-gray-400 font-semibold uppercase tracking-wider shrink-0">Period:</span>
+                    <select x-model="selectedReportMonth" class="bg-black/40 border border-bordercol rounded-lg px-3 py-1.5 text-xs font-semibold focus:outline-none focus:border-blue-500 text-blue-300 w-full sm:w-auto">
                         <template x-for="m in availableReportMonths" :key="m">
                             <option :value="m" x-text="formatMonthLabel(m)"></option>
                         </template>
                     </select>
                 </div>
 
-                <!-- Center: Sub-view Switcher -->
-                <div class="flex bg-black/40 p-1 rounded-xl border border-bordercol gap-1 w-full md:w-auto justify-center">
+                <!-- Center: Sub-view Switcher (Grid on Mobile) -->
+                <div class="grid grid-cols-2 bg-black/40 p-1 rounded-xl border border-bordercol gap-1 w-full md:w-auto">
                     <button 
                         @click="reportsActiveSubTab = 'analytics'" 
-                        :class="reportsActiveSubTab === 'analytics' ? 'bg-blue-600 text-white' : 'text-gray-400 hover:text-white'" 
-                        class="px-3.5 py-1.5 rounded-lg text-xs font-medium transition"
+                        :class="reportsActiveSubTab === 'analytics' ? 'bg-blue-600 text-white font-semibold' : 'text-gray-400 hover:text-white'" 
+                        class="px-3 py-1.5 rounded-lg text-xs transition text-center truncate"
                     >
-                        📊 Monthly Analytics
+                        📊 Analytics
                     </button>
                     <button 
                         @click="reportsActiveSubTab = 'orders'" 
-                        :class="reportsActiveSubTab === 'orders' ? 'bg-blue-600 text-white' : 'text-gray-400 hover:text-white'" 
-                        class="px-3.5 py-1.5 rounded-lg text-xs font-medium transition"
+                        :class="reportsActiveSubTab === 'orders' ? 'bg-blue-600 text-white font-semibold' : 'text-gray-400 hover:text-white'" 
+                        class="px-3 py-1.5 rounded-lg text-xs transition text-center truncate"
                     >
-                        📦 Purchase Orders
+                        📦 Orders
                     </button>
                 </div>
 
                 <!-- Right: Action Buttons -->
-                <div class="flex items-center gap-2 w-full md:w-auto justify-end">
+                <div class="flex items-center gap-2 justify-between sm:justify-end">
                     <button 
                         @click="openStockTakeModal()" 
-                        class="bg-emerald-600 hover:bg-emerald-500 text-white px-3.5 py-1.5 rounded-lg text-xs font-semibold shadow transition flex items-center gap-1.5"
+                        class="flex-1 sm:flex-initial bg-emerald-600 hover:bg-emerald-500 text-white px-3.5 py-1.5 rounded-lg text-xs font-semibold shadow transition flex items-center justify-center gap-1.5 active:scale-[0.98]"
                     >
-                        <span>📝 Start Stock-Take</span>
+                        <span>📝 Stock-Take</span>
                     </button>
 
                     <!-- Export Report Dropdown -->
-                    <div class="relative" x-data="{ exportOpen: false }" @click.away="exportOpen = false">
+                    <div class="relative shrink-0" x-data="{ exportOpen: false }" @click.away="exportOpen = false">
                         <button @click="exportOpen = !exportOpen" class="bg-black/40 border border-bordercol px-3 py-1.5 rounded-lg text-xs font-semibold hover:bg-white/10 transition flex items-center gap-1.5">
                             <span>📥 Export</span>
                             <span class="text-[9px]">▼</span>
@@ -301,50 +326,50 @@
             </div>
 
             <!-- SUB-TAB 1: MONTHLY ANALYTICS & LEADERBOARD -->
-            <div x-show="reportsActiveSubTab === 'analytics'" class="space-y-6">
+            <div x-show="reportsActiveSubTab === 'analytics'" class="space-y-4 sm:space-y-6">
                 
                 <!-- KPI CARDS -->
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                    <div class="bg-cardbg border border-bordercol p-4 rounded-xl shadow">
-                        <p class="text-xs text-gray-400 uppercase tracking-wider font-semibold">Total Import Cost (Orders)</p>
-                        <p class="text-2xl font-bold mt-1 text-blue-400" x-text="formatCurrency(monthlyImportTotal) + ' ₫'">0 ₫</p>
-                        <p class="text-[11px] text-gray-500 mt-0.5" x-text="monthlyImportsList.length + ' orders recorded in ' + formatMonthLabel(activeReportMonth)"></p>
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4">
+                    <div class="bg-cardbg border border-bordercol p-3.5 sm:p-4 rounded-xl shadow">
+                        <p class="text-xs text-gray-400 uppercase tracking-wider font-semibold">Total Import Cost</p>
+                        <p class="text-xl sm:text-2xl font-bold mt-1 text-blue-400" x-text="formatCurrency(monthlyImportTotal) + ' ₫'">0 ₫</p>
+                        <p class="text-[11px] text-gray-500 mt-0.5" x-text="monthlyImportsList.length + ' orders in ' + formatMonthLabel(activeReportMonth)"></p>
                     </div>
-                    <div class="bg-cardbg border border-bordercol p-4 rounded-xl shadow">
+                    <div class="bg-cardbg border border-bordercol p-3.5 sm:p-4 rounded-xl shadow">
                         <p class="text-xs text-gray-400 uppercase tracking-wider font-semibold">Total Stock Usage Value</p>
-                        <p class="text-2xl font-bold mt-1 text-amber-400" x-text="formatCurrency(monthlyUsageTotal) + ' ₫'">0 ₫</p>
-                        <p class="text-[11px] text-gray-500 mt-0.5">Calculated from physical audits & imports</p>
+                        <p class="text-xl sm:text-2xl font-bold mt-1 text-amber-400" x-text="formatCurrency(monthlyUsageTotal) + ' ₫'">0 ₫</p>
+                        <p class="text-[11px] text-gray-500 mt-0.5">Calculated from audits & orders</p>
                     </div>
-                    <div class="bg-cardbg border border-bordercol p-4 rounded-xl shadow">
-                        <p class="text-xs text-gray-400 uppercase tracking-wider font-semibold">Physical Audits Logged</p>
-                        <p class="text-2xl font-bold mt-1 text-emerald-400" x-text="monthlyAuditsList.length">0</p>
-                        <p class="text-[11px] text-gray-500 mt-0.5">Stock-take count sessions completed</p>
+                    <div class="bg-cardbg border border-bordercol p-3.5 sm:p-4 rounded-xl shadow">
+                        <p class="text-xs text-gray-400 uppercase tracking-wider font-semibold">Physical Audits</p>
+                        <p class="text-xl sm:text-2xl font-bold mt-1 text-emerald-400" x-text="monthlyAuditsList.length">0</p>
+                        <p class="text-[11px] text-gray-500 mt-0.5">Stock-take count sessions</p>
                     </div>
                 </div>
 
                 <!-- MOST USED INGREDIENTS LEADERBOARD -->
-                <div class="bg-cardbg border border-bordercol p-5 rounded-xl shadow space-y-4">
-                    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 border-b border-bordercol pb-3">
+                <div class="bg-cardbg border border-bordercol p-4 sm:p-5 rounded-xl shadow space-y-4">
+                    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2.5 sm:gap-3 border-b border-bordercol pb-3">
                         <div>
-                            <h2 class="text-base font-bold">🏆 Most Used Ingredients</h2>
-                            <p class="text-xs text-gray-400">Monthly consumption breakdown for <span class="text-blue-300 font-semibold" x-text="formatMonthLabel(activeReportMonth)"></span></p>
+                            <h2 class="text-sm sm:text-base font-bold">🏆 Most Used Ingredients</h2>
+                            <p class="text-xs text-gray-400">Monthly consumption for <span class="text-blue-300 font-semibold" x-text="formatMonthLabel(activeReportMonth)"></span></p>
                         </div>
 
-                        <!-- DUAL RANKING TOGGLE -->
-                        <div class="flex bg-black/40 p-1 rounded-lg border border-bordercol gap-1 text-xs">
+                        <!-- DUAL RANKING TOGGLE (50/50 Grid on Mobile) -->
+                        <div class="grid grid-cols-2 sm:flex bg-black/40 p-1 rounded-lg border border-bordercol gap-1 text-xs w-full sm:w-auto">
                             <button 
                                 @click="leaderboardMode = 'value'" 
                                 :class="leaderboardMode === 'value' ? 'bg-amber-600 text-white font-semibold' : 'text-gray-400 hover:text-white'" 
-                                class="px-3 py-1 rounded transition"
+                                class="px-2.5 sm:px-3 py-1 rounded transition text-center truncate"
                             >
-                                💰 By Cost Value (VND)
+                                💰 By Value (VND)
                             </button>
                             <button 
                                 @click="leaderboardMode = 'volume'" 
                                 :class="leaderboardMode === 'volume' ? 'bg-amber-600 text-white font-semibold' : 'text-gray-400 hover:text-white'" 
-                                class="px-3 py-1 rounded transition"
+                                class="px-2.5 sm:px-3 py-1 rounded transition text-center truncate"
                             >
-                                📦 By Quantity / Volume
+                                📦 By Volume
                             </button>
                         </div>
                     </div>
@@ -354,39 +379,42 @@
                         <table class="w-full text-left border-collapse text-sm">
                             <thead>
                                 <tr class="bg-black/30 text-gray-400 text-xs uppercase border-b border-bordercol">
-                                    <th class="p-3 text-center w-14">Rank</th>
-                                    <th class="p-3">Ingredient</th>
-                                    <th class="p-3">Category</th>
-                                    <th class="p-3 text-center">Units Consumed</th>
-                                    <th class="p-3 text-right">Unit Price</th>
-                                    <th class="p-3 text-right">Total Value Used</th>
-                                    <th class="p-3 text-right w-44">% of Monthly Usage</th>
+                                    <th class="p-2.5 sm:p-3 text-center w-10 sm:w-14">Rank</th>
+                                    <th class="p-2.5 sm:p-3">Ingredient</th>
+                                    <th class="p-3 hidden sm:table-cell">Category</th>
+                                    <th class="p-2.5 sm:p-3 text-center">Units Used</th>
+                                    <th class="p-3 text-right hidden md:table-cell">Unit Price</th>
+                                    <th class="p-2.5 sm:p-3 text-right">Value Used</th>
+                                    <th class="p-2.5 sm:p-3 text-right w-24 sm:w-44">% Share</th>
                                 </tr>
                             </thead>
                             <tbody class="divide-y divide-bordercol">
                                 <template x-for="(item, idx) in mostUsedIngredients" :key="item.id">
                                     <tr class="hover:bg-white/[0.02] transition-colors">
-                                        <td class="p-3 text-center font-bold">
+                                        <td class="p-2.5 sm:p-3 text-center font-bold">
                                             <span 
-                                                class="w-6 h-6 inline-flex items-center justify-center rounded-full text-xs font-bold" 
+                                                class="w-5 h-5 sm:w-6 sm:h-6 inline-flex items-center justify-center rounded-full text-[11px] sm:text-xs font-bold" 
                                                 :class="idx === 0 ? 'bg-yellow-500/20 text-yellow-300 border border-yellow-500/40' : (idx === 1 ? 'bg-gray-400/20 text-gray-300' : (idx === 2 ? 'bg-amber-700/20 text-amber-400' : 'text-gray-500'))"
                                                 x-text="'#' + (idx + 1)"
                                             ></span>
                                         </td>
-                                        <td class="p-3 font-semibold text-gray-100" x-text="item.name"></td>
-                                        <td class="p-3 text-gray-400 text-xs" x-text="item.category"></td>
-                                        <td class="p-3 text-center font-mono text-xs text-blue-300">
-                                            <span class="font-bold text-sm" x-text="item.usedUnits"></span>
-                                            <span class="text-gray-400 text-[10px]" x-text="'units (' + (item.unit_volume ? (item.unit_volume * item.usedUnits) : '') + item.volume_unit + ')'"></span>
+                                        <td class="p-2.5 sm:p-3">
+                                            <div class="font-semibold text-gray-100" x-text="item.name"></div>
+                                            <div class="text-[10px] text-gray-400 sm:hidden" x-text="item.category"></div>
                                         </td>
-                                        <td class="p-3 text-right font-mono text-xs text-gray-400" x-text="formatCurrency(item.unitPrice) + ' ₫'"></td>
-                                        <td class="p-3 text-right font-mono text-xs font-bold text-amber-400" x-text="formatCurrency(item.usedValue) + ' ₫'"></td>
-                                        <td class="p-3 text-right">
-                                            <div class="flex items-center justify-end space-x-2">
-                                                <div class="w-24 bg-black/40 h-2 rounded-full overflow-hidden border border-bordercol">
+                                        <td class="p-3 text-gray-400 text-xs hidden sm:table-cell" x-text="item.category"></td>
+                                        <td class="p-2.5 sm:p-3 text-center font-mono text-xs text-blue-300 whitespace-nowrap">
+                                            <span class="font-bold text-xs sm:text-sm" x-text="item.usedUnits"></span>
+                                            <span class="text-gray-400 text-[10px]" x-text="' (' + (item.unit_volume ? (item.unit_volume * item.usedUnits) : '') + item.volume_unit + ')'"></span>
+                                        </td>
+                                        <td class="p-3 text-right font-mono text-xs text-gray-400 hidden md:table-cell" x-text="formatCurrency(item.unitPrice) + ' ₫'"></td>
+                                        <td class="p-2.5 sm:p-3 text-right font-mono text-xs font-bold text-amber-400" x-text="formatCurrency(item.usedValue) + ' ₫'"></td>
+                                        <td class="p-2.5 sm:p-3 text-right">
+                                            <div class="flex items-center justify-end space-x-1.5 sm:space-x-2">
+                                                <div class="hidden sm:block w-20 sm:w-24 bg-black/40 h-2 rounded-full overflow-hidden border border-bordercol">
                                                     <div class="bg-amber-500 h-full rounded-full" :style="'width: ' + Math.min(100, item.pctOfTotal) + '%'"></div>
                                                 </div>
-                                                <span class="font-mono text-xs text-gray-300 w-10 text-right" x-text="item.pctOfTotal + '%'"></span>
+                                                <span class="font-mono text-xs text-gray-300 text-right font-bold" x-text="item.pctOfTotal + '%'"></span>
                                             </div>
                                         </td>
                                     </tr>
@@ -394,34 +422,34 @@
                             </tbody>
                         </table>
                         
-                        <div x-show="mostUsedIngredients.length === 0" class="py-12 text-center text-gray-500 space-y-2">
+                        <div x-show="mostUsedIngredients.length === 0" class="py-10 text-center text-gray-500 space-y-2">
                             <p class="text-sm">No usage records found for this period.</p>
-                            <p class="text-xs text-gray-600">Click <strong>"Start Stock-Take"</strong> above to perform an inventory count and compute consumption.</p>
+                            <p class="text-xs text-gray-600">Click <strong>"Stock-Take"</strong> above to perform an inventory count and compute consumption.</p>
                         </div>
                     </div>
                 </div>
 
                 <!-- HISTORICAL AUDIT SESSIONS LIST -->
-                <div class="bg-cardbg border border-bordercol p-5 rounded-xl shadow space-y-4">
-                    <h2 class="text-base font-bold border-b border-bordercol pb-2">📋 Stock-Take Audit History</h2>
+                <div class="bg-cardbg border border-bordercol p-4 sm:p-5 rounded-xl shadow space-y-3 sm:space-y-4">
+                    <h2 class="text-sm sm:text-base font-bold border-b border-bordercol pb-2">📋 Stock-Take Audit History</h2>
                     
-                    <div class="space-y-3" x-show="(audits || []).length > 0">
+                    <div class="space-y-2.5 sm:space-y-3" x-show="(audits || []).length > 0">
                         <template x-for="audit in audits" :key="audit.id">
-                            <div class="bg-black/30 border border-bordercol rounded-xl p-4 flex flex-col md:flex-row justify-between items-start md:items-center gap-3">
-                                <div class="space-y-1">
+                            <div class="bg-black/30 border border-bordercol rounded-xl p-3 sm:p-4 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 sm:gap-3">
+                                <div class="space-y-0.5">
                                     <div class="flex items-center space-x-2">
-                                        <span class="font-bold text-sm text-emerald-300" x-text="audit.notes || 'Physical Stock Count'"></span>
-                                        <span class="text-xs bg-black/40 px-2 py-0.5 rounded border border-bordercol text-gray-400" x-text="audit.month"></span>
+                                        <span class="font-bold text-xs sm:text-sm text-emerald-300" x-text="audit.notes || 'Physical Stock Count'"></span>
+                                        <span class="text-[10px] sm:text-xs bg-black/40 px-2 py-0.5 rounded border border-bordercol text-gray-400" x-text="audit.month"></span>
                                     </div>
-                                    <p class="text-xs text-gray-400" x-text="audit.date"></p>
+                                    <p class="text-[11px] text-gray-400" x-text="audit.date"></p>
                                 </div>
 
-                                <div class="flex items-center space-x-4">
-                                    <div class="text-right text-xs">
-                                        <span class="text-gray-400 block">Items Counted: <strong class="text-gray-200" x-text="(audit.items || []).length"></strong></span>
-                                        <span class="text-gray-400 block">Net Variance: <strong :class="getAuditNetVariance(audit) >= 0 ? 'text-emerald-400' : 'text-red-400'" x-text="getAuditNetVariance(audit).toFixed(1) + ' units'"></strong></span>
+                                <div class="flex items-center justify-between sm:justify-end w-full sm:w-auto space-x-3 pt-1 sm:pt-0 border-t sm:border-0 border-bordercol/40">
+                                    <div class="text-left sm:text-right text-xs">
+                                        <span class="text-gray-400 text-[11px] sm:text-xs">Counted: <strong class="text-gray-200" x-text="(audit.items || []).length"></strong></span>
+                                        <span class="text-gray-400 text-[11px] sm:text-xs ml-2 sm:ml-0 sm:block">Variance: <strong :class="getAuditNetVariance(audit) >= 0 ? 'text-emerald-400' : 'text-red-400'" x-text="getAuditNetVariance(audit).toFixed(1) + ' units'"></strong></span>
                                     </div>
-                                    <button @click="deleteAudit(audit.id)" class="text-red-400 hover:text-red-300 text-xs px-2 py-1 bg-red-950/30 rounded border border-red-900/40">Delete</button>
+                                    <button @click="deleteAudit(audit.id)" class="text-red-400 hover:text-red-300 text-xs px-2.5 py-1 bg-red-950/30 rounded border border-red-900/40">Delete</button>
                                 </div>
                             </div>
                         </template>
@@ -433,13 +461,13 @@
             </div>
 
             <!-- SUB-TAB 2: PURCHASE ORDERS MANAGEMENT & LEDGER -->
-            <div x-show="reportsActiveSubTab === 'orders'" class="space-y-6">
-                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <div x-show="reportsActiveSubTab === 'orders'" class="space-y-4 sm:space-y-6">
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6">
                     
                     <!-- ORDER BUILDER -->
-                    <div class="bg-cardbg border border-bordercol p-5 rounded-xl shadow space-y-4 lg:col-span-1">
+                    <div class="bg-cardbg border border-bordercol p-4 sm:p-5 rounded-xl shadow space-y-4 lg:col-span-1">
                         <div class="flex justify-between items-center border-b border-bordercol pb-2">
-                            <h2 class="text-base font-bold" x-text="editingOrderId ? 'Edit Purchase Order' : 'New Purchase Order'">New Purchase Order</h2>
+                            <h2 class="text-sm sm:text-base font-bold" x-text="editingOrderId ? 'Edit Purchase Order' : 'New Purchase Order'">New Purchase Order</h2>
                             <button x-show="editingOrderId" @click="cancelEditOrder()" class="text-xs text-gray-400 hover:text-white">Cancel</button>
                         </div>
 
@@ -460,7 +488,7 @@
                                         @focus="orderDropdownOpen = true" 
                                         @input="orderDropdownOpen = true; tempOrderIngId = ''" 
                                         placeholder="Type to search ingredient..." 
-                                        class="w-full bg-black/40 border border-bordercol rounded-lg px-3 py-1.5 text-xs focus:outline-none focus:border-blue-500"
+                                        class="w-full bg-black/40 border border-bordercol rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-blue-500"
                                     >
                                     <!-- Floating Dropdown List -->
                                     <div 
@@ -479,10 +507,10 @@
                                     </div>
                                 </div>
 
-                                <div class="flex items-center gap-2 pr-1">
-                                    <input type="number" step="0.1" x-model.number="tempOrderQty" placeholder="Qty" class="w-1/3 bg-black/40 border border-bordercol rounded-lg px-2 py-1.5 text-xs">
-                                    <input type="number" x-model.number="tempOrderPrice" placeholder="Unit Price (VND)" class="flex-1 bg-black/40 border border-bordercol rounded-lg px-2 py-1.5 text-xs">
-                                    <button @click="addOrderItem()" class="bg-blue-600 hover:bg-blue-500 w-8 h-8 rounded-lg text-xs font-bold text-white flex items-center justify-center shrink-0">+</button>
+                                <div class="flex items-center gap-2">
+                                    <input type="number" step="0.1" x-model.number="tempOrderQty" placeholder="Qty" class="w-20 bg-black/40 border border-bordercol rounded-lg px-2.5 py-2 text-sm font-mono text-center">
+                                    <input type="number" x-model.number="tempOrderPrice" placeholder="Unit Price (VND)" class="flex-1 bg-black/40 border border-bordercol rounded-lg px-3 py-2 text-sm font-mono">
+                                    <button @click="addOrderItem()" class="bg-blue-600 hover:bg-blue-500 w-9 h-9 rounded-lg text-sm font-bold text-white flex items-center justify-center shrink-0 active:scale-95 transition-transform">+</button>
                                 </div>
                             </div>
 
@@ -490,13 +518,13 @@
                             <div class="bg-black/30 border border-bordercol rounded-lg p-3 space-y-2 mt-2">
                                 <template x-for="(oi, index) in orderForm.items" :key="index">
                                     <div class="flex justify-between items-center text-xs bg-cardbg p-2 rounded border border-bordercol">
-                                        <div>
+                                        <div class="pr-2">
                                             <span class="font-medium" x-text="getIngredientName(oi.ingredient_id)"></span>
-                                            <div class="text-gray-400" x-text="oi.quantity + ' units @ ' + formatCurrency(oi.unit_price) + ' ₫'"></div>
+                                            <div class="text-gray-400 text-[11px]" x-text="oi.quantity + ' units @ ' + formatCurrency(oi.unit_price) + ' ₫'"></div>
                                         </div>
-                                        <div class="flex items-center space-x-2">
-                                            <span class="text-emerald-400 font-mono" x-text="formatCurrency(oi.quantity * oi.unit_price) + ' ₫'"></span>
-                                            <button @click="orderForm.items.splice(index, 1)" class="text-red-400 hover:text-red-300 font-bold">×</button>
+                                        <div class="flex items-center space-x-2 shrink-0">
+                                            <span class="text-emerald-400 font-mono font-bold" x-text="formatCurrency(oi.quantity * oi.unit_price) + ' ₫'"></span>
+                                            <button @click="orderForm.items.splice(index, 1)" class="text-red-400 hover:text-red-300 font-bold p-1">✕</button>
                                         </div>
                                     </div>
                                 </template>
@@ -504,16 +532,16 @@
                             </div>
                         </div>
 
-                        <button @click="submitOrder()" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white py-2 rounded-lg text-sm font-semibold transition" x-text="editingOrderId ? 'Update Order & Inventory' : 'Submit & Update Inventory'"></button>
+                        <button @click="submitOrder()" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white py-2.5 rounded-lg text-sm font-semibold transition active:scale-[0.98]" x-text="editingOrderId ? 'Update Order & Inventory' : 'Submit & Update Inventory'"></button>
                     </div>
 
                     <!-- ORDER HISTORY -->
-                    <div class="bg-cardbg border border-bordercol p-5 rounded-xl shadow lg:col-span-2 space-y-4">
+                    <div class="bg-cardbg border border-bordercol p-4 sm:p-5 rounded-xl shadow lg:col-span-2 space-y-4">
                         <div class="flex justify-between items-center border-b border-bordercol pb-2">
-                            <h2 class="text-base font-bold">Purchase Order History</h2>
+                            <h2 class="text-sm sm:text-base font-bold">Purchase Order History</h2>
                             <div class="relative" x-data="{ exportOpen: false }" @click.away="exportOpen = false">
-                                <button @click="exportOpen = !exportOpen" class="bg-black/40 border border-bordercol px-3 py-1 rounded-lg text-xs font-semibold hover:bg-white/10 transition flex items-center gap-1.5">
-                                    <span>📥 Export Orders</span>
+                                <button @click="exportOpen = !exportOpen" class="bg-black/40 border border-bordercol px-2.5 sm:px-3 py-1 rounded-lg text-xs font-semibold hover:bg-white/10 transition flex items-center gap-1.5">
+                                    <span>📥 Export</span>
                                     <span class="text-[9px]">▼</span>
                                 </button>
                                 <div x-show="exportOpen" class="absolute right-0 mt-1.5 w-44 bg-cardbg border border-bordercol rounded-xl shadow-2xl py-1 z-30 text-xs divide-y divide-bordercol">
@@ -524,23 +552,23 @@
                             </div>
                         </div>
                         
-                        <div class="space-y-4">
+                        <div class="space-y-3 sm:space-y-4">
                             <template x-for="order in orders" :key="order.id">
-                                <div class="bg-black/30 border border-bordercol rounded-xl p-4 space-y-3">
+                                <div class="bg-black/30 border border-bordercol rounded-xl p-3.5 sm:p-4 space-y-2.5 sm:space-y-3">
                                     <div class="flex justify-between items-start">
                                         <div>
-                                            <h3 class="font-bold text-sm text-blue-300" x-text="order.supplier || 'General Order'"></h3>
-                                            <p class="text-xs text-gray-400" x-text="order.date"></p>
+                                            <h3 class="font-bold text-xs sm:text-sm text-blue-300" x-text="order.supplier || 'General Order'"></h3>
+                                            <p class="text-[11px] text-gray-400" x-text="order.date"></p>
                                         </div>
-                                        <div class="space-x-2">
-                                            <button @click="startEditOrder(order)" class="text-blue-400 hover:text-blue-300 text-xs">Edit</button>
-                                            <button @click="deleteOrder(order.id)" class="text-red-400 hover:text-red-300 text-xs">Delete</button>
+                                        <div class="space-x-1.5 sm:space-x-2">
+                                            <button @click="startEditOrder(order)" class="text-blue-400 hover:text-blue-300 text-xs px-2 py-1 bg-black/40 rounded border border-bordercol">Edit</button>
+                                            <button @click="deleteOrder(order.id)" class="text-red-400 hover:text-red-300 text-xs px-2 py-1 bg-black/40 rounded border border-bordercol">Delete</button>
                                         </div>
                                     </div>
 
                                     <div class="space-y-1 border-t border-bordercol pt-2 text-xs">
                                         <template x-for="(oi, idx) in order.items" :key="oi.ingredient_id + '_' + idx">
-                                            <div class="flex justify-between text-gray-300">
+                                            <div class="flex justify-between text-gray-300 text-[11px] sm:text-xs">
                                                 <span x-text="getIngredientName(oi.ingredient_id) + ' (x' + oi.quantity + ')'"></span>
                                                 <span class="font-mono text-gray-400" x-text="formatCurrency(oi.quantity * oi.unit_price) + ' ₫'"></span>
                                             </div>
@@ -554,7 +582,7 @@
                                 </div>
                             </template>
                         </div>
-                        <p class="text-sm text-gray-500 text-center py-8" x-show="orders.length === 0">No purchase orders recorded yet.</p>
+                        <p class="text-sm text-gray-500 text-center py-6 sm:py-8" x-show="orders.length === 0">No purchase orders recorded yet.</p>
                     </div>
 
                 </div>
@@ -563,12 +591,12 @@
         </div>
 
         <!-- ================= RECIPES TAB ================= -->
-        <div x-show="activeTab === 'recipes'" class="space-y-6">
-            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <div x-show="activeTab === 'recipes'" class="space-y-4 sm:space-y-6">
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6">
                 <!-- RECIPE CREATOR / EDITOR -->
-                <div class="bg-cardbg border border-bordercol p-5 rounded-xl shadow space-y-4">
+                <div class="bg-cardbg border border-bordercol p-4 sm:p-5 rounded-xl shadow space-y-4">
                     <div class="flex justify-between items-center border-b border-bordercol pb-2">
-                        <h2 class="text-base font-bold" x-text="editingRecipeId ? 'Edit Cocktail Recipe' : 'New Cocktail Recipe'">New Cocktail Recipe</h2>
+                        <h2 class="text-sm sm:text-base font-bold" x-text="editingRecipeId ? 'Edit Cocktail Recipe' : 'New Cocktail Recipe'">New Cocktail Recipe</h2>
                         <button x-show="editingRecipeId" @click="cancelEditRecipe()" class="text-xs text-gray-400 hover:text-white">Cancel</button>
                     </div>
                     
@@ -594,7 +622,7 @@
                                     @focus="recipeDropdownOpen = true" 
                                     @input="recipeDropdownOpen = true; tempRecipeIngId = ''" 
                                     placeholder="Type to search ingredient..." 
-                                    class="w-full bg-black/40 border border-bordercol rounded-lg px-3 py-1.5 text-xs focus:outline-none focus:border-blue-500"
+                                    class="w-full bg-black/40 border border-bordercol rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-blue-500"
                                 >
                                 <!-- Floating Dropdown List -->
                                 <div 
@@ -613,9 +641,9 @@
                                 </div>
                             </div>
 
-                            <div class="flex items-center gap-2 pr-1">
-                                <input type="number" x-model.number="tempRecipeAmount" placeholder="ml/g" class="flex-1 bg-black/40 border border-bordercol rounded-lg px-2 py-1.5 text-xs">
-                                <button @click="addRecipeItem()" class="bg-blue-600 hover:bg-blue-500 w-8 h-8 rounded-lg text-xs font-bold text-white flex items-center justify-center shrink-0">+</button>
+                            <div class="flex items-center gap-2">
+                                <input type="number" x-model.number="tempRecipeAmount" placeholder="Amount (ml/g)" class="flex-1 bg-black/40 border border-bordercol rounded-lg px-3 py-2 text-sm font-mono">
+                                <button @click="addRecipeItem()" class="bg-blue-600 hover:bg-blue-500 w-9 h-9 rounded-lg text-sm font-bold text-white flex items-center justify-center shrink-0 active:scale-95 transition-transform">+</button>
                             </div>
                         </div>
 
@@ -623,13 +651,13 @@
                         <div class="bg-black/30 border border-bordercol rounded-lg p-3 space-y-2 mt-2">
                             <template x-for="(ri, index) in recipeForm.items" :key="index">
                                 <div class="flex justify-between items-center text-xs bg-cardbg p-2 rounded border border-bordercol">
-                                    <div>
+                                    <div class="pr-2">
                                         <span class="font-medium" x-text="getIngredientName(ri.ingredient_id)"></span>
-                                        <span class="text-gray-400 ml-2" x-text="ri.amount + ' ' + getIngredientUnit(ri.ingredient_id)"></span>
+                                        <span class="text-gray-400 ml-1.5 text-[11px]" x-text="ri.amount + ' ' + getIngredientUnit(ri.ingredient_id)"></span>
                                     </div>
-                                    <div class="flex items-center space-x-2">
-                                        <span class="text-emerald-400 font-mono" x-text="formatCurrency(calcRecipeItemCost(ri)) + ' ₫'"></span>
-                                        <button @click="recipeForm.items.splice(index, 1)" class="text-red-400 hover:text-red-300 font-bold">×</button>
+                                    <div class="flex items-center space-x-2 shrink-0">
+                                        <span class="text-emerald-400 font-mono font-bold" x-text="formatCurrency(calcRecipeItemCost(ri)) + ' ₫'"></span>
+                                        <button @click="recipeForm.items.splice(index, 1)" class="text-red-400 hover:text-red-300 font-bold p-1">✕</button>
                                     </div>
                                 </div>
                             </template>
@@ -637,16 +665,16 @@
                         </div>
                     </div>
 
-                    <button @click="saveRecipe()" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white py-2 rounded-lg text-sm font-semibold transition" x-text="editingRecipeId ? 'Update Recipe' : 'Save Recipe'"></button>
+                    <button @click="saveRecipe()" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white py-2.5 rounded-lg text-sm font-semibold transition active:scale-[0.98]" x-text="editingRecipeId ? 'Update Recipe' : 'Save Recipe'"></button>
                 </div>
 
                 <!-- RECIPES LIST & COSTING -->
-                <div class="bg-cardbg border border-bordercol p-5 rounded-xl shadow lg:col-span-2 space-y-4">
+                <div class="bg-cardbg border border-bordercol p-4 sm:p-5 rounded-xl shadow lg:col-span-2 space-y-4">
                     <div class="flex justify-between items-center border-b border-bordercol pb-2">
-                        <h2 class="text-base font-bold">Cocktail Menu Costing</h2>
+                        <h2 class="text-sm sm:text-base font-bold">Cocktail Menu Costing</h2>
                         <div class="relative" x-data="{ exportOpen: false }" @click.away="exportOpen = false">
-                            <button @click="exportOpen = !exportOpen" class="bg-black/40 border border-bordercol px-3 py-1 rounded-lg text-xs font-semibold hover:bg-white/10 transition flex items-center gap-1.5">
-                                <span>📥 Export Recipes</span>
+                            <button @click="exportOpen = !exportOpen" class="bg-black/40 border border-bordercol px-2.5 sm:px-3 py-1 rounded-lg text-xs font-semibold hover:bg-white/10 transition flex items-center gap-1.5">
+                                <span>📥 Export</span>
                                 <span class="text-[9px]">▼</span>
                             </button>
                             <div x-show="exportOpen" class="absolute right-0 mt-1.5 w-44 bg-cardbg border border-bordercol rounded-xl shadow-2xl py-1 z-30 text-xs divide-y divide-bordercol">
@@ -657,20 +685,20 @@
                         </div>
                     </div>
                     
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4">
                         <template x-for="recipe in recipes" :key="recipe.id">
-                            <div class="bg-black/30 border border-bordercol rounded-xl p-4 space-y-3 relative">
+                            <div class="bg-black/30 border border-bordercol rounded-xl p-3.5 sm:p-4 space-y-3 relative">
                                 <div class="flex justify-between items-start">
-                                    <h3 class="font-bold text-base" x-text="recipe.name"></h3>
-                                    <div class="space-x-2">
-                                        <button @click="startEditRecipe(recipe)" class="text-blue-400 hover:text-blue-300 text-xs">Edit</button>
-                                        <button @click="deleteRecipe(recipe.id)" class="text-red-400 hover:text-red-300 text-xs">Delete</button>
+                                    <h3 class="font-bold text-sm sm:text-base text-gray-100" x-text="recipe.name"></h3>
+                                    <div class="space-x-1.5 shrink-0">
+                                        <button @click="startEditRecipe(recipe)" class="text-blue-400 hover:text-blue-300 text-xs px-2 py-1 bg-black/40 rounded border border-bordercol">Edit</button>
+                                        <button @click="deleteRecipe(recipe.id)" class="text-red-400 hover:text-red-300 text-xs px-2 py-1 bg-black/40 rounded border border-bordercol">Delete</button>
                                     </div>
                                 </div>
 
                                 <div class="space-y-1 border-t border-bordercol pt-2 text-xs">
                                     <template x-for="(ri, idx) in recipe.items" :key="ri.ingredient_id + '_' + idx">
-                                        <div class="flex justify-between text-gray-300">
+                                        <div class="flex justify-between text-gray-300 text-[11px] sm:text-xs">
                                             <span x-text="getIngredientName(ri.ingredient_id) + ' (' + ri.amount + ' ' + getIngredientUnit(ri.ingredient_id) + ')'"></span>
                                             <span class="font-mono text-gray-400" x-text="formatCurrency(calcRecipeItemCost(ri)) + ' ₫'"></span>
                                         </div>
@@ -679,57 +707,57 @@
 
                                 <div class="border-t border-bordercol pt-2 flex justify-between items-center text-xs">
                                     <div>
-                                        <span class="text-gray-400">Total Cost: </span>
+                                        <span class="text-gray-400 text-[11px] sm:text-xs">Cost: </span>
                                         <span class="text-emerald-400 font-bold font-mono" x-text="formatCurrency(calcRecipeTotalCost(recipe)) + ' ₫'"></span>
                                     </div>
                                     <div>
-                                        <span class="text-gray-400">Pour Cost: </span>
+                                        <span class="text-gray-400 text-[11px] sm:text-xs">Pour Cost: </span>
                                         <span class="font-bold font-mono" :class="calcPourCostPct(recipe) > 25 ? 'text-red-400' : 'text-blue-400'" x-text="calcPourCostPct(recipe) + '%'"></span>
                                     </div>
                                 </div>
                             </div>
                         </template>
                     </div>
-                    <p class="text-sm text-gray-500 text-center py-8" x-show="recipes.length === 0">No cocktail recipes saved yet.</p>
+                    <p class="text-sm text-gray-500 text-center py-6 sm:py-8" x-show="recipes.length === 0">No cocktail recipes saved yet.</p>
                 </div>
             </div>
         </div>
 
         <!-- ================= SETTINGS & EXPORT TAB ================= -->
-        <div x-show="activeTab === 'settings'" class="max-w-xl mx-auto space-y-6">
+        <div x-show="activeTab === 'settings'" class="max-w-xl mx-auto space-y-4 sm:space-y-6">
             
             <!-- MASTER EXPORT CARD -->
-            <div class="bg-cardbg border border-bordercol p-6 rounded-xl shadow space-y-4">
+            <div class="bg-cardbg border border-bordercol p-4 sm:p-6 rounded-xl shadow space-y-3 sm:space-y-4">
                 <div class="flex items-center space-x-3 border-b border-bordercol pb-3">
-                    <span class="text-2xl">📊</span>
+                    <span class="text-xl sm:text-2xl">📊</span>
                     <div>
-                        <h2 class="text-base font-bold">Complete Bar Workbook Export</h2>
-                        <p class="text-xs text-gray-400">Download all your operational data into a multi-tab Excel spreadsheet.</p>
+                        <h2 class="text-sm sm:text-base font-bold">Complete Bar Workbook Export</h2>
+                        <p class="text-[11px] sm:text-xs text-gray-400">Download all data into a multi-tab Excel spreadsheet.</p>
                     </div>
                 </div>
 
-                <div class="bg-black/30 border border-bordercol rounded-xl p-4 space-y-3 text-xs text-gray-300">
+                <div class="bg-black/30 border border-bordercol rounded-xl p-3 sm:p-4 space-y-2 text-xs text-gray-300">
                     <p class="font-semibold text-gray-200">The generated workbook includes:</p>
-                    <ul class="list-disc list-inside space-y-1 text-gray-400">
-                        <li><strong>Sheet 1 (Inventory):</strong> Complete stock valuation, par levels, bottle sizes & unit costs.</li>
-                        <li><strong>Sheet 2 (Cocktail Recipes):</strong> Recipe formulations, ingredient breakdown, and pour cost percentages.</li>
-                        <li><strong>Sheet 3 (Purchase Orders):</strong> Historical purchase ledger, suppliers & order line items.</li>
-                        <li><strong>Sheet 4 (Monthly Analytics):</strong> Active month imports, consumption value, and most used ingredients ranking.</li>
+                    <ul class="list-disc list-inside space-y-1 text-gray-400 text-[11px] sm:text-xs">
+                        <li><strong>Sheet 1 (Inventory):</strong> Complete stock valuation & par levels.</li>
+                        <li><strong>Sheet 2 (Cocktail Recipes):</strong> Recipes & pour cost percentages.</li>
+                        <li><strong>Sheet 3 (Purchase Orders):</strong> Historical supplier purchase ledger.</li>
+                        <li><strong>Sheet 4 (Monthly Analytics):</strong> Active month imports & usage ranking.</li>
                     </ul>
                 </div>
 
                 <button 
                     @click="exportFullWorkbookXlsx()" 
-                    class="w-full bg-emerald-600 hover:bg-emerald-500 text-white py-2.5 rounded-lg text-sm font-semibold transition flex items-center justify-center gap-2 shadow-lg"
+                    class="w-full bg-emerald-600 hover:bg-emerald-500 text-white py-2.5 rounded-lg text-sm font-semibold transition flex items-center justify-center gap-2 shadow-lg active:scale-[0.98]"
                 >
                     <span>📥 Download Complete Bar Workbook (.xlsx)</span>
                 </button>
             </div>
 
             <!-- GITHUB SYNC CARD -->
-            <div class="bg-cardbg border border-bordercol p-6 rounded-xl shadow space-y-4">
-                <h2 class="text-base font-bold border-b border-bordercol pb-2">GitHub Cloud Sync</h2>
-                <p class="text-xs text-gray-400">Enter your GitHub details and Personal Access Token (PAT) so your inventory, orders, and audits sync seamlessly across devices.</p>
+            <div class="bg-cardbg border border-bordercol p-4 sm:p-6 rounded-xl shadow space-y-4">
+                <h2 class="text-sm sm:text-base font-bold border-b border-bordercol pb-2">GitHub Cloud Sync</h2>
+                <p class="text-[11px] sm:text-xs text-gray-400">Enter your GitHub details and Personal Access Token (PAT) so your inventory, orders, and audits sync seamlessly across devices.</p>
                 
                 <div>
                     <label class="text-xs text-gray-400 block mb-1">GitHub Username</label>
@@ -746,9 +774,9 @@
                     <input type="password" x-model="ghConfig.token" placeholder="github_pat_..." class="w-full bg-black/40 border border-bordercol rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-blue-500">
                 </div>
 
-                <div class="flex gap-3 pt-2">
-                    <button @click="syncFromGitHub()" class="flex-1 bg-blue-600 hover:bg-blue-500 text-white py-2 rounded-lg text-sm font-semibold transition">Pull from GitHub</button>
-                    <button @click="syncToGitHub()" class="flex-1 bg-emerald-600 hover:bg-emerald-500 text-white py-2 rounded-lg text-sm font-semibold transition">Push to GitHub</button>
+                <div class="flex gap-2.5 sm:gap-3 pt-2">
+                    <button @click="syncFromGitHub()" class="flex-1 bg-blue-600 hover:bg-blue-500 text-white py-2.5 rounded-lg text-xs sm:text-sm font-semibold transition active:scale-[0.98]">Pull from GitHub</button>
+                    <button @click="syncToGitHub()" class="flex-1 bg-emerald-600 hover:bg-emerald-500 text-white py-2.5 rounded-lg text-xs sm:text-sm font-semibold transition active:scale-[0.98]">Push to GitHub</button>
                 </div>
             </div>
 
@@ -759,7 +787,7 @@
     <!-- ================= PERIODICAL STOCK-TAKE AUDIT MODAL ================= -->
     <div 
         x-show="auditModalOpen" 
-        class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-3 sm:p-6"
+        class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-2 sm:p-4 md:p-6"
         x-transition:enter="transition ease-out duration-200"
         x-transition:enter-start="opacity-0"
         x-transition:enter-end="opacity-100"
@@ -768,31 +796,37 @@
         x-transition:leave-end="opacity-0"
     >
         <div 
-            class="bg-cardbg border border-bordercol rounded-2xl shadow-2xl max-w-4xl w-full max-h-[92vh] flex flex-col overflow-hidden"
+            class="bg-cardbg border border-bordercol rounded-xl sm:rounded-2xl shadow-2xl max-w-4xl w-full max-h-[96vh] sm:max-h-[92vh] flex flex-col overflow-hidden"
             @click.away="closeStockTakeModal()"
         >
             <!-- MODAL HEADER -->
-            <div class="p-5 border-b border-bordercol flex justify-between items-center bg-black/20">
+            <div class="p-3.5 sm:p-5 border-b border-bordercol flex justify-between items-start sm:items-center bg-black/20 gap-2">
                 <div>
-                    <div class="flex items-center space-x-2.5">
-                        <span class="text-xl">📝</span>
-                        <h2 class="text-base font-bold">Physical Stock-Take Audit</h2>
+                    <div class="flex items-center space-x-2">
+                        <span class="text-lg sm:text-xl">📝</span>
+                        <h2 class="text-sm sm:text-base font-bold">Physical Stock-Take Audit</h2>
                     </div>
-                    <p class="text-xs text-gray-400 mt-0.5">Count bottles shelf-by-shelf. Expected system stock is shown as baseline.</p>
+                    <p class="text-[11px] sm:text-xs text-gray-400 mt-0.5">Count bottles shelf-by-shelf. Expected stock is baseline.</p>
                 </div>
 
-                <div class="flex items-center space-x-3">
-                    <div class="flex items-center space-x-2 text-xs">
+                <div class="flex items-center space-x-2 shrink-0">
+                    <div class="hidden sm:flex items-center space-x-2 text-xs">
                         <span class="bg-amber-500/20 text-amber-300 border border-amber-500/40 px-2.5 py-1 rounded-full font-mono font-bold" x-text="auditDiscrepancyCount + ' Discrepancies'"></span>
                         <span class="text-gray-400 font-mono text-xs" x-text="'Net: ' + (auditVarianceTotal >= 0 ? '+' : '') + auditVarianceTotal + ' units'"></span>
                     </div>
-                    <button @click="closeStockTakeModal()" class="text-gray-400 hover:text-white text-lg font-bold w-8 h-8 rounded-lg bg-black/30 flex items-center justify-center">✕</button>
+                    <button @click="closeStockTakeModal()" class="text-gray-400 hover:text-white text-base font-bold w-8 h-8 rounded-lg bg-black/30 flex items-center justify-center">✕</button>
                 </div>
             </div>
 
+            <!-- COMPACT MOBILE DISCREPANCY STRIP (Only visible on small phones) -->
+            <div class="sm:hidden px-3.5 py-1.5 bg-black/40 border-b border-bordercol flex justify-between items-center text-[11px] font-mono">
+                <span class="text-amber-300 font-bold" x-text="auditDiscrepancyCount + ' Discrepancies'"></span>
+                <span class="text-gray-400" x-text="'Net: ' + (auditVarianceTotal >= 0 ? '+' : '') + auditVarianceTotal + ' units'"></span>
+            </div>
+
             <!-- MODAL CONTROLS & CATEGORY FILTER -->
-            <div class="p-4 border-b border-bordercol space-y-3 bg-black/10">
-                <div class="flex flex-col sm:flex-row gap-3">
+            <div class="p-3 sm:p-4 border-b border-bordercol space-y-2.5 sm:space-y-3 bg-black/10">
+                <div class="flex flex-col sm:flex-row gap-2 sm:gap-3">
                     <input 
                         type="text" 
                         x-model.debounce.150ms="auditSearchQuery" 
@@ -802,13 +836,13 @@
                     <input 
                         type="text" 
                         x-model="auditNotes" 
-                        placeholder="Audit notes / tag (e.g. End of Month Count, Bar 1 Spot Check)" 
+                        placeholder="Audit notes (e.g. End of Month Count)" 
                         class="bg-black/40 border border-bordercol rounded-lg px-3 py-1.5 text-xs flex-1 focus:outline-none focus:border-blue-500"
                     >
                 </div>
 
-                <!-- CATEGORY SHELF PILLS -->
-                <div class="flex items-center space-x-1.5 overflow-x-auto pb-1 text-xs">
+                <!-- CATEGORY SHELF PILLS (Smooth Touch Scroll Without Clutter) -->
+                <div class="flex items-center space-x-1.5 overflow-x-auto pb-1 text-xs no-scrollbar">
                     <button 
                         @click="auditFilterCategory = 'All'" 
                         :class="auditFilterCategory === 'All' ? 'bg-blue-600 text-white font-semibold' : 'bg-black/30 text-gray-400 hover:text-white border border-bordercol'" 
@@ -827,32 +861,41 @@
                 </div>
             </div>
 
-            <!-- MODAL TABLE -->
+            <!-- MODAL TABLE (Adapts to 3 columns on mobile so entire row fits in 360px without horizontal scroll) -->
             <div class="overflow-y-auto flex-1 p-2 table-contain">
                 <table class="w-full text-left border-collapse text-xs">
                     <thead class="sticky top-0 bg-cardbg shadow-sm">
                         <tr class="bg-black/40 text-gray-400 uppercase text-[10px] border-b border-bordercol">
-                            <th class="p-2.5">Item Name</th>
-                            <th class="p-2.5">Category</th>
-                            <th class="p-2.5 text-center">System Expected</th>
-                            <th class="p-2.5 text-center w-48">Actual Physical Count</th>
-                            <th class="p-2.5 text-center">Variance</th>
+                            <th class="p-2 sm:p-2.5">Item</th>
+                            <th class="p-2.5 hidden sm:table-cell">Category</th>
+                            <th class="p-2.5 text-center hidden sm:table-cell">Expected</th>
+                            <th class="p-2 sm:p-2.5 text-center w-36 sm:w-48">Actual Count</th>
+                            <th class="p-2 sm:p-2.5 text-center">Variance</th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-bordercol">
                         <template x-for="ing in auditIngredients" :key="ing.id">
                             <tr class="hover:bg-white/[0.02] transition-colors">
-                                <td class="p-2.5 font-medium text-gray-100" x-text="ing.name"></td>
-                                <td class="p-2.5 text-gray-400 text-[11px]" x-text="ing.category"></td>
-                                <td class="p-2.5 text-center font-mono text-gray-300">
+                                <!-- Item name + Category & Expected Stock subtitle on mobile -->
+                                <td class="p-2 sm:p-2.5">
+                                    <div class="font-medium text-gray-100 text-xs sm:text-sm" x-text="ing.name"></div>
+                                    <div class="text-[10px] text-gray-400 sm:hidden" x-text="ing.category"></div>
+                                    <div class="text-[10px] text-gray-400 sm:hidden font-mono" x-text="'Exp: ' + Number(ing.stock || 0).toFixed(1) + (ing.volume_unit === 'pcs' ? ' pcs' : ' btl')"></div>
+                                </td>
+
+                                <td class="p-2.5 text-gray-400 text-[11px] hidden sm:table-cell" x-text="ing.category"></td>
+                                
+                                <td class="p-2.5 text-center font-mono text-gray-300 hidden sm:table-cell">
                                     <div class="font-bold text-gray-200" x-text="Number(ing.stock || 0).toFixed(1) + (ing.volume_unit === 'pcs' ? ' pcs' : ' btl')"></div>
                                     <div class="text-[10px] text-gray-500" x-show="ing.unit_volume && ing.volume_unit !== 'pcs'" x-text="'(' + ing.unit_volume + ' ' + (ing.volume_unit || 'ml') + ')'"></div>
                                 </td>
-                                <td class="p-2.5 text-center">
+
+                                <!-- Touch-Friendly Stepper Buttons (32x32px) -->
+                                <td class="p-2 sm:p-2.5 text-center">
                                     <div class="flex items-center justify-center space-x-1">
                                         <button 
                                             @click="adjustAuditCount(ing, -0.1)" 
-                                            class="w-6 h-6 bg-red-900/40 text-red-300 rounded hover:bg-red-900 text-xs font-bold"
+                                            class="w-8 h-8 bg-red-900/40 text-red-300 rounded-lg hover:bg-red-900 text-sm font-bold flex items-center justify-center active:scale-95 transition-transform"
                                         >
                                             -
                                         </button>
@@ -861,20 +904,21 @@
                                             step="0.1" 
                                             :value="auditCounts[ing.id] !== undefined ? auditCounts[ing.id] : Number(ing.stock || 0)" 
                                             @input="auditCounts[ing.id] = Number(Number($event.target.value).toFixed(1))" 
-                                            class="w-16 bg-black/60 border border-bordercol rounded px-1.5 py-1 text-center font-bold text-xs focus:outline-none focus:border-blue-500 font-mono"
+                                            class="w-14 sm:w-16 bg-black/60 border border-bordercol rounded px-1 py-1 text-center font-bold text-xs focus:outline-none focus:border-blue-500 font-mono"
                                         >
                                         <button 
                                             @click="adjustAuditCount(ing, 0.1)" 
-                                            class="w-6 h-6 bg-emerald-900/40 text-emerald-300 rounded hover:bg-emerald-900 text-xs font-bold"
+                                            class="w-8 h-8 bg-emerald-900/40 text-emerald-300 rounded-lg hover:bg-emerald-900 text-sm font-bold flex items-center justify-center active:scale-95 transition-transform"
                                         >
                                             +
                                         </button>
-                                        <span class="text-[10px] text-gray-500 w-6 text-left" x-text="ing.volume_unit === 'pcs' ? 'pcs' : 'btl'"></span>
+                                        <span class="text-[10px] text-gray-400 w-5 text-left ml-0.5" x-text="ing.volume_unit === 'pcs' ? 'pcs' : 'btl'"></span>
                                     </div>
                                 </td>
-                                <td class="p-2.5 text-center font-mono font-bold">
+
+                                <td class="p-2 sm:p-2.5 text-center font-mono font-bold whitespace-nowrap">
                                     <span 
-                                        class="px-2 py-0.5 rounded text-[11px]"
+                                        class="px-1.5 sm:px-2 py-0.5 rounded text-[10px] sm:text-[11px]"
                                         :class="getAuditItemVariance(ing) === 0 ? 'text-gray-400 bg-black/20' : (getAuditItemVariance(ing) > 0 ? 'text-emerald-400 bg-emerald-950/40 border border-emerald-900/50' : 'text-red-400 bg-red-950/40 border border-red-900/50')"
                                         x-text="(getAuditItemVariance(ing) > 0 ? '+' : '') + getAuditItemVariance(ing) + (ing.volume_unit === 'pcs' ? ' pcs' : ' btl')"
                                     ></span>
@@ -886,14 +930,14 @@
             </div>
 
             <!-- MODAL FOOTER -->
-            <div class="p-4 border-t border-bordercol bg-black/30 flex flex-col sm:flex-row justify-between items-center gap-3">
-                <div class="text-xs text-gray-400">
-                    Saving updates current inventory stock and registers this count under monthly reports.
+            <div class="p-3 sm:p-4 border-t border-bordercol bg-black/30 flex flex-col sm:flex-row justify-between items-center gap-2.5 sm:gap-3">
+                <div class="text-[11px] sm:text-xs text-gray-400 text-center sm:text-left">
+                    Saving updates inventory stock & registers audit under monthly reports.
                 </div>
                 <div class="flex items-center space-x-2 w-full sm:w-auto">
-                    <button @click="closeStockTakeModal()" class="flex-1 sm:flex-initial px-4 py-2 bg-gray-800 hover:bg-gray-700 text-gray-300 rounded-lg text-xs font-semibold transition">Cancel</button>
-                    <button @click="submitStockTake()" class="flex-1 sm:flex-initial px-5 py-2 bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg text-xs font-bold shadow-lg transition flex items-center justify-center gap-1.5">
-                        <span>✅ Complete & Update Stock</span>
+                    <button @click="closeStockTakeModal()" class="flex-1 sm:flex-initial px-4 py-2 bg-gray-800 hover:bg-gray-700 text-gray-300 rounded-lg text-xs font-semibold transition active:scale-[0.98]">Cancel</button>
+                    <button @click="submitStockTake()" class="flex-1 sm:flex-initial px-5 py-2 bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg text-xs font-bold shadow-lg transition flex items-center justify-center gap-1.5 active:scale-[0.98]">
+                        <span>✅ Complete & Update</span>
                     </button>
                 </div>
             </div>

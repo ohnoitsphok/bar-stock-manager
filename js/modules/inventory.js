@@ -5,6 +5,7 @@ window.InventoryModule = {
     // Initial Form & Filter State
     searchQuery: '',
     editingId: null,
+    showMobileForm: false,
     groupByCategory: false,
     sortBy: 'name',
     sortOrder: 'asc',
