@@ -20,6 +20,8 @@ window.InventoryModule = {
     _baseSortedKey: '',
     _sortedCache: null,
     _sortedKey: '',
+    _searchMatchCache: null,
+    _searchMatchKey: '',
 
     /**
      * Pre-sorted base array cached by version + sorting criteria.
@@ -56,6 +58,7 @@ window.InventoryModule = {
 
             decorated[i] = {
                 item,
+                id: item.id,
                 nameLower,
                 catRaw,
                 catLower,
@@ -78,6 +81,60 @@ window.InventoryModule = {
         this._baseSortedCache = decorated;
         this._baseSortedKey = baseKey;
         return decorated;
+    },
+
+    /**
+     * Stable sorted list of ingredients for the table DOM.
+     * Crucial: Does NOT change when searching, preventing costly DOM row teardown/rebuild!
+     */
+    get sortedIngredients() {
+        const base = this.baseSortedIngredients;
+        const key = `${this._ingVersion || 0}|${base.length}|${this.groupByCategory}|${this.sortBy}|${this.sortOrder}`;
+        if (this._sortedCache && this._sortedKey === key) {
+            return this._sortedCache;
+        }
+
+        const result = new Array(base.length);
+        for (let i = 0; i < base.length; i++) {
+            result[i] = base[i].item;
+        }
+
+        this._sortedCache = result;
+        this._sortedKey = key;
+        return result;
+    },
+
+    /**
+     * Instantaneous O(1) visibility filter using pre-indexed lower-case search targets.
+     * Replaces destructive x-for diffing with instant CSS display toggling.
+     */
+    get searchMatchingIds() {
+        const q = (this.searchQuery || '').toLowerCase().trim();
+        if (!q) return null;
+
+        const key = `${this._ingVersion || 0}|${this.ingredients.length}|${q}`;
+        if (this._searchMatchCache && this._searchMatchKey === key) {
+            return this._searchMatchCache;
+        }
+
+        const set = new Set();
+        const base = this.baseSortedIngredients;
+        for (let i = 0; i < base.length; i++) {
+            const entry = base[i];
+            if (entry.nameLower.includes(q) || entry.catLower.includes(q)) {
+                set.add(entry.id);
+            }
+        }
+
+        this._searchMatchCache = set;
+        this._searchMatchKey = key;
+        return set;
+    },
+
+    isItemVisible(id) {
+        if (!this.searchQuery || !this.searchQuery.trim()) return true;
+        const matches = this.searchMatchingIds;
+        return matches ? matches.has(id) : true;
     },
 
     /**
@@ -142,39 +199,6 @@ window.InventoryModule = {
         return this.inventorySummary.totalInventoryValue;
     },
 
-    /**
-     * Blazing-fast O(N) search filter: preserves pre-sorted order with ZERO re-sorting
-     * and uses pre-indexed lower-case search targets.
-     */
-    get sortedIngredients() {
-        const base = this.baseSortedIngredients;
-        const q = (this.searchQuery || '').toLowerCase().trim();
-
-        const cacheKey = `${this._ingVersion || 0}|${base.length}|${q}|${this.groupByCategory}|${this.sortBy}|${this.sortOrder}`;
-        if (this._sortedCache && this._sortedKey === cacheKey) {
-            return this._sortedCache;
-        }
-
-        let result;
-        if (!q) {
-            result = new Array(base.length);
-            for (let i = 0; i < base.length; i++) {
-                result[i] = base[i].item;
-            }
-        } else {
-            result = [];
-            for (let i = 0; i < base.length; i++) {
-                const entry = base[i];
-                if (entry.nameLower.includes(q) || entry.catLower.includes(q)) {
-                    result.push(entry.item);
-                }
-            }
-        }
-
-        this._sortedCache = result;
-        this._sortedKey = cacheKey;
-        return result;
-    },
 
     // Methods
     saveIngredient() {

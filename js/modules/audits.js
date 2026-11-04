@@ -15,18 +15,17 @@ window.AuditModule = {
     get auditIngredients() {
         // Avoid rendering 136 hidden DOM rows when modal is closed
         if (!this.auditModalOpen) return [];
+        return Array.isArray(this.ingredients) ? this.ingredients : [];
+    },
 
-        const list = Array.isArray(this.ingredients) ? this.ingredients : [];
-        const cat = this.auditFilterCategory;
+    isAuditItemVisible(ing) {
+        if (!ing) return false;
+        if (this.auditFilterCategory !== 'All' && ing.category !== this.auditFilterCategory) {
+            return false;
+        }
         const q = (this.auditSearchQuery || '').toLowerCase().trim();
-
-        if (cat === 'All' && !q) return list;
-
-        return list.filter(i => {
-            const matchesCat = cat === 'All' || i.category === cat;
-            const matchesQ = !q || (i.name || '').toLowerCase().includes(q);
-            return matchesCat && matchesQ;
-        });
+        if (!q) return true;
+        return (ing.name || '').toLowerCase().includes(q);
     },
 
     /**
