@@ -785,7 +785,7 @@
                         </div>
                         <div>
                             <label class="text-xs text-gray-400 block mb-1 font-medium">Menu Price (₫)</label>
-                            <input type="number" step="5000" x-model.number="recipeForm.price" placeholder="180000" class="w-full bg-black/40 border border-bordercol rounded-lg px-3 py-1.5 text-xs font-mono focus:outline-none focus:border-amber-500 transition">
+                            <input type="number" step="5000" x-model.number="recipeForm.selling_price" placeholder="180000" class="w-full bg-black/40 border border-bordercol rounded-lg px-3 py-1.5 text-xs font-mono focus:outline-none focus:border-amber-500 transition">
                         </div>
                     </div>
 
@@ -901,7 +901,7 @@
                                         <span class="text-[10px] text-gray-400 font-medium" x-text="recipe.category || 'Cocktail'"></span>
                                     </div>
                                     <div class="space-x-1.5 shrink-0">
-                                        <button @click="editingRecipeId = recipe.id; recipeForm = JSON.parse(JSON.stringify(recipe))" class="text-xs text-amber-400 hover:text-amber-300">Edit</button>
+                                        <button @click="startEditRecipe(recipe)" class="text-xs text-amber-400 hover:text-amber-300">Edit</button>
                                         <button @click="deleteRecipe(recipe.id)" class="text-xs text-red-400 hover:text-red-300">Del</button>
                                     </div>
                                 </div>
@@ -922,7 +922,7 @@
                                     </div>
                                     <div>
                                         <span class="text-gray-400">Price: </span>
-                                        <span class="font-bold text-amber-400" x-text="formatCurrency(recipe.price) + ' ₫'"></span>
+                                        <span class="font-bold text-amber-400" x-text="formatCurrency(recipe.selling_price || recipe.price) + ' ₫'"></span>
                                     </div>
                                     <div>
                                         <span 

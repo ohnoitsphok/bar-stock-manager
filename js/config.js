@@ -53,6 +53,7 @@ window.BAR_CONFIG = {
 
     createDefaultRecipeForm: () => ({
         name: '',
+        category: '',
         selling_price: 0,
         items: []
     }),

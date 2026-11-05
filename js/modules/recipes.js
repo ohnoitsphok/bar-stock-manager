@@ -74,10 +74,12 @@ window.RecipeModule = {
     },
 
     startEditRecipe(recipe) {
+        if (!recipe) return;
         this.editingRecipeId = recipe.id;
         this.recipeForm = {
-            name: recipe.name,
-            selling_price: recipe.selling_price,
+            name: recipe.name || '',
+            category: recipe.category || '',
+            selling_price: Number(recipe.selling_price || recipe.price || 0),
             items: (recipe.items || []).map(item => ({ ...item }))
         };
     },
@@ -112,16 +114,24 @@ window.RecipeModule = {
             return this.notify ? this.notify('Please add at least one ingredient to the recipe.', 'warning') : alert('Please add at least one ingredient to the recipe.');
         }
 
+        const sellPrice = Number(this.recipeForm.selling_price || this.recipeForm.price || 0);
+        const payload = {
+            name: this.recipeForm.name.trim(),
+            category: (this.recipeForm.category || 'Cocktail').trim(),
+            selling_price: sellPrice,
+            items: this.recipeForm.items
+        };
+
         if (this.editingRecipeId) {
             const idx = this.recipes.findIndex(r => r.id === this.editingRecipeId);
             if (idx !== -1) {
-                this.recipes[idx] = { ...this.recipeForm, id: this.editingRecipeId };
+                this.recipes[idx] = { ...payload, id: this.editingRecipeId };
             }
             this.editingRecipeId = null;
             if (this.notify) this.notify('Cocktail recipe updated', 'success');
         } else {
             this.recipes.push({
-                ...this.recipeForm,
+                ...payload,
                 id: Date.now().toString()
             });
             if (this.notify) this.notify('New cocktail added to menu', 'success');
@@ -172,9 +182,9 @@ window.RecipeModule = {
             totalCost += this.calcRecipeItemCost(items[i]);
         }
 
-        const sellPrice = Number(recipe.selling_price || 0);
+        const sellPrice = Number(recipe.selling_price || recipe.price || 0);
         const pourCostNum = sellPrice > 0 ? (totalCost / sellPrice) * 100 : 0;
-        const pourCostPct = sellPrice > 0 ? pourCostNum.toFixed(1) : 0;
+        const pourCostPct = sellPrice > 0 ? pourCostNum.toFixed(1) : '0';
 
         const metrics = { totalCost, pourCostPct, pourCostNum };
         if (recipe.id) {
