@@ -1,0 +1,11 @@
+# Autonomous Multi-Agent Engineering Protocol
+
+Every feature addition, bug fix, or refactor must pass an autonomous 4-stage pipeline before being marked done:
+* Stage 1 (Implementation): Produce minimal, non-destructive unified diffs.
+* Stage 2 (QA & Bug Sweep): Run local linters, unit tests, and terminal builds. Inspect console output and catch syntax, runtime, and type errors. If tests fail, diagnose and self-heal automatically.
+* Stage 3 (Optimization & State Audit): Inspect git diffs for unnecessary DOM reflows, unhandled Promise rejections, memory leaks, and redundant reactive state updates. Apply non-breaking optimizations.
+* Stage 4 (Artifact Sign-off): Produce an Artifact summarizing: (1) Files changed, (2) Test results/status, (3) Optimizations applied.
+
+## Subagent Pipeline Roles (`.antigravity/subagents.json`)
+- **`qa-verifier`**: Executes Stage 2 verification (Alpine.js template binding validation, JS syntax/lexical checks, data integrity checks, and test suites), inspects exit codes, and isolates failures for automatic self-healing.
+- **`perf-optimizer`**: Executes Stage 3 audit on git diffs for DOM reflow bottlenecks, Alpine.js reactive overhead, memory leaks, and unhandled async rejections.
