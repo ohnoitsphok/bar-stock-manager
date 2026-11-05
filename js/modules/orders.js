@@ -17,27 +17,28 @@ window.OrderModule = {
     _orderTotalsKey: '',
 
     get filteredOrderIngredients() {
-        const list = Array.isArray(this.ingredients) ? this.ingredients : [];
+        const base = this.baseSortedIngredients;
         const q = (this.orderSearchQuery || '').toLowerCase().trim();
-        const key = `${this._ingVersion || 0}|${list.length}|${q}`;
+        const key = `${this._ingVersion || 0}|${base ? base.length : (this.ingredients || []).length}|${q}`;
         if (this._orderFilterCache && this._orderFilterKey === key) {
             return this._orderFilterCache;
         }
 
-        const limit = window.BAR_CONFIG.DEFAULTS.COMBOBOX_MAX_RESULTS;
-        let res;
-        if (!q) {
-            res = list.slice(0, limit);
+        const limit = window.BAR_CONFIG?.DEFAULTS?.COMBOBOX_MAX_RESULTS || 15;
+        const res = [];
+        if (base && base.length > 0) {
+            for (let i = 0; i < base.length && res.length < limit; i++) {
+                const entry = base[i];
+                if (!q || entry.nameLower.includes(q) || entry.catLower.includes(q)) {
+                    res.push(entry.item);
+                }
+            }
         } else {
-            res = [];
+            const list = Array.isArray(this.ingredients) ? this.ingredients : [];
             for (let i = 0; i < list.length && res.length < limit; i++) {
                 const ing = list[i];
-                if (
-                    ing && (
-                        (ing.name || '').toLowerCase().includes(q) ||
-                        (ing.category || '').toLowerCase().includes(q)
-                    )
-                ) {
+                if (!ing) continue;
+                if (!q || (ing.name || '').toLowerCase().includes(q) || (ing.category || '').toLowerCase().includes(q)) {
                     res.push(ing);
                 }
             }

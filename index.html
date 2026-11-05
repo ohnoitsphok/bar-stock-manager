@@ -638,9 +638,10 @@
                             <div class="relative" @click.away="orderDropdownOpen = false">
                                 <input 
                                     type="text" 
-                                    x-model.debounce.200ms="orderSearchQuery" 
+                                    x-model.debounce.50ms="orderSearchQuery" 
                                     @focus="orderDropdownOpen = true" 
                                     @input="orderDropdownOpen = true; tempOrderIngId = ''" 
+                                    @keydown.escape="orderDropdownOpen = false"
                                     placeholder="Type to search ingredient..." 
                                     class="w-full bg-black/40 border border-bordercol rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-amber-500 transition"
                                 >
@@ -795,9 +796,10 @@
                         <div class="relative" @click.away="recipeDropdownOpen = false">
                             <input 
                                 type="text" 
-                                x-model.debounce.200ms="recipeSearchQuery" 
+                                x-model.debounce.50ms="recipeSearchQuery" 
                                 @focus="recipeDropdownOpen = true" 
                                 @input="recipeDropdownOpen = true; tempRecipeIngId = ''" 
+                                @keydown.escape="recipeDropdownOpen = false"
                                 placeholder="Type to search ingredient..." 
                                 class="w-full bg-black/40 border border-bordercol rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-amber-500 transition"
                             >

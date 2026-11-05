@@ -18,27 +18,29 @@ window.RecipeModule = {
     _recipeMetricsKey: '',
 
     get filteredRecipeIngredients() {
-        const list = Array.isArray(this.ingredients) ? this.ingredients : [];
-        const q = (this.recipeSearchQuery || '').toLowerCase().trim();
-        const key = `${this._ingVersion || 0}|${list.length}|${q}`;
+        const base = this.baseSortedIngredients;
+        const rawQ = (this.recipeSearchQuery || '').toLowerCase().trim();
+        const q = rawQ.includes('(') ? rawQ.split('(')[0].trim() : rawQ;
+        const key = `${this._ingVersion || 0}|${base ? base.length : (this.ingredients || []).length}|${q}`;
         if (this._recipeFilterCache && this._recipeFilterKey === key) {
             return this._recipeFilterCache;
         }
 
-        const limit = window.BAR_CONFIG.DEFAULTS.COMBOBOX_MAX_RESULTS;
-        let res;
-        if (!q) {
-            res = list.slice(0, limit);
+        const limit = window.BAR_CONFIG?.DEFAULTS?.COMBOBOX_MAX_RESULTS || 15;
+        const res = [];
+        if (base && base.length > 0) {
+            for (let i = 0; i < base.length && res.length < limit; i++) {
+                const entry = base[i];
+                if (!q || entry.nameLower.includes(q) || entry.catLower.includes(q)) {
+                    res.push(entry.item);
+                }
+            }
         } else {
-            res = [];
+            const list = Array.isArray(this.ingredients) ? this.ingredients : [];
             for (let i = 0; i < list.length && res.length < limit; i++) {
                 const ing = list[i];
-                if (
-                    ing && (
-                        (ing.name || '').toLowerCase().includes(q) ||
-                        (ing.category || '').toLowerCase().includes(q)
-                    )
-                ) {
+                if (!ing) continue;
+                if (!q || (ing.name || '').toLowerCase().includes(q) || (ing.category || '').toLowerCase().includes(q)) {
                     res.push(ing);
                 }
             }
