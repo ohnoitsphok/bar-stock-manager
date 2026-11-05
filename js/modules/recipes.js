@@ -4,6 +4,8 @@
 window.RecipeModule = {
     editingRecipeId: null,
     recipeSearchQuery: '',
+    recipeFilterQuery: '',
+    recipeCategoryFilter: 'All',
     recipeDropdownOpen: false,
     recipeForm: window.BAR_CONFIG.createDefaultRecipeForm(),
     tempRecipeIngId: '',
@@ -83,12 +85,29 @@ window.RecipeModule = {
         this.recipeForm = window.BAR_CONFIG.createDefaultRecipeForm();
     },
 
+    get displayRecipes() {
+        const list = Array.isArray(this.recipes) ? this.recipes : [];
+        const q = (this.recipeFilterQuery || '').toLowerCase().trim();
+        const cat = this.recipeCategoryFilter || 'All';
+
+        if (!q && cat === 'All') return list;
+
+        return list.filter(r => {
+            const matchCat = cat === 'All' || r.category === cat;
+            const matchQ = !q || (r.name || '').toLowerCase().includes(q) || (r.items || []).some(ri => {
+                const ing = this.getIngredientById ? this.getIngredientById(ri.ingredient_id) : null;
+                return ing && (ing.name || '').toLowerCase().includes(q);
+            });
+            return matchCat && matchQ;
+        });
+    },
+
     saveRecipe() {
         if (!this.recipeForm.name || !this.recipeForm.name.trim()) {
-            return alert('Please enter a cocktail recipe name.');
+            return this.notify ? this.notify('Please enter a cocktail recipe name.', 'warning') : alert('Please enter a cocktail recipe name.');
         }
         if (!this.recipeForm.items || this.recipeForm.items.length === 0) {
-            return alert('Please add at least one ingredient to the recipe.');
+            return this.notify ? this.notify('Please add at least one ingredient to the recipe.', 'warning') : alert('Please add at least one ingredient to the recipe.');
         }
 
         if (this.editingRecipeId) {
@@ -97,11 +116,13 @@ window.RecipeModule = {
                 this.recipes[idx] = { ...this.recipeForm, id: this.editingRecipeId };
             }
             this.editingRecipeId = null;
+            if (this.notify) this.notify('Cocktail recipe updated', 'success');
         } else {
             this.recipes.push({
                 ...this.recipeForm,
                 id: Date.now().toString()
             });
+            if (this.notify) this.notify('New cocktail added to menu', 'success');
         }
 
         this.recipeForm = window.BAR_CONFIG.createDefaultRecipeForm();
@@ -113,6 +134,7 @@ window.RecipeModule = {
             this.recipes = this.recipes.filter(r => r.id !== id);
             if (this.editingRecipeId === id) this.cancelEditRecipe();
             this.persist('recipes');
+            if (this.notify) this.notify('Cocktail recipe removed', 'info');
         }
     },
 

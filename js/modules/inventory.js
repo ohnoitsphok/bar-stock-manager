@@ -4,6 +4,8 @@
 window.InventoryModule = {
     // Initial Form & Filter State
     searchQuery: '',
+    inventoryFilterCategory: 'All',
+    onlyLowStock: false,
     editingId: null,
     showMobileForm: false,
     groupByCategory: false,
@@ -131,7 +133,21 @@ window.InventoryModule = {
         return set;
     },
 
+    get formCostPerMl() {
+        const price = Number(this.form.price || 0);
+        const vol = Number(this.form.unit_volume || 0);
+        return vol > 0 ? (price / vol) : 0;
+    },
+
     isItemVisible(id) {
+        const item = this.getIngredientById(id);
+        if (!item) return false;
+        if (this.inventoryFilterCategory !== 'All' && item.category !== this.inventoryFilterCategory) {
+            return false;
+        }
+        if (this.onlyLowStock && Number(item.stock || 0) > Number(item.par || 0)) {
+            return false;
+        }
         if (!this.searchQuery || !this.searchQuery.trim()) return true;
         const matches = this.searchMatchingIds;
         return matches ? matches.has(id) : true;
@@ -203,7 +219,7 @@ window.InventoryModule = {
     // Methods
     saveIngredient() {
         if (!this.form.name || !this.form.name.trim()) {
-            return alert('Please enter an ingredient name.');
+            return this.notify ? this.notify('Please enter an ingredient name.', 'warning') : alert('Please enter an ingredient name.');
         }
 
         if (this.editingId) {
@@ -211,9 +227,11 @@ window.InventoryModule = {
             if (idx !== -1) {
                 this.ingredients[idx] = { ...this.form, id: this.editingId };
             }
+            if (this.notify) this.notify('Ingredient updated successfully', 'success');
         } else {
             const newId = Date.now().toString();
             this.ingredients.push({ ...this.form, id: newId });
+            if (this.notify) this.notify('New ingredient added to stock', 'success');
         }
 
         this.resetForm();
@@ -230,6 +248,7 @@ window.InventoryModule = {
             this.ingredients = this.ingredients.filter(i => i.id !== id);
             if (this.editingId === id) this.resetForm();
             this.persist('ingredients');
+            if (this.notify) this.notify('Ingredient removed', 'info');
         }
     },
 

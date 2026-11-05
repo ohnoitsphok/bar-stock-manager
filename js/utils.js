@@ -144,5 +144,12 @@ window.BarUtils = {
         a.click();
         document.body.removeChild(a);
         setTimeout(() => URL.revokeObjectURL(url), 100);
+    },
+
+    /**
+     * Non-blocking application notification event dispatcher
+     */
+    notify(message, type = 'success') {
+        window.dispatchEvent(new CustomEvent('bar-toast', { detail: { message, type } }));
     }
 };

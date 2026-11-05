@@ -118,6 +118,14 @@ window.AuditModule = {
         this.auditCounts[ing.id] = Math.max(0, Number((current + delta).toFixed(1)));
     },
 
+    setAuditFraction(ing, fraction) {
+        if (!ing) return;
+        const current = this.auditCounts[ing.id] !== undefined ? Number(this.auditCounts[ing.id]) : Number(ing.stock || 0);
+        const whole = Math.floor(current);
+        const val = fraction === 1 ? (whole === current && whole > 0 ? whole : whole + 1) : whole + fraction;
+        this.auditCounts[ing.id] = Number(val.toFixed(2));
+    },
+
     submitStockTake() {
         const { discrepancyCount: discrepancies, varianceTotal: varianceSum } = this.auditSummary;
         const confirmMsg = `Complete stock-take audit?\n\n• Items with discrepancies: ${discrepancies}\n• Net stock variance: ${varianceSum > 0 ? '+' : ''}${varianceSum} units\n\nThis will update all inventory stock levels to your entered physical counts.`;
@@ -161,13 +169,18 @@ window.AuditModule = {
         this.closeStockTakeModal();
         this.persist('audits');
 
-        alert(`✅ Stock-take audit saved! Inventory stock successfully updated to physical counts.`);
+        if (this.notify) {
+            this.notify('Stock-take audit completed & inventory updated', 'success');
+        } else {
+            alert('Stock-take audit saved! Inventory stock successfully updated to physical counts.');
+        }
     },
 
     deleteAudit(id) {
         if (confirm('Delete this historical audit log? (Note: Live stock levels will not be reverted)')) {
             this.audits = (this.audits || []).filter(a => a.id !== id);
             this.persist('audits');
+            if (this.notify) this.notify('Audit record deleted', 'info');
         }
     }
 };

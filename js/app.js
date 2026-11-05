@@ -19,7 +19,24 @@ function barApp() {
         _auditVersion: 0,
         _debouncedPush: null,
 
+        // Non-blocking in-app toasts
+        toasts: [],
+        notify(message, type = 'success', timeout = 3200) {
+            const id = Date.now().toString(36) + Math.random().toString(36).slice(2, 5);
+            this.toasts.push({ id, message, type });
+            setTimeout(() => {
+                this.toasts = this.toasts.filter(t => t.id !== id);
+            }, timeout);
+        },
+
         async initApp() {
+            // Listen for decoupled notification events
+            window.addEventListener('bar-toast', (e) => {
+                if (e.detail && e.detail.message) {
+                    this.notify(e.detail.message, e.detail.type || 'success');
+                }
+            });
+
             // 1. Initial fallback: if storage is empty, seed from local data.json
             if (this.ingredients.length === 0 && this.recipes.length === 0) {
                 const seed = await window.StorageService.seedFromLocalFile();
@@ -86,7 +103,7 @@ function barApp() {
 
         async syncToGitHub(silent = false) {
             if (!this.ghConfig.token || !this.ghConfig.username || !this.ghConfig.repo) {
-                if (!silent) alert('Please fill in GitHub username, repo name, and Token in the Settings tab.');
+                if (!silent) this.notify('Please fill in GitHub username, repo name, and Token.', 'warning');
                 return;
             }
             window.StorageService.setGhConfig(this.ghConfig);
@@ -99,15 +116,16 @@ function barApp() {
                     orders: this.orders,
                     audits: this.audits
                 });
-                this.syncStatus = 'Synced with GitHub ✅';
+                this.syncStatus = 'Synced with GitHub';
+                if (!silent) this.notify('Synced successfully with GitHub', 'success');
             } catch (err) {
-                this.syncStatus = 'Sync failed ❌';
-                if (!silent) alert('GitHub Error: ' + (err.message || 'Check console'));
+                this.syncStatus = 'Sync failed';
+                if (!silent) this.notify('GitHub Error: ' + (err.message || 'Check console'), 'error');
                 console.error('GitHub Push Error:', err);
             }
         },
 
-        async syncFromGitHub() {
+        async syncFromGitHub(silent = false) {
             if (!this.ghConfig.token || !this.ghConfig.username || !this.ghConfig.repo) return;
             this.syncStatus = 'Pulling from GitHub...';
             try {
@@ -124,9 +142,11 @@ function barApp() {
                 window.StorageService.setRecipes(this.recipes);
                 window.StorageService.setOrders(this.orders);
                 window.StorageService.setAudits(this.audits);
-                this.syncStatus = 'Synced with GitHub ✅';
+                this.syncStatus = 'Synced with GitHub';
+                if (!silent) this.notify('Pulled latest data from GitHub', 'success');
             } catch (err) {
-                this.syncStatus = 'Pull failed ❌';
+                this.syncStatus = 'Pull failed';
+                if (!silent) this.notify('GitHub Pull Error: ' + (err.message || 'Check console'), 'error');
                 console.error('GitHub Pull Error:', err);
             }
         },

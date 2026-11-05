@@ -6,28 +6,34 @@ html {
     -webkit-tap-highlight-color: transparent;
 }
 
+/* Custom text selection themed to burnished amber */
+::selection {
+    background: rgba(245, 158, 11, 0.25);
+    color: #fef3c7;
+}
+
 /* Smooth momentum scrolling for mobile devices */
 .overflow-x-auto, .overflow-y-auto {
     -webkit-overflow-scrolling: touch;
 }
 
-/* Custom scrollbars for dark mode tables and combobox dropdowns */
+/* Custom scrollbars for obsidian dark mode */
 ::-webkit-scrollbar {
     width: 6px;
     height: 6px;
 }
 
 ::-webkit-scrollbar-track {
-    background: #121212;
+    background: #0a0c10;
 }
 
 ::-webkit-scrollbar-thumb {
-    background: #2d2d2d;
+    background: #222836;
     border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-    background: #3d3d3d;
+    background: #2d3548;
 }
 
 /* Hide scrollbars for horizontal pill bars while maintaining scrollability */
@@ -44,6 +50,16 @@ html {
     input, select, textarea {
         font-size: 16px !important;
     }
+}
+
+/* Enforce tabular digits for financial, stock & percentage alignment */
+.tabular-nums {
+    font-variant-numeric: tabular-nums;
+}
+
+/* Accent focus rings */
+input:focus-visible, select:focus-visible, textarea:focus-visible, button:focus-visible {
+    outline: none;
 }
 
 /* Isolate table layout & style recalculation boundaries */

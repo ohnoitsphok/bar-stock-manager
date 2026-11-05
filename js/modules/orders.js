@@ -98,7 +98,7 @@ window.OrderModule = {
 
     submitOrder() {
         if (!this.orderForm.items || this.orderForm.items.length === 0) {
-            return alert('Please add at least one item to the order.');
+            return this.notify ? this.notify('Please add at least one item to the order.', 'warning') : alert('Please add at least one item to the order.');
         }
 
         if (this.editingOrderId) {
@@ -122,6 +122,7 @@ window.OrderModule = {
                 };
             }
             this.editingOrderId = null;
+            if (this.notify) this.notify('Purchase order updated & stock adjusted', 'success');
         } else {
             const now = new Date();
             const dateStr = now.toLocaleDateString() + ' ' + now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
@@ -131,6 +132,7 @@ window.OrderModule = {
                 date: dateStr
             };
             this.orders.unshift(newOrder);
+            if (this.notify) this.notify('Purchase order logged & stock received', 'success');
         }
 
         // Apply new stock quantities & update unit price if applicable
@@ -176,6 +178,7 @@ window.OrderModule = {
             this.orders = this.orders.filter(o => o.id !== id);
             if (this.editingOrderId === id) this.cancelEditOrder();
             this.persist('orders');
+            if (this.notify) this.notify('Order deleted & received stock rolled back', 'info');
         }
     },
 

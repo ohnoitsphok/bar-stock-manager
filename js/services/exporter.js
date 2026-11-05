@@ -86,7 +86,7 @@ window.ExportService = {
         try {
             if (navigator.clipboard && navigator.clipboard.writeText) {
                 await navigator.clipboard.writeText(tsv);
-                alert(`📋 Copied ${rows.length} rows to clipboard! Open Google Sheets and press Ctrl+V to paste.`);
+                window.BarUtils.notify(`Copied ${rows.length} rows to clipboard. Paste with Ctrl+V into Google Sheets.`, 'success');
                 return true;
             }
         } catch (e) {
@@ -102,7 +102,7 @@ window.ExportService = {
         textarea.select();
         document.execCommand('copy');
         document.body.removeChild(textarea);
-        alert(`📋 Copied ${rows.length} rows to clipboard! Open Google Sheets and press Ctrl+V to paste.`);
+        window.BarUtils.notify(`Copied ${rows.length} rows to clipboard. Paste with Ctrl+V into Google Sheets.`, 'success');
         return true;
     },
 
