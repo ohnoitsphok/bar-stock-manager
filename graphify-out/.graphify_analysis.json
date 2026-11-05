@@ -1,0 +1,221 @@
+{
+  "communities": {
+    "0": [
+      "js_modules_inventory",
+      "js_modules_inventory_adjuststock",
+      "js_modules_inventory_basesortedingredients",
+      "js_modules_inventory_copyinventorytoclipboard",
+      "js_modules_inventory_deleteitem",
+      "js_modules_inventory_edititem",
+      "js_modules_inventory_exportinventorycsv",
+      "js_modules_inventory_exportinventoryxlsx",
+      "js_modules_inventory_getingredientbyid",
+      "js_modules_inventory_getingredientname",
+      "js_modules_inventory_getingredientunit",
+      "js_modules_inventory_ingredientmap",
+      "js_modules_inventory_inventorysummary",
+      "js_modules_inventory_isitemvisible",
+      "js_modules_inventory_lowstockcount",
+      "js_modules_inventory_resetform",
+      "js_modules_inventory_saveingredient",
+      "js_modules_inventory_searchmatchingids",
+      "js_modules_inventory_sortedingredients",
+      "js_modules_inventory_totalinventoryvalue"
+    ],
+    "1": [
+      "js_modules_recipes",
+      "js_modules_recipes_addrecipeitem",
+      "js_modules_recipes_calcpourcostpct",
+      "js_modules_recipes_calcrecipeitemcost",
+      "js_modules_recipes_calcrecipetotalcost",
+      "js_modules_recipes_canceleditrecipe",
+      "js_modules_recipes_copyrecipestoclipboard",
+      "js_modules_recipes_deleterecipe",
+      "js_modules_recipes_exportrecipescsv",
+      "js_modules_recipes_exportrecipesxlsx",
+      "js_modules_recipes_filteredrecipeingredients",
+      "js_modules_recipes_getrecipemetrics",
+      "js_modules_recipes_saverecipe",
+      "js_modules_recipes_selectrecipeingredient",
+      "js_modules_recipes_starteditrecipe"
+    ],
+    "2": [
+      "js_utils",
+      "js_utils_base64toutf8",
+      "js_utils_currencyformatters",
+      "js_utils_debounce",
+      "js_utils_downloadblob",
+      "js_utils_formatcurrency",
+      "js_utils_formatmonthlabel",
+      "js_utils_getcurrencyformatter",
+      "js_utils_month_names",
+      "js_utils_monthlabelcache",
+      "js_utils_parseyearmonth",
+      "js_utils_textdecoder",
+      "js_utils_textencoder",
+      "js_utils_utf8tobase64",
+      "js_utils_yearmonthcache"
+    ],
+    "3": [
+      "js_modules_analytics",
+      "js_modules_analytics_activereportmonth",
+      "js_modules_analytics_availablereportmonths",
+      "js_modules_analytics_copymonthlyreporttoclipboard",
+      "js_modules_analytics_exportmonthlyreportcsv",
+      "js_modules_analytics_exportmonthlyreportxlsx",
+      "js_modules_analytics_monthlyauditslist",
+      "js_modules_analytics_monthlyimportslist",
+      "js_modules_analytics_monthlyimporttotal",
+      "js_modules_analytics_monthlysnapshot",
+      "js_modules_analytics_monthlyusagedata",
+      "js_modules_analytics_monthlyusagetotal",
+      "js_modules_analytics_mostusedingredients"
+    ],
+    "4": [
+      "js_modules_audits",
+      "js_modules_audits_adjustauditcount",
+      "js_modules_audits_auditdiscrepancycount",
+      "js_modules_audits_auditingredients",
+      "js_modules_audits_auditsummary",
+      "js_modules_audits_auditvariancetotal",
+      "js_modules_audits_closestocktakemodal",
+      "js_modules_audits_deleteaudit",
+      "js_modules_audits_getaudititemvariance",
+      "js_modules_audits_getauditnetvariance",
+      "js_modules_audits_isaudititemvisible",
+      "js_modules_audits_openstocktakemodal",
+      "js_modules_audits_submitstocktake"
+    ],
+    "5": [
+      "js_modules_orders",
+      "js_modules_orders_addorderitem",
+      "js_modules_orders_canceleditorder",
+      "js_modules_orders_copyorderstoclipboard",
+      "js_modules_orders_deleteorder",
+      "js_modules_orders_exportorderscsv",
+      "js_modules_orders_exportordersxlsx",
+      "js_modules_orders_filteredorderingredients",
+      "js_modules_orders_getordertotal",
+      "js_modules_orders_selectorderingredient",
+      "js_modules_orders_starteditorder",
+      "js_modules_orders_submitorder"
+    ],
+    "6": [
+      "js_services_storage",
+      "js_services_storage_getaudits",
+      "js_services_storage_getghconfig",
+      "js_services_storage_getingredients",
+      "js_services_storage_getorders",
+      "js_services_storage_getrecipes",
+      "js_services_storage_seedfromlocalfile",
+      "js_services_storage_setaudits",
+      "js_services_storage_setghconfig",
+      "js_services_storage_setingredients",
+      "js_services_storage_setorders",
+      "js_services_storage_setrecipes"
+    ],
+    "7": [
+      "js_services_exporter",
+      "js_services_exporter_buildinventorysheet",
+      "js_services_exporter_buildmonthlyreportsheet",
+      "js_services_exporter_buildorderssheet",
+      "js_services_exporter_buildrecipessheet",
+      "js_services_exporter_copytoclipboard",
+      "js_services_exporter_ensureingmap",
+      "js_services_exporter_exporttocsv",
+      "js_services_exporter_exporttoxlsx"
+    ],
+    "8": [
+      "js_services_github",
+      "js_services_github_getbaseurl",
+      "js_services_github_getheaders",
+      "js_services_github_pull",
+      "js_services_github_push"
+    ],
+    "9": [
+      "js_app",
+      "js_app_barapp"
+    ],
+    "10": [
+      "js_config"
+    ]
+  },
+  "cohesion": {
+    "0": 0.12631578947368421,
+    "1": 0.17142857142857143,
+    "2": 0.14285714285714285,
+    "3": 0.15384615384615385,
+    "4": 0.16666666666666666,
+    "5": 0.18181818181818182,
+    "6": 0.16666666666666666,
+    "7": 0.3055555555555556,
+    "8": 0.8,
+    "9": 1.0,
+    "10": 1.0
+  },
+  "gods": [
+    {
+      "id": "js_modules_inventory_getingredientbyid",
+      "label": "getIngredientById()",
+      "degree": 4
+    },
+    {
+      "id": "js_modules_recipes_getrecipemetrics",
+      "label": "getRecipeMetrics()",
+      "degree": 4
+    },
+    {
+      "id": "js_modules_inventory_resetform",
+      "label": "resetForm()",
+      "degree": 3
+    },
+    {
+      "id": "js_services_exporter_ensureingmap",
+      "label": "_ensureIngMap()",
+      "degree": 3
+    },
+    {
+      "id": "js_services_github_getbaseurl",
+      "label": "getBaseUrl()",
+      "degree": 3
+    },
+    {
+      "id": "js_services_github_getheaders",
+      "label": "getHeaders()",
+      "degree": 3
+    },
+    {
+      "id": "js_services_github_pull",
+      "label": "pull()",
+      "degree": 3
+    },
+    {
+      "id": "js_services_github_push",
+      "label": "push()",
+      "degree": 3
+    },
+    {
+      "id": "js_modules_inventory_adjuststock",
+      "label": "adjustStock()",
+      "degree": 2
+    },
+    {
+      "id": "js_modules_inventory_deleteitem",
+      "label": "deleteItem()",
+      "degree": 2
+    }
+  ],
+  "surprises": [],
+  "questions": [
+    {
+      "type": "low_cohesion",
+      "question": "Should `Community 0` be split into smaller, more focused modules?",
+      "why": "Cohesion score 0.12631578947368421 - nodes in this community are weakly interconnected."
+    },
+    {
+      "type": "low_cohesion",
+      "question": "Should `Community 2` be split into smaller, more focused modules?",
+      "why": "Cohesion score 0.14285714285714285 - nodes in this community are weakly interconnected."
+    }
+  ]
+}
