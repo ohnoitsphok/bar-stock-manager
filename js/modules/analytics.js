@@ -4,6 +4,8 @@
 window.AnalyticsModule = {
     selectedReportMonth: '',
     leaderboardMode: 'value', // 'value' | 'volume'
+    leaderboardPage: 1,
+    leaderboardPageSize: 20,
     reportsActiveSubTab: 'analytics', // 'analytics' | 'orders'
 
     // Internal caches
@@ -99,6 +101,7 @@ window.AnalyticsModule = {
         }
 
         let latestAuditMap = null;
+        let earliestAuditMap = null;
         if (auditsList.length > 0) {
             latestAuditMap = new Map();
             const latestItems = auditsList[0].items || [];
@@ -107,6 +110,18 @@ window.AnalyticsModule = {
                 if (ai && ai.ingredient_id !== undefined) {
                     latestAuditMap.set(ai.ingredient_id, ai);
                 }
+            }
+            if (auditsList.length > 1) {
+                earliestAuditMap = new Map();
+                const earliestItems = auditsList[auditsList.length - 1].items || [];
+                for (let i = 0; i < earliestItems.length; i++) {
+                    const ai = earliestItems[i];
+                    if (ai && ai.ingredient_id !== undefined) {
+                        earliestAuditMap.set(ai.ingredient_id, ai);
+                    }
+                }
+            } else {
+                earliestAuditMap = latestAuditMap;
             }
         }
 
@@ -121,10 +136,11 @@ window.AnalyticsModule = {
             let usedUnits = 0;
 
             if (latestAuditMap) {
-                const auditItem = latestAuditMap.get(ing.id);
-                if (auditItem) {
-                    const endingStock = Number(auditItem.physical_stock || 0);
-                    const beginningStock = Number(auditItem.system_stock || 0);
+                const latestItem = latestAuditMap.get(ing.id);
+                const earliestItem = earliestAuditMap ? earliestAuditMap.get(ing.id) : latestItem;
+                if (latestItem) {
+                    const endingStock = Number(latestItem.physical_stock || 0);
+                    const beginningStock = Number((earliestItem || latestItem).system_stock || 0);
                     const rawUsage = (beginningStock + imported) - endingStock;
                     usedUnits = Math.max(0, Number(rawUsage.toFixed(1)));
                 } else {
@@ -135,8 +151,11 @@ window.AnalyticsModule = {
             }
 
             if (usedUnits > 0) {
+                const roundedUnits = Number(usedUnits.toFixed(1));
                 const unitPrice = Number(ing.price || 0);
-                const usedValue = usedUnits * unitPrice;
+                const usedValue = roundedUnits * unitPrice;
+                const roundedValue = Math.round(usedValue);
+                const usedVolume = Math.round(roundedUnits * Number(ing.unit_volume || 0));
                 grandTotalValue += usedValue;
 
                 usageList.push({
@@ -145,9 +164,13 @@ window.AnalyticsModule = {
                     category: ing.category,
                     unit_volume: ing.unit_volume,
                     volume_unit: ing.volume_unit || 'ml',
-                    usedUnits: Number(usedUnits.toFixed(1)),
+                    usedUnits: roundedUnits,
+                    usedVolume,
                     unitPrice,
-                    usedValue: Math.round(usedValue),
+                    usedValue: roundedValue,
+                    consumed_units: roundedUnits,
+                    volume_consumed: usedVolume,
+                    cost_consumed: roundedValue,
                     pctOfTotal: '0'
                 });
             }
@@ -201,6 +224,21 @@ window.AnalyticsModule = {
         return this.leaderboardMode === 'volume'
             ? this.monthlySnapshot.sortedByVolume
             : this.monthlySnapshot.sortedByValue;
+    },
+
+    get leaderboardTotalPages() {
+        const size = this.leaderboardPageSize || 20;
+        return Math.max(1, Math.ceil(this.mostUsedIngredients.length / size));
+    },
+
+    get safeLeaderboardPage() {
+        return Math.min(Math.max(1, Number(this.leaderboardPage) || 1), this.leaderboardTotalPages);
+    },
+
+    get paginatedMostUsedIngredients() {
+        const size = this.leaderboardPageSize || 20;
+        const start = (this.safeLeaderboardPage - 1) * size;
+        return this.mostUsedIngredients.slice(start, start + size);
     },
 
     exportMonthlyReportXlsx() {

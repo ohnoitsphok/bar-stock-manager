@@ -406,6 +406,7 @@
                         <label class="text-[10px] text-gray-400 uppercase tracking-wider block font-semibold">Audit Month</label>
                         <select 
                             x-model="selectedReportMonth" 
+                            @change="leaderboardPage = 1"
                             class="bg-black/40 border border-bordercol rounded-xl px-3 py-1.5 text-xs sm:text-sm font-semibold text-gray-100 focus:outline-none focus:border-amber-500 mt-0.5"
                         >
                             <template x-for="m in availableReportMonths" :key="m">
@@ -495,15 +496,15 @@
                         <!-- Toggle Ranking Mode (By Value vs By Volume) -->
                         <div class="bg-black/40 p-1 rounded-xl border border-bordercol flex space-x-1 text-xs">
                             <button 
-                                @click="usageRankBy = 'value'" 
-                                :class="usageRankBy === 'value' ? 'bg-amber-500 text-black font-bold' : 'text-gray-400 hover:text-white'" 
+                                @click="leaderboardMode = 'value'; leaderboardPage = 1" 
+                                :class="leaderboardMode === 'value' ? 'bg-amber-500 text-black font-bold' : 'text-gray-400 hover:text-white'" 
                                 class="px-3 py-1 rounded-lg transition"
                             >
                                 By Value (Cost)
                             </button>
                             <button 
-                                @click="usageRankBy = 'volume'" 
-                                :class="usageRankBy === 'volume' ? 'bg-amber-500 text-black font-bold' : 'text-gray-400 hover:text-white'" 
+                                @click="leaderboardMode = 'volume'; leaderboardPage = 1" 
+                                :class="leaderboardMode === 'volume' ? 'bg-amber-500 text-black font-bold' : 'text-gray-400 hover:text-white'" 
                                 class="px-3 py-1 rounded-lg transition"
                             >
                                 By Volume (Units)
@@ -525,18 +526,53 @@
                                 </tr>
                             </thead>
                             <tbody class="divide-y divide-bordercol">
-                                <template x-for="(ing, idx) in mostUsedIngredients" :key="ing.id">
+                                <template x-for="(ing, idx) in paginatedMostUsedIngredients" :key="ing.id">
                                     <tr class="hover:bg-white/[0.02] transition-colors">
-                                        <td class="p-2.5 sm:p-3.5 text-center font-bold text-gray-400 font-mono" x-text="'#' + (idx + 1)"></td>
+                                        <td class="p-2.5 sm:p-3.5 text-center font-bold text-gray-400 font-mono tabular-nums" x-text="'#' + ((safeLeaderboardPage - 1) * leaderboardPageSize + idx + 1)"></td>
                                         <td class="p-2.5 sm:p-3.5 font-medium text-gray-100" x-text="ing.name"></td>
                                         <td class="p-3.5 text-gray-400 text-xs hidden sm:table-cell" x-text="ing.category"></td>
-                                        <td class="p-2.5 sm:p-3.5 text-right font-mono tabular-nums text-gray-300" x-text="Number(ing.consumed_units || 0).toFixed(1) + (ing.volume_unit === 'pcs' ? ' pcs' : ' btl')"></td>
-                                        <td class="p-2.5 sm:p-3.5 text-right font-mono tabular-nums text-gray-400" x-text="Number(ing.volume_consumed || 0).toLocaleString() + ' ' + (ing.volume_unit || 'ml')"></td>
-                                        <td class="p-2.5 sm:p-3.5 text-right font-mono tabular-nums font-bold text-emerald-400" x-text="formatCurrency(ing.cost_consumed) + ' ₫'"></td>
+                                        <td class="p-2.5 sm:p-3.5 text-right font-mono tabular-nums text-gray-300" x-text="Number(ing.usedUnits || 0).toFixed(1) + (ing.volume_unit === 'pcs' ? ' pcs' : ' btl')"></td>
+                                        <td class="p-2.5 sm:p-3.5 text-right font-mono tabular-nums text-gray-400" x-text="Number(ing.usedVolume || 0).toLocaleString() + ' ' + (ing.volume_unit || 'ml')"></td>
+                                        <td class="p-2.5 sm:p-3.5 text-right font-mono tabular-nums font-bold text-emerald-400" x-text="formatCurrency(ing.usedValue) + ' ₫'"></td>
                                     </tr>
                                 </template>
+                                <tr x-show="mostUsedIngredients.length === 0">
+                                    <td colspan="6" class="p-8 text-center text-gray-500 text-xs">
+                                        No ingredient usage recorded for <span class="text-gray-300 font-medium" x-text="formatMonthLabel(activeReportMonth)"></span>.
+                                    </td>
+                                </tr>
                             </tbody>
                         </table>
+                    </div>
+
+                    <!-- PAGINATION FOOTER (20 PER PAGE) -->
+                    <div x-show="mostUsedIngredients.length > 0" class="px-3.5 py-3 sm:px-5 border-t border-bordercol bg-black/20 flex flex-col sm:flex-row items-center justify-between gap-2 text-xs">
+                        <p class="text-gray-400 font-mono tabular-nums">
+                            Showing <span class="text-gray-200 font-semibold" x-text="(safeLeaderboardPage - 1) * leaderboardPageSize + 1"></span>–<span class="text-gray-200 font-semibold" x-text="Math.min(safeLeaderboardPage * leaderboardPageSize, mostUsedIngredients.length)"></span> of <span class="text-amber-400 font-semibold" x-text="mostUsedIngredients.length"></span> ingredients
+                        </p>
+                        <div class="flex items-center gap-1.5">
+                            <button
+                                @click="leaderboardPage = Math.max(1, safeLeaderboardPage - 1)"
+                                :disabled="safeLeaderboardPage <= 1"
+                                :class="safeLeaderboardPage <= 1 ? 'opacity-40 cursor-not-allowed text-gray-500' : 'text-gray-200 hover:bg-white/10 active:scale-[0.98]'"
+                                class="px-2.5 py-1 rounded-lg bg-black/40 border border-bordercol font-medium transition flex items-center gap-1"
+                            >
+                                <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+                                <span>Prev</span>
+                            </button>
+                            <span class="px-2.5 py-1 rounded-lg bg-black/40 border border-bordercol font-mono tabular-nums text-gray-300">
+                                Page <span class="text-amber-400 font-bold" x-text="safeLeaderboardPage"></span> / <span x-text="leaderboardTotalPages"></span>
+                            </span>
+                            <button
+                                @click="leaderboardPage = Math.min(leaderboardTotalPages, safeLeaderboardPage + 1)"
+                                :disabled="safeLeaderboardPage >= leaderboardTotalPages"
+                                :class="safeLeaderboardPage >= leaderboardTotalPages ? 'opacity-40 cursor-not-allowed text-gray-500' : 'text-gray-200 hover:bg-white/10 active:scale-[0.98]'"
+                                class="px-2.5 py-1 rounded-lg bg-black/40 border border-bordercol font-medium transition flex items-center gap-1"
+                            >
+                                <span>Next</span>
+                                <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+                            </button>
+                        </div>
                     </div>
                 </div>
 
