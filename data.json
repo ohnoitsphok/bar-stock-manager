@@ -1660,10 +1660,6 @@
       "selling_price": 180000,
       "items": [
         {
-          "ingredient_id": "47",
-          "amount": 30
-        },
-        {
           "ingredient_id": "20",
           "amount": 30
         },
@@ -1673,6 +1669,10 @@
         },
         {
           "ingredient_id": "62",
+          "amount": 30
+        },
+        {
+          "ingredient_id": "1793596832434",
           "amount": 30
         }
       ],
