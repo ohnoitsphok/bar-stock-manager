@@ -144,6 +144,7 @@ window.RecipeModule = {
     deleteRecipe(id) {
         if (confirm('Delete this recipe?')) {
             this.recipes = this.recipes.filter(r => r.id !== id);
+            window.StorageService.markDeleted('recipes', id);
             if (this.editingRecipeId === id) this.cancelEditRecipe();
             this.persist('recipes');
             if (this.notify) this.notify('Cocktail recipe removed', 'info');

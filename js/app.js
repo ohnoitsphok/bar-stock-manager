@@ -62,9 +62,20 @@ function barApp() {
                 await this.syncToGitHub(true);
             }, window.BAR_CONFIG.DEFAULTS.DEBOUNCE_SYNC_MS);
 
-            // 3. Remote sync if configured
+            // Auto-retry pending push when device regains connectivity
+            window.addEventListener('online', () => {
+                if (window.StorageService.isDirty() && this.ghConfig.token && this.ghConfig.username) {
+                    this.syncToGitHub(true);
+                }
+            });
+
+            // 3. Remote sync if configured: if local has unsynced edits, merge-push first instead of overwriting
             if (this.ghConfig.token && this.ghConfig.username) {
-                await this.syncFromGitHub();
+                if (window.StorageService.isDirty()) {
+                    await this.syncToGitHub(true);
+                } else {
+                    await this.syncFromGitHub(true);
+                }
             }
         },
 
@@ -91,6 +102,8 @@ function barApp() {
                 window.StorageService.setAudits(this.audits);
             }
 
+            window.StorageService.setDirty(true);
+
             if (this.ghConfig.token) {
                 this.syncStatus = 'Pending cloud sync...';
                 if (this._debouncedPush) {
@@ -101,6 +114,22 @@ function barApp() {
             }
         },
 
+        _applyMergedData(data, sha = '') {
+            this.ingredients = data.ingredients || [];
+            this.recipes = data.recipes || [];
+            this.orders = data.orders || [];
+            this.audits = data.audits || [];
+            this._ingVersion++;
+            this._recipeVersion++;
+            this._orderVersion++;
+            this._auditVersion++;
+            window.StorageService.setIngredients(this.ingredients);
+            window.StorageService.setRecipes(this.recipes);
+            window.StorageService.setOrders(this.orders);
+            window.StorageService.setAudits(this.audits);
+            if (sha) window.StorageService.setLastSha(sha);
+        },
+
         async syncToGitHub(silent = false) {
             if (!this.ghConfig.token || !this.ghConfig.username || !this.ghConfig.repo) {
                 if (!silent) this.notify('Please fill in GitHub username, repo name, and Token.', 'warning');
@@ -109,17 +138,43 @@ function barApp() {
             window.StorageService.setGhConfig(this.ghConfig);
 
             this.syncStatus = 'Syncing to GitHub...';
+            const localPayload = {
+                ingredients: this.ingredients,
+                recipes: this.recipes,
+                orders: this.orders,
+                audits: this.audits
+            };
+            const expectedSha = window.StorageService.getLastSha();
+
             try {
-                await window.GitHubSyncService.push(this.ghConfig, {
-                    ingredients: this.ingredients,
-                    recipes: this.recipes,
-                    orders: this.orders,
-                    audits: this.audits
-                });
+                const res = await window.GitHubSyncService.push(this.ghConfig, localPayload, expectedSha);
+                if (res && res.sha) window.StorageService.setLastSha(res.sha);
+                window.StorageService.setDirty(false);
+                window.StorageService.clearDeletedIds();
+                window.StorageService.clearDirtyIngIds();
                 this.syncStatus = 'Synced with GitHub';
                 if (!silent) this.notify('Synced successfully with GitHub', 'success');
             } catch (err) {
-                this.syncStatus = 'Sync failed';
+                if (err && err.isConflict) {
+                    try {
+                        this.syncStatus = 'Merging remote changes...';
+                        const remote = await window.GitHubSyncService.pull(this.ghConfig);
+                        const merged = window.StorageService.mergeCollections(localPayload, remote);
+                        this._applyMergedData(merged, remote.sha);
+
+                        const retryRes = await window.GitHubSyncService.push(this.ghConfig, merged, remote.sha);
+                        if (retryRes && retryRes.sha) window.StorageService.setLastSha(retryRes.sha);
+                        window.StorageService.setDirty(false);
+                        window.StorageService.clearDeletedIds();
+                        window.StorageService.clearDirtyIngIds();
+                        this.syncStatus = 'Synced with GitHub (merged)';
+                        if (!silent) this.notify('Merged remote changes & synced with GitHub', 'success');
+                        return;
+                    } catch (mergeErr) {
+                        console.error('GitHub Merge/Retry Error:', mergeErr);
+                    }
+                }
+                this.syncStatus = 'Sync failed (saved locally)';
                 if (!silent) this.notify('GitHub Error: ' + (err.message || 'Check console'), 'error');
                 console.error('GitHub Push Error:', err);
             }
@@ -130,18 +185,17 @@ function barApp() {
             this.syncStatus = 'Pulling from GitHub...';
             try {
                 const remote = await window.GitHubSyncService.pull(this.ghConfig);
-                this.ingredients = remote.ingredients;
-                this.recipes = remote.recipes;
-                this.orders = remote.orders;
-                this.audits = remote.audits || [];
-                this._ingVersion++;
-                this._recipeVersion++;
-                this._orderVersion++;
-                this._auditVersion++;
-                window.StorageService.setIngredients(this.ingredients);
-                window.StorageService.setRecipes(this.recipes);
-                window.StorageService.setOrders(this.orders);
-                window.StorageService.setAudits(this.audits);
+                if (window.StorageService.isDirty()) {
+                    const merged = window.StorageService.mergeCollections({
+                        ingredients: this.ingredients,
+                        recipes: this.recipes,
+                        orders: this.orders,
+                        audits: this.audits
+                    }, remote);
+                    this._applyMergedData(merged, remote.sha);
+                } else {
+                    this._applyMergedData(remote, remote.sha);
+                }
                 this.syncStatus = 'Synced with GitHub';
                 if (!silent) this.notify('Pulled latest data from GitHub', 'success');
             } catch (err) {

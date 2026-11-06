@@ -137,6 +137,7 @@ window.OrderModule = {
         }
 
         // Apply new stock quantities & update unit price if applicable
+        const dirtyIngIds = [];
         this.orderForm.items.forEach(oi => {
             const ing = this.getIngredientById ? this.getIngredientById(oi.ingredient_id) : this.ingredients.find(i => i.id === oi.ingredient_id);
             if (ing) {
@@ -144,8 +145,10 @@ window.OrderModule = {
                 if (oi.unit_price > 0) {
                     ing.price = oi.unit_price;
                 }
+                dirtyIngIds.push(ing.id);
             }
         });
+        window.StorageService.markDirtyIng(dirtyIngIds);
 
         this.orderForm = window.BAR_CONFIG.createDefaultOrderForm();
         this.persist('orders');
@@ -167,14 +170,18 @@ window.OrderModule = {
     deleteOrder(id) {
         if (confirm('Delete this purchase order? (Note: Stock added by this order will be deducted back)')) {
             const order = this.orders.find(o => o.id === id);
+            const dirtyIngIds = [];
             if (order && Array.isArray(order.items)) {
                 order.items.forEach(oi => {
                     const ing = this.getIngredientById ? this.getIngredientById(oi.ingredient_id) : this.ingredients.find(i => i.id === oi.ingredient_id);
                     if (ing) {
                         ing.stock = Math.max(0, Number(((ing.stock || 0) - oi.quantity).toFixed(1)));
+                        dirtyIngIds.push(ing.id);
                     }
                 });
             }
+            window.StorageService.markDirtyIng(dirtyIngIds);
+            window.StorageService.markDeleted('orders', id);
 
             this.orders = this.orders.filter(o => o.id !== id);
             if (this.editingOrderId === id) this.cancelEditOrder();

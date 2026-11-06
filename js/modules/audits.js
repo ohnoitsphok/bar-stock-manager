@@ -165,6 +165,7 @@ window.AuditModule = {
             this.audits = [];
         }
         this.audits.unshift(newAudit);
+        window.StorageService.markDirtyIng(auditItems.map(a => a.ingredient_id));
 
         this.closeStockTakeModal();
         this.persist('audits');
@@ -179,6 +180,7 @@ window.AuditModule = {
     deleteAudit(id) {
         if (confirm('Delete this historical audit log? (Note: Live stock levels will not be reverted)')) {
             this.audits = (this.audits || []).filter(a => a.id !== id);
+            window.StorageService.markDeleted('audits', id);
             this.persist('audits');
             if (this.notify) this.notify('Audit record deleted', 'info');
         }

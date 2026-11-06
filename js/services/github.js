@@ -46,9 +46,9 @@ window.GitHubSyncService = {
     },
 
     /**
-     * Push data.json to GitHub repository
+     * Push data.json to GitHub repository using known expectedSha for optimistic concurrency.
      */
-    async push(ghConfig, payload) {
+    async push(ghConfig, payload, expectedSha = '') {
         if (!ghConfig.token || !ghConfig.username || !ghConfig.repo) {
             throw new Error('GitHub configuration is incomplete.');
         }
@@ -56,16 +56,17 @@ window.GitHubSyncService = {
         const url = this.getBaseUrl(ghConfig);
         const headers = this.getHeaders(ghConfig.token);
 
-        // Fetch current SHA to avoid conflict
-        let sha = '';
-        try {
-            const getRes = await fetch(url, { headers });
-            if (getRes.ok) {
-                const fileData = await getRes.json();
-                sha = fileData.sha;
+        let sha = expectedSha || '';
+        if (!sha) {
+            try {
+                const getRes = await fetch(url, { headers });
+                if (getRes.ok) {
+                    const fileData = await getRes.json();
+                    sha = fileData.sha || '';
+                }
+            } catch (e) {
+                console.warn('Could not fetch existing file SHA, attempting direct commit:', e);
             }
-        } catch (e) {
-            console.warn('Could not fetch existing file SHA, attempting direct commit:', e);
         }
 
         const jsonString = JSON.stringify(payload, null, 2);
@@ -85,9 +86,16 @@ window.GitHubSyncService = {
 
         if (!putRes.ok) {
             const errData = await putRes.json().catch(() => ({}));
-            throw new Error(errData.message || `GitHub error: HTTP ${putRes.status}`);
+            const err = new Error(errData.message || `GitHub error: HTTP ${putRes.status}`);
+            err.status = putRes.status;
+            err.isConflict = (putRes.status === 409 || putRes.status === 422);
+            throw err;
         }
 
-        return await putRes.json();
+        const resData = await putRes.json();
+        return {
+            ...resData,
+            sha: resData?.content?.sha || ''
+        };
     }
 };

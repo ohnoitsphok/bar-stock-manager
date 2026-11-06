@@ -9,7 +9,11 @@ window.BAR_CONFIG = {
         AUDITS: 'bar_audits',
         GH_USER: 'gh_user',
         GH_REPO: 'gh_repo',
-        GH_TOKEN: 'gh_token'
+        GH_TOKEN: 'gh_token',
+        SYNC_SHA: 'bar_sync_sha',
+        SYNC_DIRTY: 'bar_sync_dirty',
+        DELETED_IDS: 'bar_deleted_ids',
+        DIRTY_ING_IDS: 'bar_dirty_ing_ids'
     },
     
     DEFAULTS: {

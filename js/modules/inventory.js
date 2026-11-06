@@ -227,10 +227,12 @@ window.InventoryModule = {
             if (idx !== -1) {
                 this.ingredients[idx] = { ...this.form, id: this.editingId };
             }
+            window.StorageService.markDirtyIng(this.editingId);
             if (this.notify) this.notify('Ingredient updated successfully', 'success');
         } else {
             const newId = Date.now().toString();
             this.ingredients.push({ ...this.form, id: newId });
+            window.StorageService.markDirtyIng(newId);
             if (this.notify) this.notify('New ingredient added to stock', 'success');
         }
 
@@ -246,6 +248,7 @@ window.InventoryModule = {
     deleteItem(id) {
         if (confirm('Delete this ingredient?')) {
             this.ingredients = this.ingredients.filter(i => i.id !== id);
+            window.StorageService.markDeleted('ingredients', id);
             if (this.editingId === id) this.resetForm();
             this.persist('ingredients');
             if (this.notify) this.notify('Ingredient removed', 'info');
@@ -256,6 +259,7 @@ window.InventoryModule = {
         const item = this.getIngredientById(id);
         if (item) {
             item.stock = Math.max(0, Number(((item.stock || 0) + delta).toFixed(1)));
+            window.StorageService.markDirtyIng(id);
             this.persist('ingredients');
         }
     },
