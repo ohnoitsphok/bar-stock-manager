@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 """
 Standalone Zero-Dependency Tailwind CSS Builder for Bar Stock Manager.
-Scans index.html and js/**/*.js and generates css/tailwind.css.
+Scans index.html and js/**/*.js and generates css/tailwind.css with deterministic
+CSS cascade ordering (shorthand before axis before side-specific, display before hidden).
 Usage: python scripts/build_css.py
 """
 import os
@@ -77,8 +78,10 @@ SPACING = {
     '16': '4rem',
     '28': '7rem',
     '36': '9rem',
+    '40': '10rem',
     '44': '11rem',
     '48': '12rem',
+    '56': '14rem',
     '60': '15rem',
     '64': '16rem',
 }
@@ -89,6 +92,9 @@ BREAKPOINTS = {
     'md': '768px',
     'lg': '1024px',
 }
+
+# Alpine-safe child selector: ignores <template x-for> and elements hidden via x-show (style="display: none")
+ALPINE_CHILD_SEL = 'CHILD:> :not([hidden]):not(template):not([style*="display: none"]) ~ :not([hidden]):not(template):not([style*="display: none"])'
 
 def hex_to_rgba(hex_str, alpha):
     h = hex_str.lstrip('#')
@@ -110,8 +116,37 @@ def resolve_color(val):
 def escape_selector(cls):
     return re.sub(r'([^a-zA-Z0-9_-])', r'\\\1', cls)
 
+def cascade_priority(base, prefixes):
+    """
+    Deterministic CSS cascade priority so shorthand utilities NEVER override axis/side utilities
+    and `.hidden` ALWAYS wins over `.block`/`.flex`/`.grid`/`.table-cell` at the same breakpoint.
+    """
+    state_prio = 100 if any(p in ('hover', 'focus', 'focus-visible', 'active', 'disabled', 'group-hover') for p in prefixes) else 0
+    if base in ('block', 'inline', 'flex', 'grid', 'table-cell'):
+        return state_prio + 10
+    if base == 'hidden':
+        return state_prio + 15
+    if base == 'inset-0':
+        return state_prio + 18
+    if base.startswith(('top-', 'bottom-', 'left-', 'right-')):
+        return state_prio + 19
+    if base.startswith(('p-', 'm-')):
+        return state_prio + 20
+    if base.startswith(('px-', 'py-', 'mx-', 'my-')):
+        return state_prio + 21
+    if base.startswith(('pt-', 'pb-', 'pl-', 'pr-', 'mt-', 'mb-', 'ml-', 'mr-')):
+        return state_prio + 22
+    if base == 'border':
+        return state_prio + 30
+    if base in ('border-t', 'border-b', 'border-l', 'border-r'):
+        return state_prio + 31
+    if base.startswith('border-'):
+        return state_prio + 32
+    if base.startswith('gap-'):
+        return state_prio + 35 if not base.startswith(('gap-x-', 'gap-y-')) else state_prio + 36
+    return state_prio + 50
+
 def compile_base_utility(base):
-    # Arbitrary size/value helpers
     if base.startswith('bg-'):
         c = resolve_color(base[3:])
         if c: return f"background-color: {c};"
@@ -146,16 +181,16 @@ def compile_base_utility(base):
         c = resolve_color(base[7:])
         if c: return f"border-color: {c};"
     if base == 'divide-y':
-        return ("CHILD:> :not([hidden]) ~ :not([hidden])", "border-top-width: 1px;")
+        return (ALPINE_CHILD_SEL, "border-top-width: 1px;")
     if base.startswith('divide-'):
         c = resolve_color(base[7:])
-        if c: return ("CHILD:> :not([hidden]) ~ :not([hidden])", f"border-color: {c};")
+        if c: return (ALPINE_CHILD_SEL, f"border-color: {c};")
     if base.startswith('space-x-'):
         sp = SPACING.get(base[8:])
-        if sp: return ("CHILD:> :not([hidden]) ~ :not([hidden])", f"margin-left: {sp};")
+        if sp: return (ALPINE_CHILD_SEL, f"margin-left: {sp};")
     if base.startswith('space-y-'):
         sp = SPACING.get(base[8:])
-        if sp: return ("CHILD:> :not([hidden]) ~ :not([hidden])", f"margin-top: {sp};")
+        if sp: return (ALPINE_CHILD_SEL, f"margin-top: {sp};")
 
     # Padding & Margin
     for prefix, prop in [
@@ -197,6 +232,7 @@ def compile_base_utility(base):
     if base.startswith('max-h-') and base[6:] in SPACING:
         return f"max-height: {SPACING[base[6:]]};"
     max_w_map = {
+        'max-w-none': 'none',
         'max-w-xs': '20rem',
         'max-w-sm': '24rem',
         'max-w-2xl': '42rem',
@@ -207,6 +243,15 @@ def compile_base_utility(base):
         return f"max-width: {max_w_map[base]};"
     if base.startswith('max-w-[') and base.endswith(']'):
         return f"max-width: {base[7:-1]};"
+
+    # Positioning coordinates
+    for pos in ('top', 'bottom', 'left', 'right'):
+        if base == f"{pos}-auto":
+            return f"{pos}: auto;"
+        if base.startswith(f"{pos}-"):
+            sp = SPACING.get(base[len(pos)+1:])
+            if sp:
+                return f"{pos}: {sp};"
 
     # Display / Flex / Grid / Position
     static_map = {
@@ -224,6 +269,7 @@ def compile_base_utility(base):
         'shrink-0': 'flex-shrink: 0;',
         'items-center': 'align-items: center;',
         'items-start': 'align-items: flex-start;',
+        'items-end': 'align-items: flex-end;',
         'items-stretch': 'align-items: stretch;',
         'justify-between': 'justify-content: space-between;',
         'justify-center': 'justify-content: center;',
@@ -244,12 +290,6 @@ def compile_base_utility(base):
         'fixed': 'position: fixed;',
         'sticky': 'position: sticky;',
         'inset-0': 'top: 0px; right: 0px; bottom: 0px; left: 0px;',
-        'top-0': 'top: 0px;',
-        'top-3': 'top: 0.75rem;',
-        'bottom-4': 'bottom: 1rem;',
-        'right-0': 'right: 0px;',
-        'right-4': 'right: 1rem;',
-        'left-2.5': 'left: 0.625rem;',
         'z-10': 'z-index: 10;',
         'z-30': 'z-index: 30;',
         'z-40': 'z-index: 40;',
@@ -323,6 +363,12 @@ def compile_base_utility(base):
     if base in static_map:
         return static_map[base]
 
+    if base.startswith('gap-x-'):
+        sp = SPACING.get(base[6:])
+        if sp: return f"column-gap: {sp};"
+    if base.startswith('gap-y-'):
+        sp = SPACING.get(base[6:])
+        if sp: return f"row-gap: {sp};"
     if base.startswith('gap-'):
         sp = SPACING.get(base[4:])
         if sp: return f"gap: {sp};"
@@ -461,20 +507,23 @@ def build():
         else:
             rule = f"{sel} {{ {compiled} }}"
 
+        prio = (cascade_priority(base, prefixes), cls)
         if bp:
-            media_rules[bp].append(rule)
+            media_rules[bp].append((prio, rule))
         else:
-            base_rules.append(rule)
+            base_rules.append((prio, rule))
 
     if unmatched:
         raise RuntimeError(f"Unmatched Tailwind classes: {unmatched}")
 
+    base_rules.sort(key=lambda x: x[0])
     out = [PREFLIGHT]
-    out.extend(base_rules)
+    out.extend(r for _, r in base_rules)
     for bp, width in BREAKPOINTS.items():
         if media_rules[bp]:
+            media_rules[bp].sort(key=lambda x: x[0])
             out.append(f"@media (min-width: {width}) {{")
-            for r in media_rules[bp]:
+            for _, r in media_rules[bp]:
                 out.append(f"    {r}")
             out.append("}")
 

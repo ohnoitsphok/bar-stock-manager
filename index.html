@@ -25,7 +25,7 @@
 <body class="bg-darkbg text-gray-100 min-h-screen font-sans antialiased selection:bg-amber-500/25 selection:text-amber-200" x-data="barApp()" x-init="initApp()" x-cloak>
 
     <!-- IN-APP NON-BLOCKING TOAST STACK -->
-    <div class="fixed bottom-4 right-4 z-50 flex flex-col gap-2 max-w-sm pointer-events-none">
+    <div class="fixed bottom-3 left-3 right-3 sm:left-auto sm:bottom-4 sm:right-4 z-50 flex flex-col gap-2 sm:max-w-sm pointer-events-none">
         <template x-for="toast in toasts" :key="toast.id">
             <div 
                 class="pointer-events-auto px-4 py-2.5 rounded-xl shadow-2xl border text-xs font-medium flex items-center gap-2.5 backdrop-blur-md transition-all duration-200"
@@ -83,7 +83,7 @@
                 <button 
                     @click="activeTab = 'inventory'" 
                     :class="activeTab === 'inventory' ? 'bg-amber-500 text-black font-bold shadow-md shadow-amber-500/20' : 'text-gray-400 hover:text-white hover:bg-white/5'" 
-                    class="px-2.5 sm:px-3.5 py-1.5 rounded-lg transition-all flex items-center justify-center gap-1.5"
+                    class="px-1.5 sm:px-3.5 py-2 sm:py-1.5 rounded-lg transition-all flex items-center justify-center gap-1 sm:gap-1.5 min-h-[38px]"
                 >
                     <svg class="w-3.5 h-3.5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5M12 22V12"/></svg>
                     <span>Stock</span>
@@ -91,7 +91,7 @@
                 <button 
                     @click="activeTab = 'reports'" 
                     :class="activeTab === 'reports' ? 'bg-amber-500 text-black font-bold shadow-md shadow-amber-500/20' : 'text-gray-400 hover:text-white hover:bg-white/5'" 
-                    class="px-2.5 sm:px-3.5 py-1.5 rounded-lg transition-all flex items-center justify-center gap-1.5"
+                    class="px-1.5 sm:px-3.5 py-2 sm:py-1.5 rounded-lg transition-all flex items-center justify-center gap-1 sm:gap-1.5 min-h-[38px]"
                 >
                     <svg class="w-3.5 h-3.5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><path d="M15 2H9a1 1 0 0 0-1 1v2a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V3a1 1 0 0 0-1-1Z"/><path d="M9 12h6M9 16h6"/></svg>
                     <span>Reports</span>
@@ -99,7 +99,7 @@
                 <button 
                     @click="activeTab = 'recipes'" 
                     :class="activeTab === 'recipes' ? 'bg-amber-500 text-black font-bold shadow-md shadow-amber-500/20' : 'text-gray-400 hover:text-white hover:bg-white/5'" 
-                    class="px-2.5 sm:px-3.5 py-1.5 rounded-lg transition-all flex items-center justify-center gap-1.5"
+                    class="px-1.5 sm:px-3.5 py-2 sm:py-1.5 rounded-lg transition-all flex items-center justify-center gap-1 sm:gap-1.5 min-h-[38px]"
                 >
                     <svg class="w-3.5 h-3.5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 22h8M12 11v11M19 3l-7 8-7-8h14Z"/></svg>
                     <span>Recipes</span>
@@ -107,7 +107,7 @@
                 <button 
                     @click="activeTab = 'settings'" 
                     :class="activeTab === 'settings' ? 'bg-amber-500 text-black font-bold shadow-md shadow-amber-500/20' : 'text-gray-400 hover:text-white hover:bg-white/5'" 
-                    class="px-2.5 sm:px-3.5 py-1.5 rounded-lg transition-all flex items-center justify-center gap-1.5"
+                    class="px-1.5 sm:px-3.5 py-2 sm:py-1.5 rounded-lg transition-all flex items-center justify-center gap-1 sm:gap-1.5 min-h-[38px]"
                 >
                     <svg class="w-3.5 h-3.5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1Z"/></svg>
                     <span>Sync</span>
@@ -123,25 +123,25 @@
         <div x-show="activeTab === 'inventory'" class="space-y-4 sm:space-y-6">
             
             <!-- KPI SUMMARY CARDS -->
-            <div class="grid grid-cols-3 gap-2.5 sm:gap-4">
-                <div class="bg-cardbg border border-bordercol p-3 sm:p-5 rounded-2xl shadow-md">
-                    <p class="text-xs sm:text-xs text-gray-400 uppercase tracking-wider font-semibold truncate">Total Items</p>
-                    <p class="text-base sm:text-2xl font-bold font-mono tabular-nums mt-1 text-gray-100" x-text="ingredients.length">0</p>
+            <div class="grid grid-cols-2 sm:grid-cols-3 gap-2.5 sm:gap-4">
+                <div class="bg-cardbg border border-bordercol p-3.5 sm:p-5 rounded-2xl shadow-md">
+                    <p class="text-xs text-gray-400 uppercase tracking-wider font-semibold">Total Items</p>
+                    <p class="text-lg sm:text-2xl font-bold font-mono tabular-nums mt-1 text-gray-100" x-text="ingredients.length">0</p>
                 </div>
                 <div 
                     @click="onlyLowStock = !onlyLowStock" 
                     :class="onlyLowStock ? 'ring-2 ring-red-500/50 bg-red-950/20' : ''" 
-                    class="bg-cardbg border border-bordercol p-3 sm:p-5 rounded-2xl shadow-md cursor-pointer hover:border-red-500/40 transition group"
+                    class="bg-cardbg border border-bordercol p-3.5 sm:p-5 rounded-2xl shadow-md cursor-pointer hover:border-red-500/40 transition group"
                 >
-                    <div class="flex justify-between items-center">
-                        <p class="text-xs sm:text-xs text-gray-400 group-hover:text-red-300 uppercase tracking-wider font-semibold truncate">Par Deficit</p>
+                    <div class="flex justify-between items-center gap-1">
+                        <p class="text-xs text-gray-400 group-hover:text-red-300 uppercase tracking-wider font-semibold">Par Deficit</p>
                         <span class="text-xs px-1.5 py-0.5 rounded bg-red-500/20 text-red-400 font-bold hidden sm:inline" x-show="lowStockCount > 0">Needs Restock</span>
                     </div>
-                    <p class="text-base sm:text-2xl font-bold font-mono tabular-nums mt-1 text-red-400" x-text="lowStockCount">0</p>
+                    <p class="text-lg sm:text-2xl font-bold font-mono tabular-nums mt-1 text-red-400" x-text="lowStockCount">0</p>
                 </div>
-                <div class="bg-cardbg border border-bordercol p-3 sm:p-5 rounded-2xl shadow-md">
-                    <p class="text-xs sm:text-xs text-gray-400 uppercase tracking-wider font-semibold truncate">Inventory Value</p>
-                    <p class="text-xs sm:text-2xl font-bold font-mono tabular-nums mt-1 text-emerald-400 truncate" x-text="formatCurrency(totalInventoryValue) + ' ₫'">0 ₫</p>
+                <div class="bg-cardbg border border-bordercol p-3.5 sm:p-5 rounded-2xl shadow-md col-span-2 sm:col-span-1">
+                    <p class="text-xs text-gray-400 uppercase tracking-wider font-semibold">Inventory Value</p>
+                    <p class="text-lg sm:text-2xl font-bold font-mono tabular-nums mt-1 text-emerald-400" x-text="formatCurrency(totalInventoryValue) + ' ₫'">0 ₫</p>
                 </div>
             </div>
 
@@ -224,7 +224,7 @@
                 </div>
 
                 <!-- TABLE & CONTROLS -->
-                <div class="bg-cardbg border border-bordercol rounded-2xl shadow-md lg:col-span-3 flex flex-col overflow-hidden">
+                <div class="bg-cardbg border border-bordercol rounded-2xl shadow-md lg:col-span-3 flex flex-col">
                     
                     <!-- SEARCH & CONTROLS TOOLBAR -->
                     <div class="p-3 sm:p-4 border-b border-bordercol flex flex-col gap-3">
@@ -240,7 +240,7 @@
                                 <svg class="w-3.5 h-3.5 text-gray-400 absolute left-2.5 top-3 pointer-events-none" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
                             </div>
 
-                            <div class="flex items-center gap-1.5 sm:gap-2 justify-between sm:justify-end">
+                            <div class="flex flex-wrap items-center gap-1.5 sm:gap-2 justify-between sm:justify-end">
                                 <!-- Mobile Add Toggle -->
                                 <button 
                                     @click="showMobileForm = !showMobileForm" 
@@ -316,41 +316,46 @@
                                     <th class="p-2.5 sm:p-3.5 text-center w-28 sm:w-36">Stock</th>
                                     <th class="p-3.5 text-right hidden md:table-cell">Bottle Price</th>
                                     <th class="p-3.5 text-right hidden lg:table-cell">Cost / Unit</th>
-                                    <th class="p-2.5 sm:p-3.5 text-right">Value</th>
+                                    <th class="p-2.5 sm:p-3.5 text-right hidden sm:table-cell">Value</th>
                                     <th class="p-2.5 sm:p-3.5 text-center">Actions</th>
                                 </tr>
                             </thead>
                             <tbody class="divide-y divide-bordercol">
                                 <template x-for="item in sortedIngredients" :key="item.id">
                                     <tr x-show="isItemVisible(item.id)" class="hover:bg-white/[0.02] transition-colors" :class="Number(item.stock || 0) <= Number(item.par || 0) ? 'bg-red-950/20' : ''">
-                                        <!-- Item Name + Category Subtitle on Mobile -->
+                                        <!-- Item Name + Category/Value Subtitle on Mobile -->
                                         <td class="p-2.5 sm:p-3.5">
-                                            <div class="flex items-center space-x-1.5">
+                                            <div class="flex flex-wrap items-center gap-1.5">
                                                 <span class="font-medium text-gray-100" x-text="item.name"></span>
                                                 <span x-show="Number(item.stock || 0) <= Number(item.par || 0)" class="text-xs font-bold px-1.5 py-0.2 rounded bg-red-500/20 text-red-400 border border-red-500/30">LOW</span>
                                             </div>
-                                            <div class="text-xs text-gray-400 sm:hidden mt-0.5" x-text="item.category + ' • ' + (item.unit_volume || 0) + (item.volume_unit || 'ml')"></div>
+                                            <div class="text-xs text-gray-400 sm:hidden mt-0.5">
+                                                <span x-text="item.category + ' • ' + (item.unit_volume || 0) + (item.volume_unit || 'ml')"></span>
+                                                <span class="text-emerald-400 font-mono font-semibold ml-1" x-text="'• ' + formatCurrency(Number(item.stock || 0) * Number(item.price || 0)) + ' ₫'"></span>
+                                            </div>
                                         </td>
                                         <td class="p-3.5 text-gray-400 text-xs hidden sm:table-cell" x-text="item.category"></td>
                                         <td class="p-3.5 text-center text-xs text-gray-300 font-mono hidden sm:table-cell" x-text="(item.unit_volume || 0) + ' ' + (item.volume_unit || 'ml')"></td>
                                         
-                                        <!-- Stock Adjustment with 32x32px Touch Targets -->
-                                        <td class="p-2.5 sm:p-3.5 text-center">
+                                        <!-- Stock Adjustment with 36x36px Touch Targets -->
+                                        <td class="p-2 sm:p-3.5 text-center">
                                             <div class="flex items-center justify-center space-x-1 sm:space-x-1.5">
-                                                <button @click="adjustStock(item.id, -0.1)" aria-label="Decrease stock by 0.1" class="w-7 h-7 sm:w-8 sm:h-8 bg-red-900/40 text-red-300 rounded-lg hover:bg-red-900 text-sm font-bold flex items-center justify-center active:scale-95 transition-transform">-</button>
+                                                <button @click="adjustStock(item.id, -0.1)" aria-label="Decrease stock by 0.1" class="w-8 h-8 bg-red-900/40 text-red-300 rounded-lg hover:bg-red-900 text-sm font-bold flex items-center justify-center active:scale-95 transition-transform">-</button>
                                                 <span class="px-1 sm:px-2 font-bold font-mono text-xs sm:text-sm text-gray-100 tabular-nums" x-text="Number(item.stock || 0).toFixed(1)"></span>
-                                                <button @click="adjustStock(item.id, 0.1)" aria-label="Increase stock by 0.1" class="w-7 h-7 sm:w-8 sm:h-8 bg-emerald-900/40 text-emerald-300 rounded-lg hover:bg-emerald-900 text-sm font-bold flex items-center justify-center active:scale-95 transition-transform">+</button>
+                                                <button @click="adjustStock(item.id, 0.1)" aria-label="Increase stock by 0.1" class="w-8 h-8 bg-emerald-900/40 text-emerald-300 rounded-lg hover:bg-emerald-900 text-sm font-bold flex items-center justify-center active:scale-95 transition-transform">+</button>
                                             </div>
                                         </td>
 
                                         <td class="p-3.5 text-right font-mono text-xs text-gray-300 tabular-nums hidden md:table-cell" x-text="formatCurrency(item.price)"></td>
                                         <td class="p-3.5 text-right font-mono text-xs text-gray-400 tabular-nums hidden lg:table-cell" x-text="Number(item.unit_volume) > 0 ? formatCurrency(Number(item.price) / Number(item.unit_volume), 2) + '/' + item.volume_unit : '0'"></td>
-                                        <td class="p-2.5 sm:p-3.5 text-right font-mono text-xs text-emerald-400 font-bold tabular-nums" x-text="formatCurrency(Number(item.stock || 0) * Number(item.price || 0))"></td>
+                                        <td class="p-2.5 sm:p-3.5 text-right font-mono text-xs text-emerald-400 font-bold tabular-nums hidden sm:table-cell" x-text="formatCurrency(Number(item.stock || 0) * Number(item.price || 0))"></td>
                                         
                                         <!-- Actions as Touch Pills -->
-                                        <td class="p-2.5 sm:p-3.5 text-center whitespace-nowrap space-x-1">
-                                            <button @click="editItem(item); showMobileForm = true" class="text-amber-400 hover:text-amber-300 text-xs px-2 py-1 bg-black/40 rounded border border-bordercol hover:border-amber-500/40 transition">Edit</button>
-                                            <button @click="deleteItem(item.id)" class="text-red-400 hover:text-red-300 text-xs px-2 py-1 bg-black/40 rounded border border-bordercol hover:border-red-500/40 transition">Del</button>
+                                        <td class="p-2 sm:p-3.5 text-center whitespace-nowrap">
+                                            <div class="flex flex-col sm:flex-row items-center justify-center gap-1">
+                                                <button @click="editItem(item); showMobileForm = true" class="w-full sm:w-auto text-amber-400 hover:text-amber-300 text-xs px-2 py-1 bg-black/40 rounded border border-bordercol hover:border-amber-500/40 transition">Edit</button>
+                                                <button @click="deleteItem(item.id)" class="w-full sm:w-auto text-red-400 hover:text-red-300 text-xs px-2 py-1 bg-black/40 rounded border border-bordercol hover:border-red-500/40 transition">Del</button>
+                                            </div>
                                         </td>
                                     </tr>
                                 </template>
@@ -373,14 +378,14 @@
             <!-- REPORTS HEADER & CONTROL BAR -->
             <div class="bg-cardbg border border-bordercol p-3.5 sm:p-5 rounded-2xl shadow-md flex flex-col md:flex-row justify-between items-stretch md:items-center gap-3 sm:gap-4">
                 
-                <!-- Period Selector -->
-                <div class="flex items-center space-x-3">
+                <!-- Period Selector + Sub-Tab Switcher (Stacks cleanly on mobile) -->
+                <div class="flex flex-col sm:flex-row items-stretch sm:items-end gap-2.5 sm:gap-3">
                     <div>
                         <label class="text-xs text-gray-400 uppercase tracking-wider block font-semibold">Audit Month</label>
                         <select 
                             x-model="selectedReportMonth" aria-label="Select Audit Month" 
                             @change="leaderboardPage = 1"
-                            class="bg-black/40 border border-bordercol rounded-xl px-3 py-1.5 text-xs sm:text-sm font-semibold text-gray-100 focus:outline-none focus:border-amber-500 mt-0.5"
+                            class="w-full sm:w-auto bg-black/40 border border-bordercol rounded-xl px-3 py-2 sm:py-1.5 text-xs sm:text-sm font-semibold text-gray-100 focus:outline-none focus:border-amber-500 mt-0.5"
                         >
                             <template x-for="m in availableReportMonths" :key="m">
                                 <option :value="m" x-text="formatMonthLabel(m)"></option>
@@ -389,18 +394,18 @@
                     </div>
 
                     <!-- Sub-Tab Switcher (Usage vs Orders) -->
-                    <div class="bg-black/40 p-1 rounded-xl border border-bordercol flex space-x-1 self-end text-xs">
+                    <div class="bg-black/40 p-1 rounded-xl border border-bordercol grid grid-cols-2 sm:flex gap-1 text-xs">
                         <button 
                             @click="reportsActiveSubTab = 'analytics'" 
                             :class="reportsActiveSubTab === 'analytics' ? 'bg-amber-500 text-black font-bold' : 'text-gray-400 hover:text-white'" 
-                            class="px-3 py-1 rounded-lg transition"
+                            class="px-3 py-1.5 sm:py-1 rounded-lg transition text-center"
                         >
                             Analytics
                         </button>
                         <button 
                             @click="reportsActiveSubTab = 'orders'" 
                             :class="reportsActiveSubTab === 'orders' ? 'bg-amber-500 text-black font-bold' : 'text-gray-400 hover:text-white'" 
-                            class="px-3 py-1 rounded-lg transition"
+                            class="px-3 py-1.5 sm:py-1 rounded-lg transition text-center"
                         >
                             Purchase Orders
                         </button>
@@ -411,15 +416,15 @@
                 <div class="flex flex-wrap items-center gap-2">
                     <button 
                         @click="openStockTakeModal()" 
-                        class="bg-emerald-600 hover:bg-emerald-500 text-white px-3.5 py-1.5 rounded-xl text-xs font-bold shadow-md transition flex items-center gap-1.5 active:scale-[0.98]"
+                        class="flex-1 sm:flex-initial justify-center bg-emerald-600 hover:bg-emerald-500 text-white px-3.5 py-2 sm:py-1.5 rounded-xl text-xs font-bold shadow-md transition flex items-center gap-1.5 active:scale-[0.98]"
                     >
-                        <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><path d="M15 2H9a1 1 0 0 0-1 1v2a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V3a1 1 0 0 0-1-1Z"/><path d="M9 12h6M9 16h6"/></svg>
+                        <svg class="w-3.5 h-3.5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><path d="M15 2H9a1 1 0 0 0-1 1v2a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V3a1 1 0 0 0-1-1Z"/><path d="M9 12h6M9 16h6"/></svg>
                         <span>Start Stock-Take Audit</span>
                     </button>
 
                     <!-- Export Report Dropdown -->
                     <div class="relative shrink-0" x-data="{ exportOpen: false }" @click.away="exportOpen = false">
-                        <button @click="exportOpen = !exportOpen" class="bg-black/40 border border-bordercol px-3 py-1.5 rounded-xl text-xs font-semibold hover:bg-white/10 transition flex items-center gap-1.5">
+                        <button @click="exportOpen = !exportOpen" class="bg-black/40 border border-bordercol px-3 py-2 sm:py-1.5 rounded-xl text-xs font-semibold hover:bg-white/10 transition flex items-center gap-1.5">
                             <svg class="w-3.5 h-3.5 text-gray-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
                             <span>Export Report</span>
                             <span class="text-xs">▼</span>
@@ -490,11 +495,11 @@
                         <table class="w-full text-left border-collapse text-xs sm:text-sm">
                             <thead>
                                 <tr class="bg-black/30 text-gray-400 text-xs uppercase tracking-wider border-b border-bordercol">
-                                    <th class="p-2.5 sm:p-3.5 text-center w-12 sm:w-16">Rank</th>
+                                    <th class="p-2.5 sm:p-3.5 text-center w-10 sm:w-16">#</th>
                                     <th class="p-2.5 sm:p-3.5">Ingredient</th>
                                     <th class="p-3.5 hidden sm:table-cell">Category</th>
-                                    <th class="p-2.5 sm:p-3.5 text-right">Consumed Units</th>
-                                    <th class="p-2.5 sm:p-3.5 text-right">Estimated Liquid</th>
+                                    <th class="p-2.5 sm:p-3.5 text-right">Used</th>
+                                    <th class="p-2.5 sm:p-3.5 text-right hidden sm:table-cell">Estimated Liquid</th>
                                     <th class="p-2.5 sm:p-3.5 text-right">Usage Cost</th>
                                 </tr>
                             </thead>
@@ -502,11 +507,14 @@
                                 <template x-for="(ing, idx) in paginatedMostUsedIngredients" :key="ing.id">
                                     <tr class="hover:bg-white/[0.02] transition-colors">
                                         <td class="p-2.5 sm:p-3.5 text-center font-bold text-gray-400 font-mono tabular-nums" x-text="'#' + ((safeLeaderboardPage - 1) * leaderboardPageSize + idx + 1)"></td>
-                                        <td class="p-2.5 sm:p-3.5 font-medium text-gray-100" x-text="ing.name"></td>
+                                        <td class="p-2.5 sm:p-3.5">
+                                            <div class="font-medium text-gray-100" x-text="ing.name"></div>
+                                            <div class="text-xs text-gray-400 sm:hidden mt-0.5 font-mono" x-text="Number(ing.usedVolume || 0).toLocaleString() + ' ' + (ing.volume_unit || 'ml') + ' • ' + ing.category"></div>
+                                        </td>
                                         <td class="p-3.5 text-gray-400 text-xs hidden sm:table-cell" x-text="ing.category"></td>
-                                        <td class="p-2.5 sm:p-3.5 text-right font-mono tabular-nums text-gray-300" x-text="Number(ing.usedUnits || 0).toFixed(1) + (ing.volume_unit === 'pcs' ? ' pcs' : ' btl')"></td>
-                                        <td class="p-2.5 sm:p-3.5 text-right font-mono tabular-nums text-gray-400" x-text="Number(ing.usedVolume || 0).toLocaleString() + ' ' + (ing.volume_unit || 'ml')"></td>
-                                        <td class="p-2.5 sm:p-3.5 text-right font-mono tabular-nums font-bold text-emerald-400" x-text="formatCurrency(ing.usedValue) + ' ₫'"></td>
+                                        <td class="p-2.5 sm:p-3.5 text-right font-mono tabular-nums text-gray-300 whitespace-nowrap" x-text="Number(ing.usedUnits || 0).toFixed(1) + (ing.volume_unit === 'pcs' ? ' pcs' : ' btl')"></td>
+                                        <td class="p-2.5 sm:p-3.5 text-right font-mono tabular-nums text-gray-400 hidden sm:table-cell" x-text="Number(ing.usedVolume || 0).toLocaleString() + ' ' + (ing.volume_unit || 'ml')"></td>
+                                        <td class="p-2.5 sm:p-3.5 text-right font-mono tabular-nums font-bold text-emerald-400 whitespace-nowrap" x-text="formatCurrency(ing.usedValue) + ' ₫'"></td>
                                     </tr>
                                 </template>
                                 <tr x-show="mostUsedIngredients.length === 0">
@@ -561,8 +569,8 @@
                             <thead>
                                 <tr class="bg-black/30 text-gray-400 text-xs uppercase tracking-wider border-b border-bordercol">
                                     <th class="p-2.5 sm:p-3.5">Audit Date</th>
-                                    <th class="p-2.5 sm:p-3.5">Notes</th>
-                                    <th class="p-2.5 sm:p-3.5 text-center">Discrepant Items</th>
+                                    <th class="p-2.5 sm:p-3.5 hidden sm:table-cell">Notes</th>
+                                    <th class="p-2.5 sm:p-3.5 text-center hidden sm:table-cell">Discrepant Items</th>
                                     <th class="p-2.5 sm:p-3.5 text-center">Net Variance</th>
                                     <th class="p-2.5 sm:p-3.5 text-right">Actions</th>
                                 </tr>
@@ -570,12 +578,18 @@
                             <tbody class="divide-y divide-bordercol">
                                 <template x-for="audit in monthlyAuditsList" :key="audit.id">
                                     <tr class="hover:bg-white/[0.02] transition-colors">
-                                        <td class="p-2.5 sm:p-3.5 font-mono text-gray-300" x-text="audit.date"></td>
-                                        <td class="p-2.5 sm:p-3.5 text-gray-400" x-text="audit.notes || '—'"></td>
-                                        <td class="p-2.5 sm:p-3.5 text-center font-mono text-amber-400" x-text="(audit.items || []).filter(i => Math.abs(i.variance) >= 0.05).length + ' items'"></td>
-                                        <td class="p-2.5 sm:p-3.5 text-center font-mono font-bold" :class="getAuditNetVariance(audit) >= 0 ? 'text-emerald-400' : 'text-red-400'" x-text="(getAuditNetVariance(audit) >= 0 ? '+' : '') + getAuditNetVariance(audit) + ' units'"></td>
+                                        <td class="p-2.5 sm:p-3.5">
+                                            <div class="font-mono text-gray-200" x-text="audit.date"></div>
+                                            <div class="text-xs text-gray-400 sm:hidden mt-0.5">
+                                                <span class="text-amber-400 font-mono" x-text="(audit.items || []).filter(i => Math.abs(i.variance) >= 0.05).length + ' items'"></span>
+                                                <span x-text="' • ' + (audit.notes || '—')"></span>
+                                            </div>
+                                        </td>
+                                        <td class="p-2.5 sm:p-3.5 text-gray-400 hidden sm:table-cell" x-text="audit.notes || '—'"></td>
+                                        <td class="p-2.5 sm:p-3.5 text-center font-mono text-amber-400 hidden sm:table-cell" x-text="(audit.items || []).filter(i => Math.abs(i.variance) >= 0.05).length + ' items'"></td>
+                                        <td class="p-2.5 sm:p-3.5 text-center font-mono font-bold whitespace-nowrap" :class="getAuditNetVariance(audit) >= 0 ? 'text-emerald-400' : 'text-red-400'" x-text="(getAuditNetVariance(audit) >= 0 ? '+' : '') + getAuditNetVariance(audit) + ' units'"></td>
                                         <td class="p-2.5 sm:p-3.5 text-right">
-                                            <button @click="deleteAudit(audit.id)" class="text-red-400 hover:text-red-300 text-xs px-2 py-1 bg-black/40 rounded border border-bordercol">Delete</button>
+                                            <button @click="deleteAudit(audit.id)" class="text-red-400 hover:text-red-300 text-xs px-2.5 py-1 bg-black/40 rounded border border-bordercol">Delete</button>
                                         </td>
                                     </tr>
                                 </template>
@@ -847,7 +861,7 @@
                                 type="text" 
                                 x-model.debounce.50ms="recipeFilterQuery" aria-label="Search cocktails" 
                                 placeholder="Search cocktails..." 
-                                class="bg-black/40 border border-bordercol rounded-lg px-2.5 py-1 text-xs w-36 sm:w-44 focus:outline-none focus:border-amber-500"
+                                class="bg-black/40 border border-bordercol rounded-lg px-3 py-1.5 text-xs flex-1 sm:w-48 focus:outline-none focus:border-amber-500"
                             >
 
                             <div class="relative" x-data="{ exportOpen: false }" @click.away="exportOpen = false">
@@ -888,7 +902,7 @@
                                     </template>
                                 </div>
 
-                                <div class="pt-2 border-t border-bordercol flex justify-between items-center text-xs font-mono">
+                                <div class="pt-2 border-t border-bordercol flex flex-wrap justify-between items-center gap-1.5 text-xs font-mono">
                                     <div>
                                         <span class="text-gray-400">Cost: </span>
                                         <span class="font-bold text-gray-200" x-text="formatCurrency(getRecipeMetrics(recipe).totalCost) + ' ₫'"></span>
@@ -1067,21 +1081,28 @@
                 <table class="w-full text-left border-collapse text-xs">
                     <thead class="sticky top-0 z-10 bg-cardbg shadow-sm">
                         <tr class="bg-cardbg text-gray-400 uppercase text-xs tracking-wider border-b border-bordercol">
-                            <th class="px-3 sm:px-4 py-2 sm:py-2.5 bg-cardbg">Item</th>
+                            <th class="px-2.5 sm:px-4 py-2 sm:py-2.5 bg-cardbg">Item</th>
                             <th class="px-3 sm:px-4 py-2.5 hidden sm:table-cell bg-cardbg">Category</th>
                             <th class="px-3 sm:px-4 py-2.5 text-center hidden sm:table-cell bg-cardbg">Expected</th>
-                            <th class="px-3 sm:px-4 py-2 sm:py-2.5 text-center w-48 sm:w-60 bg-cardbg">Actual Count</th>
-                            <th class="px-3 sm:px-4 py-2 sm:py-2.5 text-center bg-cardbg">Variance</th>
+                            <th class="px-2 sm:px-4 py-2 sm:py-2.5 text-center w-40 sm:w-60 bg-cardbg">Actual Count</th>
+                            <th class="px-3 sm:px-4 py-2 sm:py-2.5 text-center hidden sm:table-cell bg-cardbg">Variance</th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-bordercol">
                         <template x-for="ing in auditIngredients" :key="ing.id">
                             <tr x-show="isAuditItemVisible(ing)" class="hover:bg-white/[0.02] transition-colors">
-                                <!-- Item name + Category & Expected Stock subtitle on mobile -->
-                                <td class="px-3 sm:px-4 py-2 sm:py-2.5">
+                                <!-- Item name + Category, Expected Stock & Live Variance badge on mobile -->
+                                <td class="px-2.5 sm:px-4 py-2.5">
                                     <div class="font-medium text-gray-100 text-xs sm:text-sm" x-text="ing.name"></div>
-                                    <div class="text-xs text-gray-400 sm:hidden" x-text="ing.category"></div>
-                                    <div class="text-xs text-gray-400 sm:hidden font-mono" x-text="'Exp: ' + Number(ing.stock || 0).toFixed(1) + (ing.volume_unit === 'pcs' ? ' pcs' : ' btl')"></div>
+                                    <div class="text-xs text-gray-400 sm:hidden mt-0.5" x-text="ing.category"></div>
+                                    <div class="flex flex-wrap items-center gap-1.5 mt-1 sm:hidden font-mono text-xs">
+                                        <span class="text-gray-300" x-text="'Exp: ' + Number(ing.stock || 0).toFixed(1) + (ing.volume_unit === 'pcs' ? ' pcs' : ' btl')"></span>
+                                        <span 
+                                            class="px-1.5 py-0.5 rounded font-bold"
+                                            :class="getAuditItemVariance(ing) === 0 ? 'text-gray-400 bg-black/30' : (getAuditItemVariance(ing) > 0 ? 'text-emerald-400 bg-emerald-950/40 border border-emerald-900/50' : 'text-red-400 bg-red-950/40 border border-red-900/50')"
+                                            x-text="'Var: ' + (getAuditItemVariance(ing) > 0 ? '+' : '') + getAuditItemVariance(ing)"
+                                        ></span>
+                                    </div>
                                 </td>
 
                                 <td class="px-3 sm:px-4 py-2.5 text-gray-400 text-xs hidden sm:table-cell" x-text="ing.category"></td>
@@ -1091,14 +1112,14 @@
                                     <div class="text-xs text-gray-400" x-show="ing.unit_volume && ing.volume_unit !== 'pcs'" x-text="'(' + ing.unit_volume + ' ' + (ing.volume_unit || 'ml') + ')'"></div>
                                 </td>
 
-                                <!-- Stepper Buttons + Quick Fractional Presets (.25, .50, .75) with 44px Touch Targets -->
-                                <td class="px-3 sm:px-4 py-2 sm:py-2.5 text-center">
+                                <!-- Stepper Buttons + Quick Fractional Presets (.25, .50, .75) -->
+                                <td class="px-2 sm:px-4 py-2 sm:py-2.5 text-center">
                                     <div class="flex flex-col items-center gap-1.5">
-                                        <div class="flex items-center justify-center space-x-1.5">
+                                        <div class="flex items-center justify-center space-x-1">
                                             <button 
                                                 @click="adjustAuditCount(ing, -0.1)" 
                                                 aria-label="Decrease count by 0.1"
-                                                class="min-w-[44px] min-h-[44px] bg-red-900/40 text-red-300 rounded-lg hover:bg-red-900 text-base font-bold flex items-center justify-center active:scale-95 transition-transform"
+                                                class="min-w-[40px] min-h-[40px] sm:min-w-[44px] sm:min-h-[44px] bg-red-900/40 text-red-300 rounded-lg hover:bg-red-900 text-base font-bold flex items-center justify-center active:scale-95 transition-transform"
                                             >
                                                 -
                                             </button>
@@ -1107,31 +1128,31 @@
                                                 step="0.05" 
                                                 :value="auditCounts[ing.id] !== undefined ? auditCounts[ing.id] : Number(ing.stock || 0)" aria-label="Actual physical count" 
                                                 @input="auditCounts[ing.id] = Number(Number($event.target.value).toFixed(2))" 
-                                                class="w-16 min-h-[44px] bg-black/60 border border-bordercol rounded-lg px-1.5 py-1 text-center font-bold text-xs focus:outline-none focus:border-amber-500 font-mono tabular-nums"
+                                                class="w-14 sm:w-16 min-h-[40px] sm:min-h-[44px] bg-black/60 border border-bordercol rounded-lg px-1 py-1 text-center font-bold text-xs focus:outline-none focus:border-amber-500 font-mono tabular-nums"
                                             >
                                             <button 
                                                 @click="adjustAuditCount(ing, 0.1)" 
                                                 aria-label="Increase count by 0.1"
-                                                class="min-w-[44px] min-h-[44px] bg-emerald-900/40 text-emerald-300 rounded-lg hover:bg-emerald-900 text-base font-bold flex items-center justify-center active:scale-95 transition-transform"
+                                                class="min-w-[40px] min-h-[40px] sm:min-w-[44px] sm:min-h-[44px] bg-emerald-900/40 text-emerald-300 rounded-lg hover:bg-emerald-900 text-base font-bold flex items-center justify-center active:scale-95 transition-transform"
                                             >
                                                 +
                                             </button>
-                                            <span class="text-xs text-gray-400 w-6 text-left ml-0.5" x-text="ing.volume_unit === 'pcs' ? 'pcs' : 'btl'"></span>
+                                            <span class="text-xs text-gray-400 w-6 text-left ml-0.5 hidden sm:inline" x-text="ing.volume_unit === 'pcs' ? 'pcs' : 'btl'"></span>
                                         </div>
 
-                                        <!-- Quick Bottle Preset Pills (44px min height/width for thumb accuracy) -->
-                                        <div class="flex items-center gap-1 text-xs font-mono text-gray-400">
-                                            <button @click="setAuditFraction(ing, 0.25)" aria-label="Set fraction to 0.25 bottle" class="min-w-[44px] min-h-[36px] px-2 py-1 rounded-lg bg-black/40 hover:bg-amber-500/20 hover:text-amber-300 border border-bordercol transition">.25</button>
-                                            <button @click="setAuditFraction(ing, 0.50)" aria-label="Set fraction to 0.50 bottle" class="min-w-[44px] min-h-[36px] px-2 py-1 rounded-lg bg-black/40 hover:bg-amber-500/20 hover:text-amber-300 border border-bordercol transition">.50</button>
-                                            <button @click="setAuditFraction(ing, 0.75)" aria-label="Set fraction to 0.75 bottle" class="min-w-[44px] min-h-[36px] px-2 py-1 rounded-lg bg-black/40 hover:bg-amber-500/20 hover:text-amber-300 border border-bordercol transition">.75</button>
-                                            <button @click="setAuditFraction(ing, 1.00)" aria-label="Set to full bottle" class="min-w-[44px] min-h-[36px] px-2 py-1 rounded-lg bg-black/40 hover:bg-emerald-500/20 hover:text-emerald-300 border border-bordercol transition">Full</button>
+                                        <!-- Quick Bottle Preset Pills -->
+                                        <div class="grid grid-cols-4 gap-1 w-full max-w-[152px] sm:max-w-none sm:flex sm:w-auto items-center justify-center text-xs font-mono text-gray-400">
+                                            <button @click="setAuditFraction(ing, 0.25)" aria-label="Set fraction to 0.25 bottle" class="min-h-[34px] sm:min-w-[44px] sm:min-h-[36px] px-1.5 py-1 rounded-lg bg-black/40 hover:bg-amber-500/20 hover:text-amber-300 border border-bordercol transition">.25</button>
+                                            <button @click="setAuditFraction(ing, 0.50)" aria-label="Set fraction to 0.50 bottle" class="min-h-[34px] sm:min-w-[44px] sm:min-h-[36px] px-1.5 py-1 rounded-lg bg-black/40 hover:bg-amber-500/20 hover:text-amber-300 border border-bordercol transition">.50</button>
+                                            <button @click="setAuditFraction(ing, 0.75)" aria-label="Set fraction to 0.75 bottle" class="min-h-[34px] sm:min-w-[44px] sm:min-h-[36px] px-1.5 py-1 rounded-lg bg-black/40 hover:bg-amber-500/20 hover:text-amber-300 border border-bordercol transition">.75</button>
+                                            <button @click="setAuditFraction(ing, 1.00)" aria-label="Set to full bottle" class="min-h-[34px] sm:min-w-[44px] sm:min-h-[36px] px-1.5 py-1 rounded-lg bg-black/40 hover:bg-emerald-500/20 hover:text-emerald-300 border border-bordercol transition">Full</button>
                                         </div>
                                     </div>
                                 </td>
 
-                                <td class="px-3 sm:px-4 py-2 sm:py-2.5 text-center font-mono font-bold whitespace-nowrap tabular-nums">
+                                <td class="px-3 sm:px-4 py-2 sm:py-2.5 text-center font-mono font-bold whitespace-nowrap tabular-nums hidden sm:table-cell">
                                     <span 
-                                        class="px-1.5 sm:px-2 py-0.5 rounded text-xs sm:text-xs"
+                                        class="px-2 py-0.5 rounded text-xs"
                                         :class="getAuditItemVariance(ing) === 0 ? 'text-gray-400 bg-black/20' : (getAuditItemVariance(ing) > 0 ? 'text-emerald-400 bg-emerald-950/40 border border-emerald-900/50' : 'text-red-400 bg-red-950/40 border border-red-900/50')"
                                         x-text="(getAuditItemVariance(ing) > 0 ? '+' : '') + getAuditItemVariance(ing) + (ing.volume_unit === 'pcs' ? ' pcs' : ' btl')"
                                     ></span>

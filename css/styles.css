@@ -45,9 +45,9 @@ html {
     scrollbar-width: none;
 }
 
-/* Prevent unwanted automatic zoom on iOS Safari when focusing form inputs */
+/* Prevent unwanted automatic zoom on iOS Safari when focusing text/search/form inputs, while keeping compact table steppers & selects proportional */
 @media screen and (max-width: 640px) {
-    input, select, textarea {
+    input[type="text"], input[type="password"], textarea {
         font-size: 16px !important;
     }
 }
