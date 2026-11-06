@@ -2,12 +2,40 @@
  * Data Export Service - XLSX (SheetJS), UTF-8 CSV, and Google Sheets Clipboard
  */
 window.ExportService = {
+    _xlsxPromise: null,
+
+    /**
+     * Dynamically loads SheetJS (~900 KB) only when an .xlsx export is triggered.
+     */
+    ensureXLSX() {
+        if (window.XLSX) return Promise.resolve(window.XLSX);
+        if (this._xlsxPromise) return this._xlsxPromise;
+        this._xlsxPromise = new Promise((resolve, reject) => {
+            const script = document.createElement('script');
+            script.src = 'https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js';
+            script.onload = () => resolve(window.XLSX);
+            script.onerror = () => {
+                this._xlsxPromise = null;
+                reject(new Error('Failed to load SheetJS library'));
+            };
+            document.head.appendChild(script);
+        });
+        return this._xlsxPromise;
+    },
+
     /**
      * Export multiple sheets to a single .xlsx file using SheetJS
      * @param {string} filename - e.g. "Bar_Inventory_2026-11-03.xlsx"
      * @param {Object} sheets - e.g. { "Inventory": [headers, ...rows], "Recipes": [...] }
      */
-    exportToXLSX(filename, sheets) {
+    async exportToXLSX(filename, sheets) {
+        if (!window.XLSX) {
+            try {
+                await this.ensureXLSX();
+            } catch (e) {
+                console.warn('Lazy load of SheetJS failed:', e);
+            }
+        }
         if (!window.XLSX) {
             console.warn('SheetJS (XLSX) library not loaded. Falling back to CSV export.');
             // Fallback: export first sheet as CSV

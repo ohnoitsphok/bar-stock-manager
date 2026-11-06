@@ -57,9 +57,10 @@ html {
     font-variant-numeric: tabular-nums;
 }
 
-/* Accent focus rings */
-input:focus-visible, select:focus-visible, textarea:focus-visible, button:focus-visible {
-    outline: none;
+/* Accessible burnished-amber focus ring for keyboard navigation */
+input:focus-visible, select:focus-visible, textarea:focus-visible, button:focus-visible, a:focus-visible, [tabindex]:focus-visible {
+    outline: 2px solid #f59e0b !important;
+    outline-offset: 2px;
 }
 
 /* Isolate table layout & style recalculation boundaries */

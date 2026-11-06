@@ -76,6 +76,16 @@ window.OrderModule = {
         this.tempOrderPrice = 0;
     },
 
+    removeOrderItem(idx) {
+        if (this.orderForm && Array.isArray(this.orderForm.items)) {
+            this.orderForm.items.splice(idx, 1);
+        }
+    },
+
+    calcOrderTotal(order) {
+        return this.getOrderTotal(order);
+    },
+
     getOrderTotal(order) {
         if (!order || !Array.isArray(order.items)) return 0;
         const key = `${this._orderVersion || 0}_${(this.orders || []).length}`;

@@ -8,9 +8,10 @@ window.AuditModule = {
     auditCounts: {},
     auditNotes: '',
 
-    // Internal cache for historical audit net variances
+    // Internal cache for historical audit net variances & focus return element
     _auditNetVarMap: null,
     _auditNetVarKey: '',
+    _lastFocusedEl: null,
 
     get auditIngredients() {
         // Avoid rendering 136 hidden DOM rows when modal is closed
@@ -87,6 +88,7 @@ window.AuditModule = {
     },
 
     openStockTakeModal() {
+        this._lastFocusedEl = document.activeElement;
         this.auditNotes = '';
         this.auditFilterCategory = 'All';
         this.auditSearchQuery = '';
@@ -100,10 +102,38 @@ window.AuditModule = {
         }
         this.auditCounts = counts;
         this.auditModalOpen = true;
+        requestAnimationFrame(() => {
+            const searchInput = document.getElementById('audit-search-input');
+            if (searchInput) searchInput.focus();
+        });
     },
 
     closeStockTakeModal() {
         this.auditModalOpen = false;
+        if (this._lastFocusedEl && typeof this._lastFocusedEl.focus === 'function') {
+            const el = this._lastFocusedEl;
+            this._lastFocusedEl = null;
+            requestAnimationFrame(() => el.focus());
+        }
+    },
+
+    trapAuditFocus(e) {
+        if (!this.auditModalOpen || e.key !== 'Tab') return;
+        const dialog = e.currentTarget;
+        if (!dialog) return;
+        const focusables = Array.from(
+            dialog.querySelectorAll('button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])')
+        ).filter(el => el.offsetParent !== null);
+        if (focusables.length === 0) return;
+        const first = focusables[0];
+        const last = focusables[focusables.length - 1];
+        if (e.shiftKey && document.activeElement === first) {
+            e.preventDefault();
+            last.focus();
+        } else if (!e.shiftKey && document.activeElement === last) {
+            e.preventDefault();
+            first.focus();
+        }
     },
 
     getAuditItemVariance(ing) {
