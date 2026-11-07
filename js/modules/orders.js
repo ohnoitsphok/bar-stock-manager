@@ -57,6 +57,9 @@ window.OrderModule = {
     },
 
     addOrderItem() {
+        const query = (this.orderSearchQuery || '').trim();
+        if (!query) return;
+
         if (!this.tempOrderIngId && this.filteredOrderIngredients.length > 0) {
             const topMatch = this.filteredOrderIngredients[0];
             this.tempOrderIngId = topMatch.id;

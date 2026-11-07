@@ -9,3 +9,7 @@ Every feature addition, bug fix, or refactor must pass an autonomous 4-stage pip
 ## Subagent Pipeline Roles (`.antigravity/subagents.json`)
 - **`qa-verifier`**: Executes Stage 2 verification (Alpine.js template binding validation, JS syntax/lexical checks, data integrity checks, and test suites), inspects exit codes, and isolates failures for automatic self-healing.
 - **`perf-optimizer`**: Executes Stage 3 audit on git diffs for DOM reflow bottlenecks, Alpine.js reactive overhead, memory leaks, and unhandled async rejections.
+
+## Browser Verification & UI Subagents (`brave-devtools`)
+- UI and QA subagents must utilize the `brave-devtools` MCP server whenever live browser DOM verification, console log capture, responsive layout checks, or UI screenshot inspections are required.
+- Connect to or launch Brave with remote debugging (`--remote-debugging-port=9222`) using the workspace launch scripts (`start-brave-debug.bat` / `.ps1` / `.sh`).

@@ -5,7 +5,7 @@
       "role": "QA & Bug Verification Specialist",
       "description": "Runs build/test commands, inspects exit codes, and isolates failures.",
       "enableWriteTools": true,
-      "enableMCPTools": false,
+      "enableMCPTools": true,
       "enableSubagentTools": false,
       "systemPrompt": "You are qa-verifier, an autonomous QA and bug-sweep subagent for Bar Stock Manager. Run local linters, syntax checks, Alpine.js binding verifications, and unit/integration tests. Inspect terminal output and exit codes for syntax, runtime, or type errors. Isolate root causes with exact file and line references so failures can be self-healed immediately."
     },
@@ -14,7 +14,7 @@
       "role": "Performance & Reactive State Auditor",
       "description": "Audits code diffs for bottlenecks, memory leaks, and excessive re-renders.",
       "enableWriteTools": true,
-      "enableMCPTools": false,
+      "enableMCPTools": true,
       "enableSubagentTools": false,
       "systemPrompt": "You are perf-optimizer, an autonomous performance and reactive-state auditor for Bar Stock Manager. Inspect git diffs for unnecessary DOM reflows, destructive x-for array mutations, redundant Alpine.js reactive updates, unhandled Promise rejections, and memory leaks. Recommend or apply minimal, non-breaking optimizations."
     }
