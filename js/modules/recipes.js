@@ -58,6 +58,9 @@ window.RecipeModule = {
     },
 
     addRecipeItem() {
+        const query = (this.recipeSearchQuery || '').trim();
+        if (!query) return;
+
         if (!this.tempRecipeIngId && this.filteredRecipeIngredients.length > 0) {
             this.tempRecipeIngId = this.filteredRecipeIngredients[0].id;
         }
