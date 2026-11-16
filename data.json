@@ -1860,18 +1860,19 @@
     },
     {
       "name": "Negroni",
+      "category": "Cocktail",
       "selling_price": 240000,
       "items": [
         {
-          "ingredient_id": "1791975533630",
-          "amount": 30
-        },
-        {
           "ingredient_id": "15",
           "amount": 30
         },
         {
-          "ingredient_id": "15",
+          "ingredient_id": "4",
+          "amount": 30
+        },
+        {
+          "ingredient_id": "1791975353176",
           "amount": 30
         }
       ],
