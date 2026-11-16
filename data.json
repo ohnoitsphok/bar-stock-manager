@@ -17,9 +17,9 @@
       "category": "Liqueurs & Modifiers",
       "unit_volume": 700,
       "volume_unit": "ml",
-      "stock": 0,
+      "stock": 1,
       "par": 0.1,
-      "price": 550000,
+      "price": 560000,
       "expiry": ""
     },
     {
@@ -215,9 +215,9 @@
       "category": "Liqueurs & Modifiers",
       "unit_volume": 700,
       "volume_unit": "ml",
-      "stock": 1,
+      "stock": 2,
       "par": 0.1,
-      "price": 494000,
+      "price": 350000,
       "expiry": ""
     },
     {
@@ -698,9 +698,9 @@
       "category": "Spirit - Whisky",
       "unit_volume": 700,
       "volume_unit": "ml",
-      "stock": 0,
+      "stock": 1,
       "par": 0.1,
-      "price": 550000,
+      "price": 630000,
       "expiry": "",
       "id": "1791973593005"
     },
@@ -720,9 +720,9 @@
       "category": "Spirit - Whisky",
       "unit_volume": 750,
       "volume_unit": "ml",
-      "stock": 0,
+      "stock": 1,
       "par": 0.1,
-      "price": 660000,
+      "price": 600000,
       "expiry": "",
       "id": "1791973749972"
     },
@@ -808,9 +808,9 @@
       "category": "Spirit - Whisky",
       "unit_volume": 750,
       "volume_unit": "ml",
-      "stock": 0,
+      "stock": 1,
       "par": 0.1,
-      "price": 282000,
+      "price": 340000,
       "expiry": "",
       "id": "1791974052624"
     },
@@ -819,9 +819,9 @@
       "category": "Spirit - Whisky",
       "unit_volume": 700,
       "volume_unit": "ml",
-      "stock": 0,
+      "stock": 1,
       "par": 0.1,
-      "price": 528000,
+      "price": 620000,
       "expiry": "",
       "id": "1791974075843"
     },
@@ -1193,9 +1193,9 @@
       "category": "Spirit - Rum",
       "unit_volume": 750,
       "volume_unit": "ml",
-      "stock": 0,
+      "stock": 1,
       "par": 0.3,
-      "price": 380000,
+      "price": 370000,
       "expiry": "",
       "id": "1791975882035"
     },
@@ -1950,6 +1950,48 @@
     }
   ],
   "orders": [
+    {
+      "supplier": "A Tuyến",
+      "items": [
+        {
+          "ingredient_id": "1791974052624",
+          "quantity": 1,
+          "unit_price": 340000
+        },
+        {
+          "ingredient_id": "1791974075843",
+          "quantity": 1,
+          "unit_price": 620000
+        },
+        {
+          "ingredient_id": "1791975882035",
+          "quantity": 1,
+          "unit_price": 370000
+        },
+        {
+          "ingredient_id": "2",
+          "quantity": 1,
+          "unit_price": 560000
+        },
+        {
+          "ingredient_id": "1791973749972",
+          "quantity": 1,
+          "unit_price": 600000
+        },
+        {
+          "ingredient_id": "1791973593005",
+          "quantity": 1,
+          "unit_price": 630000
+        },
+        {
+          "ingredient_id": "20",
+          "quantity": 1,
+          "unit_price": 350000
+        }
+      ],
+      "id": "1794844640018",
+      "date": "16/11/2026 22:57"
+    },
     {
       "supplier": "Malt&Co",
       "items": [
