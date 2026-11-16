@@ -1506,6 +1506,17 @@
       "price": 2350000,
       "expiry": "",
       "id": "1793776908116"
+    },
+    {
+      "name": "Chivas 18",
+      "category": "Spirit - Whisky",
+      "unit_volume": 700,
+      "volume_unit": "ml",
+      "stock": 0.9,
+      "par": 0,
+      "price": 1500000,
+      "expiry": "",
+      "id": "1794844808889"
     }
   ],
   "recipes": [
