@@ -1553,12 +1553,12 @@
     },
     {
       "name": "Bowmore 12",
-      "category": "Spirit - Gin",
+      "category": "Spirit - Whisky",
       "unit_volume": 700,
       "volume_unit": "ml",
       "stock": 1,
-      "par": 1,
-      "price": 0,
+      "par": 0,
+      "price": 1620000,
       "expiry": "",
       "id": "1794845135635"
     }
