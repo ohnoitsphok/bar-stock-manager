@@ -215,9 +215,9 @@
       "category": "Liqueurs & Modifiers",
       "unit_volume": 700,
       "volume_unit": "ml",
-      "stock": 0,
+      "stock": 1,
       "par": 0.1,
-      "price": 441000,
+      "price": 494000,
       "expiry": ""
     },
     {
@@ -1950,6 +1950,18 @@
     }
   ],
   "orders": [
+    {
+      "supplier": "Malt&Co",
+      "items": [
+        {
+          "ingredient_id": "20",
+          "quantity": 1,
+          "unit_price": 494000
+        }
+      ],
+      "id": "1794844498437",
+      "date": "16/11/2026 22:54"
+    },
     {
       "supplier": "A Tuyến",
       "items": [
