@@ -1561,6 +1561,17 @@
       "price": 1620000,
       "expiry": "",
       "id": "1794845135635"
+    },
+    {
+      "name": "Bowmore 14",
+      "category": "Spirit - Whisky",
+      "unit_volume": 700,
+      "volume_unit": "ml",
+      "stock": 1,
+      "par": 0,
+      "price": 1400000,
+      "expiry": "",
+      "id": "1794845215737"
     }
   ],
   "recipes": [
