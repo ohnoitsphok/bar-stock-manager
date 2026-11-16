@@ -1528,6 +1528,17 @@
       "price": 2850000,
       "expiry": "",
       "id": "1794844862390"
+    },
+    {
+      "name": "Glenfiddich 15",
+      "category": "Spirit - Whisky",
+      "unit_volume": 700,
+      "volume_unit": "ml",
+      "stock": 1,
+      "par": 0,
+      "price": 1550000,
+      "expiry": "",
+      "id": "1794844939472"
     }
   ],
   "recipes": [
