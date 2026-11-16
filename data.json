@@ -1539,6 +1539,17 @@
       "price": 1550000,
       "expiry": "",
       "id": "1794844939472"
+    },
+    {
+      "name": "Prakaan Peated Malt",
+      "category": "Spirit - Whisky",
+      "unit_volume": 700,
+      "volume_unit": "ml",
+      "stock": 1,
+      "par": 0,
+      "price": 1800000,
+      "expiry": "",
+      "id": "1794845004989"
     }
   ],
   "recipes": [
