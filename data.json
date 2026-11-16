@@ -1517,6 +1517,17 @@
       "price": 1500000,
       "expiry": "",
       "id": "1794844808889"
+    },
+    {
+      "name": "Royal Salute 21",
+      "category": "Spirit - Whisky",
+      "unit_volume": 700,
+      "volume_unit": "ml",
+      "stock": 1,
+      "par": 0,
+      "price": 2850000,
+      "expiry": "",
+      "id": "1794844862390"
     }
   ],
   "recipes": [
