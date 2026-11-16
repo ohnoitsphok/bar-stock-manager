@@ -39,7 +39,7 @@
       "category": "Vermouth & Aperitifs",
       "unit_volume": 1000,
       "volume_unit": "ml",
-      "stock": 1,
+      "stock": 0.7,
       "par": 0.3,
       "price": 580000,
       "expiry": ""
